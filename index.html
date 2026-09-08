@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>연경쌤의 지구과학 실험실 | Earthssaem Lab</title>
   <meta name="description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
-  <meta name="theme-color" content="#F6FAFE">
+  <meta name="theme-color" content="#F7F5F0">
   <meta property="og:title" content="연경쌤의 지구과학 실험실 | Earthssaem Lab">
   <meta property="og:description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
   <meta property="og:type" content="website">
-  <!-- 파비콘: 굵은 외곽선의 만화풍 지구 (상단 로고와 동일) -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='34' fill='%237FB8E6' stroke='%232A2A2A' stroke-width='4.5'/%3E%3Cpath d='M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM44 56c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14zM60 22c6-2 12 2 12 8s-6 6-10 4-4-8-2-12zM20 52c4-2 8 0 8 4s-4 5-7 3-3-5-1-7z' fill='%238FC98A' stroke='%232A2A2A' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <!-- 파비콘: 상단 로고 마크와 같은 지구 시스템 단면 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3CclipPath id='c'%3E%3Ccircle cx='36' cy='43' r='28'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23c)' stroke='%2326344A' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='80' height='80' fill='%23EAF3FB' stroke='none'/%3E%3Cpath d='M8 40c10-2 20 2 30 0s20-2 30 1v18H8z' fill='%23BFE0F5' stroke='none'/%3E%3Cpath d='M8 55c10 2 20-2 30 0s20 1 30-1v10H8z' fill='%23C9A27C' stroke='none'/%3E%3Cpath d='M8 63c12-1 22 2 32 0s18 0 28 1v12H8z' fill='%238A6240' stroke='none'/%3E%3Cpath d='M8 40c10-2 20 2 30 0s20-2 30 1M8 55c10 2 20-2 30 0s20 1 30-1M8 63c12-1 22 2 32 0s18 0 28 1' fill='none'/%3E%3Cpath d='M20 48c6-5 10-5 16 0s10 5 16 0' fill='none' stroke='%237FB8E6'/%3E%3Cpath d='M26 30c-5 0-7-4-5-7s6-4 8-2c1-5 9-6 12-2 4-2 9 1 8 6 3 0 5 3 3 5z' fill='%23FFFFFF'/%3E%3C/g%3E%3Ccircle cx='36' cy='43' r='28' fill='none' stroke='%2326344A' stroke-width='4'/%3E%3Cpolygon points='68,6 70.3,10.8 75.6,11.5 71.8,15.2 72.7,20.5 68,18 63.3,20.5 64.2,15.2 60.4,11.5 65.7,10.8' fill='%23F2CF6B' stroke='%2326344A' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E">
 
   <!-- 한글 글꼴: Pretendard (불러오지 못하면 아래 CSS의 시스템 폰트가 대신 적용됩니다) -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -21,43 +21,41 @@
        1. 디자인 토큰
        ========================================================== */
     :root {
-      /* 배경·글자: 아주 옅은 하늘색 바탕에 검정에 가까운 잉크색 */
-      --bg: #F6FAFE;
-      --bg-soft: #E6F1FA;
+      /* 다섯 가지 색: 잉크(남색에 가까운 검정) · 아이보리 · 노랑 · 하늘 · 흙 */
+      --ink: #26344A;
+      --bg: #F7F5F0;            /* 아이보리 */
+      --bg-soft: #EFEAE0;
       --surface: #FFFFFF;
-      --line: #D5E2EE;
-      --line-strong: #BFD0DF;
-      --navy: #2A2A2A;          /* 제목·본문 (잉크색) */
-      --navy-soft: #4E5561;     /* 보조 본문 */
+      --line: #DDD6C8;
+      --line-strong: #C9C0AF;
+      --navy: var(--ink);       /* 제목·본문 */
+      --navy-soft: #4E5868;     /* 보조 본문 (잉크 연하게) */
       --muted: #7A8390;
+      --shadow-ink: var(--ink); /* 오프셋 그림자 */
 
-      /* 유형 색: 캐릭터의 바다색·대륙색·별색 */
-      --teal: #7FB8E6;          /* 개념 탐구 = 하늘색 */
+      --star: #F2CF6B;          /* 노랑: 형광펜·별 */
+      --sky: #7FB8E6;           /* 하늘색: 대기·해양 */
+      --sky-soft: #DDEEFA;
+      --earth: #C9A27C;         /* 흙색: 지층 */
+
+      /* 카드 유형 색 (기존 세 색 유지) */
+      --teal: var(--sky);       /* 개념 탐구 */
       --teal-text: #2B5F8C;
-      --teal-soft: #DDEEFA;
+      --teal-soft: var(--sky-soft);
 
-      --blue: #8FC98A;          /* 데이터 분석 = 초록 */
+      --blue: #8FC98A;          /* 데이터 분석 */
       --blue-text: #2F6B3A;
       --blue-soft: #E3F3E0;
 
-      --orange: #F2CF6B;        /* 게임·복습 = 노랑 */
+      --orange: var(--star);    /* 게임·복습 */
       --orange-text: #7D5A0B;
       --orange-soft: #FBF1CF;
-
-      --sky: #7FB8E6;           /* 캐릭터 바다색 */
-      --sky-soft: #A8D3F0;
-      --leaf: #8FC98A;          /* 캐릭터 대륙색 */
-      --star: #F2CF6B;          /* 별 노란색 */
-      --star-blue: #A9CDE8;     /* 별 하늘색 */
-      --ink: #2A2A2A;           /* 캐릭터 외곽선 */
-      --shadow-ink: #26344A;    /* 카드 그림자용 짙은 네이비 */
 
       --radius-lg: 24px;
       --radius-md: 14px;
       --radius-pill: 999px;
-      /* 스티커처럼 딱 떨어지는 그림자 */
+      /* 오프셋 그림자: 오른쪽 아래 4px 하나로 통일 */
       --shadow-sm: 4px 4px 0 var(--ink);
-      --shadow-md: 7px 7px 0 var(--accent, var(--ink));
 
       --header-h: 56px;
       --container: 1240px;
@@ -95,8 +93,8 @@
     button { font: inherit; color: inherit; }
 
     :focus-visible {
-      outline: 3px solid var(--teal-text);
-      outline-offset: 3px;
+      outline: 2px solid var(--teal-text);
+      outline-offset: 2px;
       border-radius: 6px;
     }
 
@@ -134,7 +132,7 @@
       top: 0;
       z-index: 50;
       height: var(--header-h);
-      background: rgba(246, 250, 254, 0.96);
+      background: rgba(247, 245, 240, 0.96);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 2px solid var(--ink);
@@ -195,40 +193,29 @@
       border-bottom: 1px solid var(--line);
     }
     .hero .container { position: relative; }
-    /* 배경 별: 히어로 오른쪽에 흩뿌림 */
     .hero__deco {
       position: absolute;
       inset: 0;
       pointer-events: none;
     }
-    /* 오른쪽 가장자리에 걸친 큰 하늘색 원 */
-    .hero__sky {
-      position: absolute;
-      right: -150px; top: 50%;
-      width: 380px; height: 380px;
-      transform: translateY(-50%);
-      border-radius: 50%;
-      background: var(--teal-soft);
-      border: 2.5px solid var(--ink);
-    }
-    .hero__stars {
+    /* 지구 시스템 단면: 지름 = 히어로 높이의 1.3배, 오른쪽 가장자리에 1/4 잘림, 세로 중앙
+       (viewBox 226×260에서 원 지름 192 → 요소 높이 176% = 원 지름 130%) */
+    .hero__art {
       position: absolute;
       right: 0; top: 50%;
-      width: min(620px, 100%); height: 100%;
-      transform: translateY(-50%);
+      height: 176%;
+      aspect-ratio: 226 / 260;
+      transform: translate(21.2%, -50%);
+      color: var(--ink);
     }
-    .hero__stars .moon { animation: moon-float 5s ease-in-out infinite; }
-    @keyframes moon-float {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-5px); }
-    }
+    .hero__art * { vector-effect: non-scaling-stroke; }
 
     .hero__inner {
       position: relative;
       max-width: 760px;
     }
     .hero h1 {
-      font-size: clamp(1.9rem, 3.8vw, 3rem);
+      font-size: clamp(1.8rem, 3.2vw, 2.4rem);
       line-height: 1.25;
       font-weight: 800;
       letter-spacing: -0.02em;
@@ -248,31 +235,12 @@
        5. 섹션 공통
        ========================================================== */
     .section { padding: clamp(2.25rem, 4vw, 2.5rem) 0 clamp(3rem, 5vw, 4rem); }
-    .section__head {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 0.5rem 1.5rem;
-    }
-    .section__head > div { max-width: 640px; }
-    .title-star {
-      display: inline-block;
-      width: 0.7em; height: 0.7em;
-      margin-left: 0.3em;
-      vertical-align: 0.15em;
-      color: var(--star);
-    }
+    #tools.section { padding-top: 1.25rem; }
     .section__title {
       font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 800;
       letter-spacing: -0.015em;
       line-height: 1.3;
-    }
-    .section__sub {
-      margin-top: 0.35rem;
-      color: var(--navy-soft);
-      font-size: 0.98rem;
     }
 
     /* ==========================================================
@@ -281,7 +249,7 @@
     #tools { scroll-margin-top: calc(var(--header-h) + 8px); }
 
     .toolbar {
-      margin-top: 1.25rem;
+      margin-top: 0;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -345,33 +313,26 @@
       width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--dot, var(--ink));
-      border: 1.5px solid var(--ink);
     }
     .filter-btn[data-type="all"]::before { display: none; }
     .filter-btn[data-type="concept"] { --dot: var(--teal); }
     .filter-btn[data-type="data"]    { --dot: var(--blue); }
     .filter-btn[data-type="game"]    { --dot: var(--orange); }
-    .filter-btn:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
+    .filter-btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
     .filter-btn[aria-pressed="true"] {
       background: var(--ink);
       color: #fff;
-      box-shadow: 3px 3px 0 var(--dot, var(--teal));
+      box-shadow: 4px 4px 0 var(--sky);
     }
-    .filter-btn[aria-pressed="true"]::before { background: #fff; border-color: #fff; }
-    .filter-btn[aria-pressed="true"][data-type="concept"] { background: var(--teal);   color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
-    .filter-btn[aria-pressed="true"][data-type="data"]    { background: var(--blue);   color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
-    .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange); color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
-    .filter-btn[aria-pressed="true"][data-type]:not([data-type="all"])::before { background: var(--ink); border-color: var(--ink); }
+    .filter-btn[aria-pressed="true"]::before { background: #fff; }
+    .filter-btn[aria-pressed="true"][data-type="concept"] { background: var(--teal);   color: var(--navy); box-shadow: 4px 4px 0 var(--ink); }
+    .filter-btn[aria-pressed="true"][data-type="data"]    { background: var(--blue);   color: var(--navy); box-shadow: 4px 4px 0 var(--ink); }
+    .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange); color: var(--navy); box-shadow: 4px 4px 0 var(--ink); }
+    .filter-btn[aria-pressed="true"][data-type]:not([data-type="all"])::before { background: var(--ink); }
 
-    .section__title-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.4rem 0.75rem;
-    }
     .result-count {
       flex: none;
-      margin: 0;
+      margin: 0 0 0 auto;
       padding: 3px 11px;
       border-radius: var(--radius-pill);
       border: 2px solid var(--ink);
@@ -412,9 +373,9 @@
       min-height: 100%;
       padding: 1.55rem 1.25rem 1.1rem;
       background: var(--surface);
-      border: 2.5px solid var(--ink);
+      border: 2px solid var(--ink);
       border-radius: var(--radius-lg);
-      box-shadow: 3px 3px 0 var(--shadow-ink);
+      box-shadow: 4px 4px 0 var(--shadow-ink);
       transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
     }
     .card[hidden], .card-grid[hidden] { display: none; }
@@ -426,7 +387,7 @@
       top: 0; left: 0; right: 0;
       height: 7px;
       background: var(--accent);
-      border-bottom: 2.5px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
     }
     .card--concept { --accent: var(--teal);   --accent-text: var(--teal-text);   --accent-soft: var(--teal-soft); }
     .card--data    { --accent: var(--blue);   --accent-text: var(--blue-text);   --accent-soft: var(--blue-soft); }
@@ -434,8 +395,8 @@
 
     .card:hover,
     .card:focus-within {
-      transform: translate(-3px, -3px) rotate(-0.5deg);
-      box-shadow: 6px 6px 0 var(--accent);
+      transform: translate(-2px, -2px) rotate(-0.5deg);
+      box-shadow: 4px 4px 0 var(--accent);
     }
     /* 카드 전체 클릭: 제목 링크의 가상 요소를 카드 전체로 펼침 */
     .card__link::after {
@@ -448,13 +409,13 @@
       outline: none;
     }
     .card:has(.card__link:focus-visible) {
-      outline: 3px solid var(--accent-text);
-      outline-offset: 3px;
+      outline: 2px solid var(--accent-text);
+      outline-offset: 2px;
     }
     /* :has 미지원 브라우저 대비 */
     .card__link:focus-visible::after {
-      outline: 3px solid var(--accent-text);
-      outline-offset: 3px;
+      outline: 2px solid var(--accent-text);
+      outline-offset: 2px;
     }
     .card:has(.card__link:focus-visible) .card__link:focus-visible::after { outline: none; }
 
@@ -487,19 +448,6 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .card__type {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 3px 10px;
-      border-radius: var(--radius-pill);
-      background: var(--accent);
-      border: 1.5px solid var(--ink);
-      color: var(--navy);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
     .card__title {
       font-size: 1.2rem;
       font-weight: 800;
@@ -527,7 +475,6 @@
       padding: 2px 9px;
       border-radius: 8px;
       background: var(--bg);
-      border: 1.5px solid var(--line-strong);
       color: var(--navy-soft);
       font-size: 0.78rem;
       font-weight: 600;
@@ -566,12 +513,11 @@
       margin-top: 1.5rem;
       padding: 2.5rem 1.5rem;
       text-align: center;
-      border: 2.5px dashed var(--ink);
+      border: 2px dashed var(--ink);
       border-radius: var(--radius-lg);
       background: var(--surface);
       color: var(--navy-soft);
     }
-    .empty svg { width: 52px; height: 52px; margin: 0 auto 0.75rem; color: var(--star); }
     .empty strong { color: var(--navy); }
     .empty button {
       margin-top: 1rem;
@@ -581,9 +527,9 @@
       background: var(--surface);
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+      transition: background-color 0.15s var(--ease);
     }
-    .empty button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
+    .empty button:hover { background: var(--orange-soft); }
 
     .nojs-note {
       margin-top: 1.5rem;
@@ -609,13 +555,6 @@
     .about {
       padding: 3rem 0;
     }
-    .about__deco {
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 44%;
-      pointer-events: none;
-    }
-    .about__deco svg { width: 100%; height: 100%; }
     .about__inner {
       position: relative;
       max-width: 640px;
@@ -636,7 +575,7 @@
       color: var(--navy-soft);
       font-weight: 600;
       text-decoration: underline;
-      text-decoration-thickness: 1.5px;
+      text-decoration-thickness: 2px;
       text-underline-offset: 3px;
     }
     .about__contact a:hover { color: var(--teal-text); }
@@ -664,7 +603,7 @@
       color: var(--navy-soft);
       font-weight: 600;
       text-decoration: underline;
-      text-decoration-thickness: 1.5px;
+      text-decoration-thickness: 2px;
       text-underline-offset: 3px;
     }
     .footer__meta a:hover { color: var(--teal-text); }
@@ -682,11 +621,8 @@
       .site-nav ul { gap: 0; }
       .site-nav a { padding: 8px 7px; font-size: 0.86rem; }
       .hero { padding: 2rem 0 1.85rem; }
-      .hero__sky { width: 210px; height: 210px; right: -110px; }
-      .hero__stars { width: 100%; }
-      .hero__stars .far { display: none; }
-      .hero__inner { padding-right: 104px; }
-      .about__deco { width: 30%; opacity: 0.45; }
+      .hero__art { height: min(176%, 230px); }
+      .hero__inner { padding-right: 128px; }
       .search { max-width: none; }
       .filters { width: 100%; }
       .filter-btn { flex: 1 1 auto; justify-content: center; padding: 0 0.75rem; }
@@ -707,7 +643,6 @@
       }
       .card { opacity: 1; transform: none; animation: none; }
       .card:hover, .card:focus-within { transform: none; }
-      .hero__stars .moon { animation: none; }
       .card:hover .card__icon, .card:focus-within .card__icon { transform: none; }
     }
   </style>
@@ -743,40 +678,49 @@
          ====================================================== -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__deco" aria-hidden="true">
-        <!-- 배경 별 -->
-        <div class="hero__sky"></div>
-        <svg class="hero__stars" viewBox="0 0 620 175" preserveAspectRatio="xMaxYMid meet">
-          <!-- 달 -->
-          <g transform="translate(496 90)">
-            <g class="moon">
-              <path d="M-4-40a40 40 0 1 0 34 62 30 30 0 1 1-34-62z" fill="var(--star)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- 지구 시스템 단면: 대기(구름) → 해양(물결) → 지질(지층·화석), 원 둘레에 별과 초승달(천문) -->
+        <svg class="hero__art" viewBox="0 0 226 260" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <defs><clipPath id="es-clip"><circle cx="130" cy="130" r="95"/></clipPath></defs>
+          <g clip-path="url(#es-clip)">
+            <!-- 대기 -->
+            <rect x="30" y="30" width="200" height="200" fill="#EAF3FB" stroke="none"/>
+            <!-- 해양 -->
+            <path d="M30 118c30-4 60 3 90-1s60-5 110 2v48H30z" fill="#BFE0F5" stroke="none"/>
+            <!-- 지층 -->
+            <path d="M30 166c34 3 68-4 102 0s58 4 98-2v30H30z" fill="#E4CBA9" stroke="none"/>
+            <path d="M30 190c30-3 66 4 100 1s60-3 100 2v26H30z" fill="#C9A27C" stroke="none"/>
+            <path d="M30 213c36 2 70-3 104 1s62 2 96-2v22H30z" fill="#A97F57" stroke="none"/>
+            <path d="M30 232c32-2 70 3 104 0s60-2 96 1v30H30z" fill="#8A6240" stroke="none"/>
+            <!-- 층 경계선 (손그림처럼 살짝 굴곡) -->
+            <path d="M30 118c30-4 60 3 90-1s60-5 110 2"/>
+            <path d="M30 166c34 3 68-4 102 0s58 4 98-2"/>
+            <path d="M30 190c30-3 66 4 100 1s60-3 100 2"/>
+            <path d="M30 213c36 2 70-3 104 1s62 2 96-2"/>
+            <path d="M30 232c32-2 70 3 104 0s60-2 96 1"/>
+            <!-- 구름 2개 -->
+            <path d="M74 88c-8 0-12-6-9-12s10-7 14-3c2-8 14-10 19-3 6-4 15 1 13 9 6 0 9 5 6 9z" fill="#FFFFFF"/>
+            <path d="M152 66c-7 0-10-5-7-10s9-6 12-2c2-6 12-8 16-2 5-3 12 1 10 7 5 0 7 4 5 7z" fill="#FFFFFF"/>
+            <!-- 물결선 3줄 -->
+            <g stroke="#7FB8E6">
+              <path d="M52 132c8-6 14-6 22 0s14 6 22 0 14-6 22 0 14 6 22 0 14-6 22 0 14 6 22 0"/>
+              <path d="M40 144c8-6 14-6 22 0s14 6 22 0 14-6 22 0 14 6 22 0 14-6 22 0 14 6 22 0 14-6 22 0"/>
+              <path d="M52 156c8-6 14-6 22 0s14 6 22 0 14-6 22 0 14 6 22 0 14-6 22 0 14 6 22 0"/>
             </g>
+            <!-- 지층마다 작은 화석 하나 -->
+            <path d="M118 178a2 2 0 0 1 4 0a4 4 0 0 1-8 0a6 6 0 0 1 12 0a8 8 0 0 1-16 0"/>
+            <path d="M150 208c0-6 4-10 9-10s9 4 9 10M159 198v10M153 200l3 8M165 200l-3 8"/>
+            <path d="M96 222h22M104 216l-4 6 4 6M112 217l-3 5 3 5M118 219l-2 3 2 3"/>
+            <path d="M148 246c0-8 6-12 12-12 0 8-6 12-12 12zM148 246c4-4 8-6 12-8"/>
           </g>
-          <g fill="var(--star)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
-            <use href="#star5" class="far" transform="translate(300 34) scale(1.6)"/>
-            <use href="#star5" class="far" transform="translate(150 118) scale(1.1)"/>
-            <use href="#star5" transform="translate(600 30) scale(1.3)"/>
-            <use href="#star5" transform="translate(420 150) scale(0.9)"/>
-            <use href="#star5" transform="translate(586 148) scale(1.0)"/>
-          </g>
-          <g fill="var(--surface)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
-            <use href="#star5" class="far" transform="translate(240 100) scale(1.0)"/>
-            <use href="#star5" transform="translate(430 40) scale(1.0)"/>
-            <use href="#star5" class="far" transform="translate(90 44) scale(0.8)"/>
-          </g>
-          <g fill="var(--star)">
-            <use href="#star4" class="far" transform="translate(196 58) scale(0.7)"/>
-            <use href="#star4" transform="translate(560 100) scale(0.7)"/>
-            <use href="#star4" class="far" transform="translate(40 140) scale(0.5)"/>
-            <use href="#star4" transform="translate(370 120) scale(0.5)"/>
-          </g>
-          <g fill="var(--ink)" opacity="0.5">
-            <circle cx="330" cy="130" r="2.2" class="far"/>
-            <circle cx="120" cy="80" r="2" class="far"/>
-            <circle cx="470" cy="20" r="2.2"/>
-            <circle cx="60" cy="66" r="1.8" class="far"/>
-            <circle cx="390" cy="60" r="2"/>
-            <circle cx="540" cy="160" r="1.8"/>
+          <!-- 원 테두리 -->
+          <circle cx="130" cy="130" r="95"/>
+          <!-- 원 둘레의 별과 초승달 -->
+          <g fill="#F2CF6B">
+            <use href="#star5" transform="translate(26 88) scale(1.1)"/>
+            <use href="#star5" transform="translate(18 121) scale(0.8)"/>
+            <use href="#star5" transform="translate(20 153) scale(1.0)"/>
+            <use href="#star5" transform="translate(34 186) scale(0.85)"/>
+            <path d="M40 56a9 9 0 1 0 8 14 7 7 0 1 1-8-14z"/>
           </g>
         </svg>
       </div>
@@ -794,16 +738,7 @@
          ====================================================== -->
     <section class="section tools" id="tools" aria-labelledby="tools-title">
       <div class="container">
-        <div class="section__head">
-          <div>
-            <div class="section__title-row">
-              <h2 class="section__title" id="tools-title">웹앱 모음<svg class="title-star" viewBox="-10 -10 20 20" aria-hidden="true"><use href="#star4" fill="currentColor"/></svg></h2>
-              <!-- 앱 개수는 JavaScript가 APPS 배열을 기준으로 자동 계산합니다 -->
-              <p class="result-count" id="result-count" aria-live="polite"></p>
-            </div>
-            <p class="section__sub">수업 목적과 과목에 맞는 도구를 찾아보세요.</p>
-          </div>
-        </div>
+        <h2 class="visually-hidden" id="tools-title">웹앱 모음</h2>
 
         <div class="toolbar">
           <div class="search">
@@ -815,6 +750,8 @@
           <div class="filters" role="group" aria-label="활용 유형 필터" id="filters">
             <!-- 필터 버튼은 JavaScript가 CATEGORIES를 기준으로 생성합니다 -->
           </div>
+          <!-- 앱 개수는 JavaScript가 APPS 배열을 기준으로 자동 계산합니다 -->
+          <p class="result-count" id="result-count" aria-live="polite"></p>
         </div>
 
         <ul class="card-grid" id="card-grid" aria-label="수업 도구 목록">
@@ -822,7 +759,6 @@
         </ul>
 
         <div class="empty" id="empty" hidden>
-          <svg viewBox="-12 -12 24 24" aria-hidden="true"><use href="#star5" fill="currentColor" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round"/></svg>
           <p><strong>앗, 찾는 웹앱이 없어요.</strong><br>다른 검색어를 입력하거나 필터를 바꿔 보세요.</p>
           <button type="button" id="reset-btn">검색·필터 초기화</button>
         </div>
@@ -842,28 +778,6 @@
          About
          ====================================================== -->
     <section class="section about" id="about" aria-labelledby="about-title">
-      <div class="about__deco" aria-hidden="true">
-        <!-- 별 장식 -->
-        <svg viewBox="0 0 520 200" preserveAspectRatio="xMaxYMid meet">
-          <g fill="var(--star)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
-            <use href="#star5" transform="translate(330 46) scale(1.5)"/>
-            <use href="#star5" transform="translate(470 120) scale(1.2)"/>
-            <use href="#star5" transform="translate(410 168) scale(0.9)"/>
-          </g>
-          <g fill="var(--surface)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
-            <use href="#star5" transform="translate(250 130) scale(1.0)"/>
-            <use href="#star5" transform="translate(500 30) scale(0.9)"/>
-          </g>
-          <g fill="var(--star)">
-            <use href="#star4" transform="translate(390 100) scale(0.7)"/>
-            <use href="#star4" transform="translate(290 80) scale(0.5)"/>
-          </g>
-          <g fill="var(--ink)" opacity="0.45">
-            <circle cx="440" cy="60" r="2"/><circle cx="360" cy="150" r="2"/><circle cx="300" cy="30" r="1.8"/>
-          </g>
-        </svg>
-      </div>
-
       <div class="container">
         <div class="about__inner">
           <h2 class="section__title" id="about-title">수업에서 시작된 작은 실험들</h2>
@@ -896,15 +810,24 @@
        APPS 배열의 icon 값에 "이름"을 적으면 됩니다.
        ======================================================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <!-- 별 -->
+    <!-- 별 (히어로 그래픽 전용) -->
     <defs>
     <g id="star5"><polygon points="0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4"/></g>
-    <g id="star4"><path d="M0-10C1-4 4-1 10 0 4 1 1 4 0 10-1 4-4 1-10 0-4-1-1-4 0-10z"/></g>
     </defs>
-    <!-- 로고 마크: 굵은 외곽선의 만화풍 지구 -->
+    <!-- 로고 마크: 지구 시스템 단면의 단순화 (구름 1, 물결 1, 지층 2, 별 1) -->
     <symbol id="earth-mark" viewBox="0 0 80 80">
-      <circle cx="40" cy="40" r="34" fill="#7FB8E6" stroke="#2A2A2A" stroke-width="4.5"/>
-      <path d="M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM44 56c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14zM60 22c6-2 12 2 12 8s-6 6-10 4-4-8-2-12zM20 52c4-2 8 0 8 4s-4 5-7 3-3-5-1-7z" fill="#8FC98A" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round"/>
+      <defs><clipPath id="mark-clip"><circle cx="36" cy="43" r="28"/></clipPath></defs>
+      <g clip-path="url(#mark-clip)" stroke="#26344A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="0" y="0" width="80" height="80" fill="#EAF3FB" stroke="none"/>
+        <path d="M8 40c10-2 20 2 30 0s20-2 30 1v18H8z" fill="#BFE0F5" stroke="none"/>
+        <path d="M8 55c10 2 20-2 30 0s20 1 30-1v10H8z" fill="#C9A27C" stroke="none"/>
+        <path d="M8 63c12-1 22 2 32 0s18 0 28 1v12H8z" fill="#8A6240" stroke="none"/>
+        <path d="M8 40c10-2 20 2 30 0s20-2 30 1M8 55c10 2 20-2 30 0s20 1 30-1M8 63c12-1 22 2 32 0s18 0 28 1" fill="none"/>
+        <path d="M20 48c6-5 10-5 16 0s10 5 16 0" fill="none" stroke="#7FB8E6"/>
+        <path d="M26 30c-5 0-7-4-5-7s6-4 8-2c1-5 9-6 12-2 4-2 9 1 8 6 3 0 5 3 3 5z" fill="#FFFFFF"/>
+      </g>
+      <circle cx="36" cy="43" r="28" fill="none" stroke="#26344A" stroke-width="4"/>
+      <polygon points="68,6 70.3,10.8 75.6,11.5 71.8,15.2 72.7,20.5 68,18 63.3,20.5 64.2,15.2 60.4,11.5 65.7,10.8" fill="#F2CF6B" stroke="#26344A" stroke-width="2.5" stroke-linejoin="round"/>
     </symbol>
     <!-- 암모나이트 화석 -->
     <symbol id="icon-fossil" viewBox="0 0 48 48">
@@ -1176,7 +1099,6 @@
 
         const top = el('div', { class: 'card__top' }, [
           el('div', { class: 'card__icon', 'aria-hidden': 'true' }, [svgUse(app.icon)]),
-          el('p', { class: 'card__type', text: cat.label }),
         ]);
 
         const link = el('a', {
