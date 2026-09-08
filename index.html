@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>연경쌤의 지구과학 실험실 | Earthssaem Lab</title>
   <meta name="description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
-  <meta name="theme-color" content="#F7F5F0">
+  <meta name="theme-color" content="#F6FAFE">
   <meta property="og:title" content="연경쌤의 지구과학 실험실 | Earthssaem Lab">
   <meta property="og:description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
   <meta property="og:type" content="website">
-  <!-- 파비콘: 지구 캐릭터 얼굴 -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='34' fill='%237FB8E6' stroke='%232A2A2A' stroke-width='4'/%3E%3Cpath d='M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM46 58c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14z' fill='%238FC98A' stroke='%232A2A2A' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='30' cy='42' r='3.5' fill='%232A2A2A'/%3E%3Ccircle cx='50' cy='42' r='3.5' fill='%232A2A2A'/%3E%3Cpath d='M34 48q6 7 12 0z' fill='%23E2595E' stroke='%232A2A2A' stroke-width='2'/%3E%3C/svg%3E">
+  <!-- 파비콘: 굵은 외곽선의 만화풍 지구 (상단 로고와 동일) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='34' fill='%237FB8E6' stroke='%232A2A2A' stroke-width='4.5'/%3E%3Cpath d='M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM44 56c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14zM60 22c6-2 12 2 12 8s-6 6-10 4-4-8-2-12zM20 52c4-2 8 0 8 4s-4 5-7 3-3-5-1-7z' fill='%238FC98A' stroke='%232A2A2A' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E">
 
   <!-- 한글 글꼴: Pretendard (불러오지 못하면 아래 CSS의 시스템 폰트가 대신 적용됩니다) -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -21,26 +21,28 @@
        1. 디자인 토큰
        ========================================================== */
     :root {
-      --bg: #F7F5F0;            /* 밝은 아이보리 배경 */
-      --bg-soft: #EFEBE1;       /* 연한 베이지 구분 영역 */
+      /* 배경·글자: 아주 옅은 하늘색 바탕에 검정에 가까운 잉크색 */
+      --bg: #F6FAFE;
+      --bg-soft: #E6F1FA;
       --surface: #FFFFFF;
-      --line: #DED8CB;          /* 얇은 테두리 */
-      --line-strong: #C9C2B2;
-      --navy: #1B2A41;          /* 제목·본문 */
-      --navy-soft: #4A566A;     /* 보조 본문 */
-      --muted: #6E7787;
+      --line: #D5E2EE;
+      --line-strong: #BFD0DF;
+      --navy: #2A2A2A;          /* 제목·본문 (잉크색) */
+      --navy-soft: #4E5561;     /* 보조 본문 */
+      --muted: #7A8390;
 
-      --teal: #0F8B8D;          /* 개념 탐구 */
-      --teal-text: #0B6E70;
-      --teal-soft: #E1F2F1;
+      /* 유형 색: 캐릭터의 바다색·대륙색·별색 */
+      --teal: #7FB8E6;          /* 개념 탐구 = 하늘색 */
+      --teal-text: #2B5F8C;
+      --teal-soft: #DDEEFA;
 
-      --blue: #2F6FDB;          /* 데이터 분석 */
-      --blue-text: #2458B8;
-      --blue-soft: #E4ECFB;
+      --blue: #8FC98A;          /* 데이터 분석 = 초록 */
+      --blue-text: #2F6B3A;
+      --blue-soft: #E3F3E0;
 
-      --orange: #D9822B;        /* 게임·복습 */
-      --orange-text: #9E5410;
-      --orange-soft: #FBEBDC;
+      --orange: #F2CF6B;        /* 게임·복습 = 노랑 */
+      --orange-text: #7D5A0B;
+      --orange-soft: #FBF1CF;
 
       --sky: #7FB8E6;           /* 캐릭터 바다색 */
       --sky-soft: #A8D3F0;
@@ -49,11 +51,12 @@
       --star-blue: #A9CDE8;     /* 별 하늘색 */
       --ink: #2A2A2A;           /* 캐릭터 외곽선 */
 
-      --radius-lg: 22px;
+      --radius-lg: 24px;
       --radius-md: 14px;
       --radius-pill: 999px;
-      --shadow-sm: 0 1px 2px rgba(27, 42, 65, 0.05), 0 4px 14px rgba(27, 42, 65, 0.05);
-      --shadow-md: 0 2px 4px rgba(27, 42, 65, 0.06), 0 12px 28px rgba(27, 42, 65, 0.10);
+      /* 스티커처럼 딱 떨어지는 그림자 */
+      --shadow-sm: 4px 4px 0 var(--ink);
+      --shadow-md: 7px 7px 0 var(--accent, var(--ink));
 
       --header-h: 56px;
       --container: 1240px;
@@ -91,7 +94,7 @@
     button { font: inherit; color: inherit; }
 
     :focus-visible {
-      outline: 3px solid var(--navy);
+      outline: 3px solid var(--teal-text);
       outline-offset: 3px;
       border-radius: 6px;
     }
@@ -130,10 +133,10 @@
       top: 0;
       z-index: 50;
       height: var(--header-h);
-      background: rgba(247, 245, 240, 0.96);
+      background: rgba(246, 250, 254, 0.96);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--line);
+      border-bottom: 2px solid var(--ink);
     }
     .site-header .container {
       height: 100%;
@@ -177,7 +180,7 @@
       white-space: nowrap;
       transition: color 0.2s var(--ease), background-color 0.2s var(--ease);
     }
-    .site-nav a:hover { color: var(--navy); background: var(--bg-soft); }
+    .site-nav a:hover { color: var(--navy); background: var(--orange-soft); }
     .site-nav a svg { width: 18px; height: 18px; }
     .site-nav .nav-label-short { display: none; }
 
@@ -197,25 +200,26 @@
       inset: 0;
       pointer-events: none;
     }
+    /* 오른쪽 가장자리에 걸친 큰 하늘색 원 */
+    .hero__sky {
+      position: absolute;
+      right: -150px; top: 50%;
+      width: 380px; height: 380px;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background: var(--teal-soft);
+      border: 2.5px solid var(--ink);
+    }
     .hero__stars {
       position: absolute;
       right: 0; top: 50%;
-      width: min(560px, 100%); height: 100%;
+      width: min(620px, 100%); height: 100%;
       transform: translateY(-50%);
     }
-    /* 지구 캐릭터: 컨테이너 오른쪽 끝, 히어로 높이 안에 꽉 차게 */
-    .hero__buddy {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      width: 166px; height: 166px;
-      transform: translateY(-50%);
-      pointer-events: none;
-      animation: buddy-float 4s ease-in-out infinite;
-    }
-    @keyframes buddy-float {
-      0%, 100% { transform: translateY(-50%); }
-      50%      { transform: translateY(calc(-50% - 4px)); }
+    .hero__stars .moon { animation: moon-float 5s ease-in-out infinite; }
+    @keyframes moon-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
     }
 
     .hero__inner {
@@ -227,6 +231,10 @@
       line-height: 1.25;
       font-weight: 800;
       letter-spacing: -0.02em;
+    }
+    .hero h1 .hl {
+      background: linear-gradient(transparent 58%, var(--orange) 58%, var(--orange) 92%, transparent 92%);
+      padding: 0 0.1em;
     }
     .hero__desc {
       margin-top: 0.7rem;
@@ -296,18 +304,18 @@
       height: 46px;
       padding: 0 14px 0 42px;
       border-radius: var(--radius-pill);
-      border: 1px solid var(--line-strong);
+      border: 2px solid var(--ink);
       background: var(--surface);
       font: inherit;
       font-size: 1rem;
       color: var(--navy);
-      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+      transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
     }
     .search input::placeholder { color: var(--muted); }
     .search input:focus {
       outline: none;
-      border-color: var(--teal);
-      box-shadow: 0 0 0 3px rgba(15, 139, 141, 0.18);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--teal);
     }
     .search input::-webkit-search-cancel-button { cursor: pointer; }
 
@@ -320,45 +328,46 @@
       height: 40px;
       padding: 0 1rem;
       border-radius: var(--radius-pill);
-      border: 1px solid var(--line-strong);
+      border: 2px solid var(--ink);
       background: var(--surface);
-      color: var(--navy-soft);
-      font-weight: 600;
+      color: var(--navy);
+      font-weight: 700;
       font-size: 0.93rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+      transition: background-color 0.2s var(--ease), transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
     }
     .filter-btn::before {
       content: "";
       width: 8px; height: 8px;
       border-radius: 50%;
-      background: var(--dot, var(--navy-soft));
-      opacity: 0.85;
+      background: var(--dot, var(--ink));
+      border: 1.5px solid var(--ink);
     }
     .filter-btn[data-type="all"]::before { display: none; }
     .filter-btn[data-type="concept"] { --dot: var(--teal); }
     .filter-btn[data-type="data"]    { --dot: var(--blue); }
     .filter-btn[data-type="game"]    { --dot: var(--orange); }
-    .filter-btn:hover { border-color: var(--navy-soft); color: var(--navy); }
+    .filter-btn:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"] {
-      background: var(--navy);
-      border-color: var(--navy);
+      background: var(--ink);
       color: #fff;
+      box-shadow: 3px 3px 0 var(--dot, var(--teal));
     }
-    .filter-btn[aria-pressed="true"]::before { background: #fff; }
-    .filter-btn[aria-pressed="true"][data-type="concept"] { background: var(--teal-text); border-color: var(--teal-text); }
-    .filter-btn[aria-pressed="true"][data-type="data"]    { background: var(--blue-text); border-color: var(--blue-text); }
-    .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange-text); border-color: var(--orange-text); }
+    .filter-btn[aria-pressed="true"]::before { background: #fff; border-color: #fff; }
+    .filter-btn[aria-pressed="true"][data-type="concept"] { background: var(--teal);   color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
+    .filter-btn[aria-pressed="true"][data-type="data"]    { background: var(--blue);   color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
+    .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange); color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
+    .filter-btn[aria-pressed="true"][data-type]:not([data-type="all"])::before { background: var(--ink); border-color: var(--ink); }
 
     .result-count {
       flex: none;
       margin: 0 0 0.3rem;
       padding: 5px 12px;
       border-radius: var(--radius-pill);
-      border: 1px solid var(--line);
+      border: 2px solid var(--ink);
       background: var(--surface);
       font-size: 0.86rem;
       color: var(--muted);
@@ -393,12 +402,12 @@
       display: flex;
       flex-direction: column;
       min-height: 100%;
-      padding: 1.25rem 1.25rem 1.1rem;
+      padding: 1.55rem 1.25rem 1.1rem;
       background: var(--surface);
-      border: 1px solid var(--line);
+      border: 2.5px solid var(--ink);
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);
+      box-shadow: 4px 4px 0 var(--ink);
+      transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
     }
     .card[hidden], .card-grid[hidden] { display: none; }
     /* 카드 상단의 유형 색 라인 */
@@ -407,8 +416,9 @@
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
+      height: 7px;
       background: var(--accent);
+      border-bottom: 2.5px solid var(--ink);
     }
     .card--concept { --accent: var(--teal);   --accent-text: var(--teal-text);   --accent-soft: var(--teal-soft); }
     .card--data    { --accent: var(--blue);   --accent-text: var(--blue-text);   --accent-soft: var(--blue-soft); }
@@ -416,9 +426,8 @@
 
     .card:hover,
     .card:focus-within {
-      transform: translateY(-5px) rotate(-0.6deg);
-      border-color: var(--accent);
-      box-shadow: var(--shadow-md);
+      transform: translate(-3px, -3px) rotate(-0.5deg);
+      box-shadow: 8px 8px 0 var(--accent);
     }
     /* 카드 전체 클릭: 제목 링크의 가상 요소를 카드 전체로 펼침 */
     .card__link::after {
@@ -452,7 +461,8 @@
       width: 56px; height: 56px;
       border-radius: 18px;
       background: var(--accent-soft);
-      color: var(--accent-text);
+      border: 2px solid var(--ink);
+      color: var(--ink);
       display: grid;
       place-items: center;
       flex: none;
@@ -465,7 +475,7 @@
       width: 34px; height: 34px;
       fill: none;
       stroke: currentColor;
-      stroke-width: 1.7;
+      stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
@@ -473,19 +483,14 @@
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: var(--radius-pill);
-      background: var(--accent-soft);
-      color: var(--accent-text);
+      background: var(--accent);
+      border: 1.5px solid var(--ink);
+      color: var(--navy);
       font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.02em;
-    }
-    .card__type::before {
-      content: "";
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
     }
     .card__title {
       font-size: 1.2rem;
@@ -511,9 +516,10 @@
       gap: 0.4rem;
     }
     .card__tags li {
-      padding: 3px 9px;
+      padding: 2px 9px;
       border-radius: 8px;
-      background: var(--bg-soft);
+      background: var(--bg);
+      border: 1.5px solid var(--line-strong);
       color: var(--navy-soft);
       font-size: 0.78rem;
       font-weight: 600;
@@ -521,13 +527,13 @@
     .card__cta {
       margin-top: 0.9rem;
       padding-top: 0.75rem;
-      border-top: 1px dashed var(--line);
+      border-top: 2px dashed var(--line-strong);
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      font-weight: 700;
-      font-size: 0.88rem;
-      color: var(--accent-text);
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--navy);
     }
     .card__cta .arrow {
       display: inline-block;
@@ -552,23 +558,24 @@
       margin-top: 1.5rem;
       padding: 2.5rem 1.5rem;
       text-align: center;
-      border: 1px dashed var(--line-strong);
+      border: 2.5px dashed var(--ink);
       border-radius: var(--radius-lg);
       background: var(--surface);
       color: var(--navy-soft);
     }
-    .empty svg { width: 56px; height: 56px; margin: 0 auto 0.75rem; }
+    .empty svg { width: 52px; height: 52px; margin: 0 auto 0.75rem; color: var(--star); }
     .empty strong { color: var(--navy); }
     .empty button {
       margin-top: 1rem;
       padding: 0.55rem 1.1rem;
       border-radius: var(--radius-pill);
-      border: 1px solid var(--line-strong);
+      border: 2px solid var(--ink);
       background: var(--surface);
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
+      transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
     }
-    .empty button:hover { border-color: var(--navy); }
+    .empty button:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
 
     .nojs-note {
       margin-top: 1.5rem;
@@ -588,8 +595,8 @@
       position: relative;
       overflow: hidden;
       background: var(--bg-soft);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
     }
     .about {
       padding: 3rem 0;
@@ -597,10 +604,8 @@
     .about__deco {
       position: absolute;
       right: 0; top: 0; bottom: 0;
-      width: 48%;
+      width: 44%;
       pointer-events: none;
-      color: var(--navy);
-      opacity: 0.06;
     }
     .about__deco svg { width: 100%; height: 100%; }
     .about__inner {
@@ -613,13 +618,15 @@
       font-size: 1rem;
     }
     .about .section__title { color: var(--navy); }
-    .about a { color: var(--teal-text); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
+    .about a { color: var(--navy); font-weight: 700; text-decoration: none; border-bottom: 2.5px solid var(--teal); }
+    .about a:hover { background: var(--teal-soft); }
 
     /* ==========================================================
        9. 푸터
        ========================================================== */
     .site-footer {
       padding: 2rem 0;
+      border-top: 2px solid var(--ink);
     }
     .site-footer .container {
       display: flex;
@@ -647,7 +654,8 @@
       text-decoration: none;
       border-bottom: 1px solid transparent;
     }
-    .footer__meta a:hover { border-bottom-color: var(--navy); }
+    .footer__meta a { border-bottom: 2px solid var(--teal); }
+    .footer__meta a:hover { background: var(--teal-soft); }
     .footer__meta a svg { width: 18px; height: 18px; }
 
     /* ==========================================================
@@ -663,10 +671,10 @@
       .site-nav ul { gap: 0; }
       .site-nav a { padding: 8px 7px; font-size: 0.86rem; }
       .hero { padding: 2rem 0 1.85rem; }
-      .hero__buddy { width: 118px; height: 118px; right: -4px; }
-      .hero__stars { opacity: 0.8; }
+      .hero__sky { width: 210px; height: 210px; right: -110px; }
+      .hero__stars { width: 100%; }
       .hero__stars .far { display: none; }
-      .hero__inner { padding-right: 118px; }
+      .hero__inner { padding-right: 104px; }
       .search { max-width: none; }
       .filters { width: 100%; }
       .filter-btn { flex: 1 1 auto; justify-content: center; padding: 0 0.75rem; }
@@ -688,7 +696,7 @@
       }
       .card { opacity: 1; transform: none; animation: none; }
       .card:hover, .card:focus-within { transform: none; }
-      .hero__buddy { animation: none; }
+      .hero__stars .moon { animation: none; }
       .card:hover .card__icon, .card:focus-within .card__icon { transform: none; }
     }
   </style>
@@ -702,7 +710,7 @@
   <header class="site-header">
     <div class="container">
       <a class="brand" href="#top" aria-label="Earthssaem Lab 홈">
-        <svg class="brand__logo" aria-hidden="true"><use href="#earth-face"/></svg>
+        <svg class="brand__logo" aria-hidden="true"><use href="#earth-mark"/></svg>
         <span>EARTHSSAEM LAB</span>
       </a>
 
@@ -725,41 +733,48 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__deco" aria-hidden="true">
         <!-- 배경 별 -->
-        <svg class="hero__stars" viewBox="0 0 560 175" preserveAspectRatio="xMaxYMid meet">
-          <g fill="var(--star)" stroke="var(--ink)" stroke-width="1.2" stroke-linejoin="round">
-            <use href="#star5" class="far" transform="translate(268 34) scale(1.5)"/>
-            <use href="#star5" class="far" transform="translate(118 122) scale(1.0)"/>
-            <use href="#star5" transform="translate(540 36) scale(1.25)"/>
-            <use href="#star5" transform="translate(352 158) scale(0.8)"/>
+        <div class="hero__sky"></div>
+        <svg class="hero__stars" viewBox="0 0 620 175" preserveAspectRatio="xMaxYMid meet">
+          <!-- 달 -->
+          <g transform="translate(496 90)">
+            <g class="moon">
+              <path d="M-4-40a40 40 0 1 0 34 62 30 30 0 1 1-34-62z" fill="var(--star)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>
+            </g>
           </g>
-          <g fill="var(--star-blue)" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round">
-            <use href="#star5" class="far" transform="translate(208 92) scale(1.0)"/>
-            <use href="#star5" transform="translate(522 148) scale(0.9)"/>
-            <use href="#star5" class="far" transform="translate(66 42) scale(0.8)"/>
+          <g fill="var(--star)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+            <use href="#star5" class="far" transform="translate(300 34) scale(1.6)"/>
+            <use href="#star5" class="far" transform="translate(150 118) scale(1.1)"/>
+            <use href="#star5" transform="translate(600 30) scale(1.3)"/>
+            <use href="#star5" transform="translate(420 150) scale(0.9)"/>
+            <use href="#star5" transform="translate(586 148) scale(1.0)"/>
+          </g>
+          <g fill="var(--surface)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+            <use href="#star5" class="far" transform="translate(240 100) scale(1.0)"/>
+            <use href="#star5" transform="translate(430 40) scale(1.0)"/>
+            <use href="#star5" class="far" transform="translate(90 44) scale(0.8)"/>
           </g>
           <g fill="var(--star)">
-            <use href="#star4" class="far" transform="translate(166 56) scale(0.7)"/>
-            <use href="#star4" transform="translate(506 98) scale(0.6)"/>
-            <use href="#star4" class="far" transform="translate(30 140) scale(0.5)"/>
+            <use href="#star4" class="far" transform="translate(196 58) scale(0.7)"/>
+            <use href="#star4" transform="translate(560 100) scale(0.7)"/>
+            <use href="#star4" class="far" transform="translate(40 140) scale(0.5)"/>
+            <use href="#star4" transform="translate(370 120) scale(0.5)"/>
           </g>
-          <g fill="var(--star-blue)">
-            <circle cx="292" cy="120" r="2.5" class="far"/>
-            <circle cx="104" cy="80" r="2" class="far"/>
-            <circle cx="446" cy="18" r="2.5"/>
-            <circle cx="42" cy="66" r="1.8" class="far"/>
-            <circle cx="376" cy="24" r="2"/>
-            <circle cx="238" cy="150" r="1.8" class="far"/>
+          <g fill="var(--ink)" opacity="0.5">
+            <circle cx="330" cy="130" r="2.2" class="far"/>
+            <circle cx="120" cy="80" r="2" class="far"/>
+            <circle cx="470" cy="20" r="2.2"/>
+            <circle cx="60" cy="66" r="1.8" class="far"/>
+            <circle cx="390" cy="60" r="2"/>
+            <circle cx="540" cy="160" r="1.8"/>
           </g>
         </svg>
       </div>
 
       <div class="container">
         <div class="hero__inner">
-          <h1 id="hero-title">연경쌤의 지구과학 실험실</h1>
+          <h1 id="hero-title">연경쌤의 <span class="hl">지구과학 실험실</span></h1>
           <p class="hero__desc">수업에서 보여 주기 어려웠던 장면을, 직접 만져 볼 수 있는 웹앱으로 만듭니다.</p>
         </div>
-        <!-- 지구 캐릭터 (아래 SVG 심볼 #earth-buddy) -->
-        <svg class="hero__buddy" aria-hidden="true"><use href="#earth-buddy"/></svg>
       </div>
     </section>
 
@@ -793,7 +808,7 @@
         </ul>
 
         <div class="empty" id="empty" hidden>
-          <svg aria-hidden="true"><use href="#earth-face"/></svg>
+          <svg viewBox="-12 -12 24 24" aria-hidden="true"><use href="#star5" fill="currentColor" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round"/></svg>
           <p><strong>앗, 찾는 웹앱이 없어요.</strong><br>다른 검색어를 입력하거나 필터를 바꿔 보세요.</p>
           <button type="button" id="reset-btn">검색·필터 초기화</button>
         </div>
@@ -814,16 +829,24 @@
          ====================================================== -->
     <section class="section about" id="about" aria-labelledby="about-title">
       <div class="about__deco" aria-hidden="true">
-        <!-- 등고선·지층선 그래픽 -->
-        <svg viewBox="0 0 700 420" preserveAspectRatio="xMaxYMid slice" fill="none" stroke="currentColor" stroke-width="1.2">
-          <path d="M60 340c80-60 140-20 220-70s120-110 220-120 200 40 200 40"/>
-          <path d="M90 372c80-60 150-40 230-90s110-120 210-130 170 30 170 30"/>
-          <path d="M20 300c90-70 160-10 250-60s130-130 240-140 190 60 190 60"/>
-          <path d="M140 400c70-50 150-60 230-110s110-100 200-110 130 50 130 50"/>
-          <path d="M-20 250c100-60 180 10 270-40s150-140 250-150 200 80 200 80"/>
-          <ellipse cx="470" cy="180" rx="120" ry="52" transform="rotate(-12 470 180)"/>
-          <ellipse cx="470" cy="180" rx="80" ry="32" transform="rotate(-12 470 180)"/>
-          <ellipse cx="470" cy="180" rx="40" ry="14" transform="rotate(-12 470 180)"/>
+        <!-- 별 장식 -->
+        <svg viewBox="0 0 520 200" preserveAspectRatio="xMaxYMid meet">
+          <g fill="var(--star)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+            <use href="#star5" transform="translate(330 46) scale(1.5)"/>
+            <use href="#star5" transform="translate(470 120) scale(1.2)"/>
+            <use href="#star5" transform="translate(410 168) scale(0.9)"/>
+          </g>
+          <g fill="var(--surface)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+            <use href="#star5" transform="translate(250 130) scale(1.0)"/>
+            <use href="#star5" transform="translate(500 30) scale(0.9)"/>
+          </g>
+          <g fill="var(--star)">
+            <use href="#star4" transform="translate(390 100) scale(0.7)"/>
+            <use href="#star4" transform="translate(290 80) scale(0.5)"/>
+          </g>
+          <g fill="var(--ink)" opacity="0.45">
+            <circle cx="440" cy="60" r="2"/><circle cx="360" cy="150" r="2"/><circle cx="300" cy="30" r="1.8"/>
+          </g>
         </svg>
       </div>
 
@@ -869,39 +892,10 @@
     <g id="star5"><polygon points="0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4"/></g>
     <g id="star4"><path d="M0-10C1-4 4-1 10 0 4 1 1 4 0 10-1 4-4 1-10 0-4-1-1-4 0-10z"/></g>
     </defs>
-    <!-- 지구 캐릭터 얼굴 (로고·빈 결과) -->
-    <symbol id="earth-face" viewBox="0 0 80 80">
-      <circle cx="40" cy="40" r="34" fill="#7FB8E6" stroke="#2A2A2A" stroke-width="3.5"/>
-      <path d="M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM46 58c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14zM60 24c6-2 12 2 12 8s-6 6-10 4-4-8-2-12z" fill="#8FC98A" stroke="#2A2A2A" stroke-width="2.2" stroke-linejoin="round"/>
-      <circle cx="30" cy="42" r="3.2" fill="#2A2A2A"/>
-      <circle cx="50" cy="42" r="3.2" fill="#2A2A2A"/>
-      <ellipse cx="22" cy="49" rx="4.5" ry="2.6" fill="#F09A9A"/>
-      <ellipse cx="58" cy="49" rx="4.5" ry="2.6" fill="#F09A9A"/>
-      <path d="M34 48q6 7 12 0z" fill="#E2595E" stroke="#2A2A2A" stroke-width="2" stroke-linejoin="round"/>
-    </symbol>
-    <!-- 지구 캐릭터 전신: 노트북을 보는 지구 (히어로) -->
-    <symbol id="earth-buddy" viewBox="0 0 200 200">
-      <ellipse cx="104" cy="186" rx="74" ry="7" fill="#DCE7F0"/>
-      <ellipse cx="130" cy="171" rx="17" ry="8" fill="#7FB8E6" stroke="#2A2A2A" stroke-width="3"/>
-      <circle cx="104" cy="92" r="70" fill="#7FB8E6" stroke="#2A2A2A" stroke-width="3.5"/>
-      <clipPath id="buddy-clip"><circle cx="104" cy="92" r="68"/></clipPath>
-      <g clip-path="url(#buddy-clip)" fill="#8FC98A" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round">
-        <path d="M44 66c4-16 20-28 36-24 10 3 14 12 8 20-4 6-12 6-16 12s-14 8-20 4-10-6-8-12z"/>
-        <path d="M122 32c14-8 34-4 46 8 8 8 6 22-4 28-8 4-16 0-24-4-8-2-16 0-20-8-4-10-4-18 2-24z"/>
-        <path d="M60 116c8-6 20-2 22 8 2 8-2 20-10 26-6 4-12-2-14-10-2-8-2-18 2-24z"/>
-        <path d="M132 112c10-4 20 2 20 12s-8 18-16 18c-8-2-12-10-10-18 1-5 3-9 6-12z"/>
-        <path d="M36 100c6 0 10 4 8 8s-8 4-10 0 0-8 2-8z"/>
-      </g>
-      <circle cx="84" cy="92" r="4.5" fill="#2A2A2A"/>
-      <circle cx="122" cy="92" r="4.5" fill="#2A2A2A"/>
-      <ellipse cx="70" cy="103" rx="8" ry="4.5" fill="#F09A9A"/>
-      <ellipse cx="136" cy="103" rx="8" ry="4.5" fill="#F09A9A"/>
-      <path d="M94 100q9 11 18 0z" fill="#E2595E" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round"/>
-      <rect x="18" y="124" width="66" height="46" rx="6" fill="#A8D3F0" stroke="#2A2A2A" stroke-width="3"/>
-      <path d="M56 137a9 9 0 1 0 8 15 7 7 0 1 1-8-15z" fill="#F2CF6B" stroke="#2A2A2A" stroke-width="2" stroke-linejoin="round"/>
-      <rect x="12" y="169" width="80" height="9" rx="4" fill="#C9E2F4" stroke="#2A2A2A" stroke-width="3"/>
-      <path d="M100 146c-6 8-12 16-16 26" stroke="#2A2A2A" stroke-width="14" stroke-linecap="round"/>
-      <path d="M100 146c-6 8-12 16-16 26" stroke="#7FB8E6" stroke-width="8" stroke-linecap="round"/>
+    <!-- 로고 마크: 굵은 외곽선의 만화풍 지구 -->
+    <symbol id="earth-mark" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="34" fill="#7FB8E6" stroke="#2A2A2A" stroke-width="4.5"/>
+      <path d="M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM44 56c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14zM60 22c6-2 12 2 12 8s-6 6-10 4-4-8-2-12zM20 52c4-2 8 0 8 4s-4 5-7 3-3-5-1-7z" fill="#8FC98A" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round"/>
     </symbol>
     <!-- 암모나이트 화석 -->
     <symbol id="icon-fossil" viewBox="0 0 48 48">
