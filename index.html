@@ -820,7 +820,7 @@
   <footer class="site-footer">
     <div class="container">
       <p class="footer__meta">
-        <span class="footer__credit"><span class="footer__label">제작:</span> <span class="value">수도여고 교사 김연경</span></span>
+        <span class="footer__credit"><span class="footer__label">© <span id="year">2026</span> 제작:</span> <span class="value">수도여고 교사 김연경</span></span>
         <span class="footer__contact"><span class="footer__label">수정 제안:</span> <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a></span>
       </p>
     </div>
@@ -1078,6 +1078,7 @@
       const resetBtn = document.getElementById('reset-btn');
 
       const subjectSelect = document.getElementById('subject-select');
+      const yearEl = document.getElementById('year');
 
       let activeType = 'all';
       let activeSubject = 'all';
@@ -1226,6 +1227,9 @@
       });
 
       applyFilters();
+
+      // --- 푸터 연도 ---------------------------------------------
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
 
       // --- 부드러운 스크롤 (헤더 높이 보정) --------------------------
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
