@@ -59,7 +59,7 @@
       --shadow-sm: 4px 4px 0 var(--ink);
       --shadow-md: 7px 7px 0 var(--accent, var(--ink));
 
-      --header-h: 56px;
+      --header-h: 48px;
       --container: 1240px;
       --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
               system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
@@ -156,34 +156,11 @@
       letter-spacing: 0.08em;
       font-size: 0.95rem;
       color: var(--navy);
-      padding: 6px 4px;
+      padding: 4px 2px;
       white-space: nowrap;
     }
-    .brand__logo { width: 30px; height: 30px; color: var(--navy); flex: none; }
+    .brand__logo { width: 28px; height: 28px; color: var(--navy); flex: none; }
     .brand__logo .orbit { color: var(--teal); }
-
-    /* 상단 링크 영역: 새 링크는 <li>를 하나 더 추가하면 됩니다 (아래 HTML의 주석 참고) */
-    .site-nav ul {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .site-nav a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 8px 12px;
-      border-radius: var(--radius-pill);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--navy-soft);
-      white-space: nowrap;
-      transition: color 0.2s var(--ease), background-color 0.2s var(--ease);
-    }
-    .site-nav a:hover { color: var(--navy); background: var(--orange-soft); }
-    .site-nav a svg { width: 18px; height: 18px; }
-    .site-nav .nav-label-short { display: none; }
 
     /* ==========================================================
        4. 히어로
@@ -614,12 +591,8 @@
     @media (max-width: 640px) {
       .container { width: min(var(--container), 100% - 2rem); }
       .site-header .container { gap: 0.5rem; }
-      .site-header .container > * { min-width: 0; }
       .brand { letter-spacing: 0.04em; font-size: 0.8rem; gap: 0.4rem; padding-inline: 0; }
       .brand__logo { width: 26px; height: 26px; }
-      .site-nav { flex: none; }
-      .site-nav ul { gap: 0; }
-      .site-nav a { padding: 8px 7px; font-size: 0.86rem; }
       .hero { padding: 1.25rem 0 1.15rem; }
       .hero__desc { max-width: none; }
       .search { max-width: none; }
@@ -642,8 +615,6 @@
     }
 
     @media (max-width: 420px) {
-      .site-nav .nav-label-full { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-      .site-nav .nav-label-short { display: inline; }
       .brand { font-size: 0.76rem; letter-spacing: 0.03em; }
     }
 
@@ -661,26 +632,17 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#tools">도구 목록으로 바로가기</a>
+  <a class="skip-link" href="#tools">웹앱 목록으로 바로가기</a>
 
   <!-- ========================================================
        헤더
        ======================================================== -->
   <header class="site-header">
     <div class="container">
-      <a class="brand" href="#top" aria-label="Earthssaem Lab 홈">
+      <a class="brand" href="#top" aria-label="Earthssaem Lab, 페이지 맨 위로">
         <svg class="brand__logo" aria-hidden="true"><use href="#earth-mark"/></svg>
         <span>EARTHSSAEM LAB</span>
       </a>
-
-      <nav class="site-nav" aria-label="주요 메뉴">
-        <ul>
-          <li><a href="#tools"><span class="nav-label-full">웹앱 모음</span><span class="nav-label-short" aria-hidden="true">웹앱</span></a></li>
-          <!-- 링크 추가 위치: 블로그 등 새 링크는 아래 형식으로 <li>를 추가하세요.
-          <li><a href="https://blog.example.com" target="_blank" rel="noopener noreferrer">Blog</a></li>
-          -->
-        </ul>
-      </nav>
     </div>
   </header>
 
@@ -1161,17 +1123,12 @@
       // --- 푸터 연도 ---------------------------------------------
       if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-      // --- 부드러운 스크롤 (헤더 높이 보정) --------------------------
+      // --- 로고 클릭: 페이지 맨 위로 (건너뛰기 링크는 기본 동작 유지) -------
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      document.querySelectorAll('a[href^="#"]').forEach((a) => {
-        a.addEventListener('click', (e) => {
-          const id = a.getAttribute('href').slice(1);
-          const target = id ? document.getElementById(id) : null;
-          if (!target) return;
-          e.preventDefault();
-          target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
-          if (history.pushState) history.pushState(null, '', '#' + id);
-        });
+      document.querySelector('.brand').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+        if (history.pushState) history.pushState(null, '', location.pathname + location.search);
       });
 
     })();
