@@ -9,8 +9,8 @@
   <meta property="og:title" content="연경쌤의 지구과학 실험실 | Earthssaem Lab">
   <meta property="og:description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
   <meta property="og:type" content="website">
-  <!-- 파비콘: 히어로의 선으로 그린 지구를 축소한 것 -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-17 -17 34 34' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='rotate(-14)'%3E%3Ccircle r='15' stroke='%231B2A41' stroke-width='1.8'/%3E%3Cg stroke='%230F8B8D' stroke-width='1.3'%3E%3Cellipse rx='6' ry='15'/%3E%3Cpath d='M0-15v30M-15 0h30M-13.5-6.5h27M-13.5 6.5h27'/%3E%3C/g%3E%3Cpath d='M-6-3c2-2 5-1 7 1s3 5 1 7-5 1-7-1-3-5-1-7z' fill='%231B2A41'/%3E%3C/g%3E%3C/svg%3E">
+  <!-- 파비콘: 지구 캐릭터 얼굴 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='34' fill='%237FB8E6' stroke='%232A2A2A' stroke-width='4'/%3E%3Cpath d='M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM46 58c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14z' fill='%238FC98A' stroke='%232A2A2A' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='30' cy='42' r='3.5' fill='%232A2A2A'/%3E%3Ccircle cx='50' cy='42' r='3.5' fill='%232A2A2A'/%3E%3Cpath d='M34 48q6 7 12 0z' fill='%23E2595E' stroke='%232A2A2A' stroke-width='2'/%3E%3C/svg%3E">
 
   <!-- 한글 글꼴: Pretendard (불러오지 못하면 아래 CSS의 시스템 폰트가 대신 적용됩니다) -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -42,7 +42,14 @@
       --orange-text: #9E5410;
       --orange-soft: #FBEBDC;
 
-      --radius-lg: 20px;
+      --sky: #7FB8E6;           /* 캐릭터 바다색 */
+      --sky-soft: #A8D3F0;
+      --leaf: #8FC98A;          /* 캐릭터 대륙색 */
+      --star: #F2CF6B;          /* 별 노란색 */
+      --star-blue: #A9CDE8;     /* 별 하늘색 */
+      --ink: #2A2A2A;           /* 캐릭터 외곽선 */
+
+      --radius-lg: 22px;
       --radius-md: 14px;
       --radius-pill: 999px;
       --shadow-sm: 0 1px 2px rgba(27, 42, 65, 0.05), 0 4px 14px rgba(27, 42, 65, 0.05);
@@ -183,23 +190,33 @@
       padding: 2.4rem 0 2.25rem;
       border-bottom: 1px solid var(--line);
     }
+    .hero .container { position: relative; }
+    /* 배경 별: 히어로 오른쪽에 흩뿌림 */
     .hero__deco {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      color: var(--teal);
     }
-    /* 선으로 그린 지구: 오른쪽 가장자리에서 1/3쯤 잘려 들어옴 */
-    .hero__deco .deco-globe {
+    .hero__stars {
       position: absolute;
-      right: -100px;
-      top: 50%;
-      width: 300px; height: 300px;
-      max-width: none;
+      right: 0; top: 50%;
+      width: min(560px, 100%); height: 100%;
       transform: translateY(-50%);
-      opacity: 0.42;
     }
-    .hero__deco .deco-globe * { vector-effect: non-scaling-stroke; }
+    /* 지구 캐릭터: 컨테이너 오른쪽 끝, 히어로 높이 안에 꽉 차게 */
+    .hero__buddy {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 166px; height: 166px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      animation: buddy-float 4s ease-in-out infinite;
+    }
+    @keyframes buddy-float {
+      0%, 100% { transform: translateY(-50%); }
+      50%      { transform: translateY(calc(-50% - 4px)); }
+    }
 
     .hero__inner {
       position: relative;
@@ -230,6 +247,13 @@
       gap: 0.5rem 1.5rem;
     }
     .section__head > div { max-width: 640px; }
+    .title-star {
+      display: inline-block;
+      width: 0.7em; height: 0.7em;
+      margin-left: 0.3em;
+      vertical-align: 0.15em;
+      color: var(--star);
+    }
     .section__title {
       font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 800;
@@ -392,7 +416,7 @@
 
     .card:hover,
     .card:focus-within {
-      transform: translateY(-4px);
+      transform: translateY(-5px) rotate(-0.6deg);
       border-color: var(--accent);
       box-shadow: var(--shadow-md);
     }
@@ -426,13 +450,17 @@
     }
     .card__icon {
       width: 56px; height: 56px;
-      border-radius: 14px;
+      border-radius: 18px;
       background: var(--accent-soft);
       color: var(--accent-text);
       display: grid;
       place-items: center;
       flex: none;
+      transition: transform 0.25s var(--ease);
     }
+    /* 카드에 마우스를 올리면 아이콘이 살짝 기울어짐 */
+    .card:hover .card__icon,
+    .card:focus-within .card__icon { transform: rotate(-8deg) scale(1.06); }
     .card__icon svg {
       width: 34px; height: 34px;
       fill: none;
@@ -529,7 +557,7 @@
       background: var(--surface);
       color: var(--navy-soft);
     }
-    .empty svg { width: 40px; height: 40px; margin: 0 auto 0.75rem; color: var(--muted); }
+    .empty svg { width: 56px; height: 56px; margin: 0 auto 0.75rem; }
     .empty strong { color: var(--navy); }
     .empty button {
       margin-top: 1rem;
@@ -635,8 +663,10 @@
       .site-nav ul { gap: 0; }
       .site-nav a { padding: 8px 7px; font-size: 0.86rem; }
       .hero { padding: 2rem 0 1.85rem; }
-      .hero__deco .deco-globe { width: 180px; height: 180px; right: -60px; opacity: 0.35; }
-      .hero__inner { padding-right: 110px; }
+      .hero__buddy { width: 118px; height: 118px; right: -4px; }
+      .hero__stars { opacity: 0.8; }
+      .hero__stars .far { display: none; }
+      .hero__inner { padding-right: 118px; }
       .search { max-width: none; }
       .filters { width: 100%; }
       .filter-btn { flex: 1 1 auto; justify-content: center; padding: 0 0.75rem; }
@@ -658,6 +688,8 @@
       }
       .card { opacity: 1; transform: none; animation: none; }
       .card:hover, .card:focus-within { transform: none; }
+      .hero__buddy { animation: none; }
+      .card:hover .card__icon, .card:focus-within .card__icon { transform: none; }
     }
   </style>
 </head>
@@ -670,16 +702,7 @@
   <header class="site-header">
     <div class="container">
       <a class="brand" href="#top" aria-label="Earthssaem Lab 홈">
-        <svg class="brand__logo" viewBox="-17 -17 34 34" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <g transform="rotate(-14)">
-            <circle r="15" stroke-width="1.8"/>
-            <g class="orbit" stroke-width="1.3">
-              <ellipse rx="6" ry="15"/>
-              <path d="M0-15v30M-15 0h30M-13.5-6.5h27M-13.5 6.5h27"/>
-            </g>
-            <path d="M-6-3c2-2 5-1 7 1s3 5 1 7-5 1-7-1-3-5-1-7z" fill="currentColor" stroke="none"/>
-          </g>
-        </svg>
+        <svg class="brand__logo" aria-hidden="true"><use href="#earth-face"/></svg>
         <span>EARTHSSAEM LAB</span>
       </a>
 
@@ -701,27 +724,31 @@
          ====================================================== -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__deco" aria-hidden="true">
-        <!-- 선으로 그린 지구: 구 윤곽 + 경선·위선 + 단순화한 대륙 윤곽 -->
-        <svg class="deco-globe" viewBox="-110 -110 220 220" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-          <defs><clipPath id="globe-clip"><circle r="100"/></clipPath></defs>
-          <g transform="rotate(-14)">
-            <circle r="100"/>
-            <!-- 경선 -->
-            <path d="M0-100V100"/>
-            <ellipse rx="38" ry="100"/>
-            <ellipse rx="74" ry="100"/>
-            <!-- 위선 -->
-            <path d="M-100 0H100"/>
-            <path d="M-93.5-35H93.5M-93.5 35H93.5"/>
-            <path d="M-71.4-70H71.4M-71.4 70H71.4"/>
-            <!-- 대륙 윤곽 (단순화) -->
-            <g clip-path="url(#globe-clip)">
-              <path d="M-34-30c3-9 4-19 12-24s14-13 24-11 18 2 26-2 10-6 14-4l-4 10c-10 4-14 14-24 16-6 1-9 6-15 9s-11 0-16 4-9 8-17 2z"/>
-              <path d="M-30-14c8-8 22-6 34-7 10-1 18 4 26 3l16-5c3 8-2 16-8 22s-7 14-14 19-8 12-11 20-8 14-14 18-14 4-16-4c-1-8 2-16-4-22s-14-10-14-20c0-9 1-17 5-24z"/>
-              <path d="M40-30c8-4 18-4 26-2l6 14c-5 6-10 12-18 12-6-4-10-12-14-24z"/>
-              <path d="M50-62c12-6 26-8 40-4l30 6v40c-10-2-18 4-26 10-10 4-18 0-26-4s-16-6-20-14 0-24 2-34z"/>
-              <path d="M-108 8c8-6 20-4 28 2s10 16 6 26-6 20-10 28-8 12-14 12-6-16-8-26-4-22-2-42z"/>
-            </g>
+        <!-- 배경 별 -->
+        <svg class="hero__stars" viewBox="0 0 560 175" preserveAspectRatio="xMaxYMid meet">
+          <g fill="var(--star)" stroke="var(--ink)" stroke-width="1.2" stroke-linejoin="round">
+            <use href="#star5" class="far" transform="translate(268 34) scale(1.5)"/>
+            <use href="#star5" class="far" transform="translate(118 122) scale(1.0)"/>
+            <use href="#star5" transform="translate(540 36) scale(1.25)"/>
+            <use href="#star5" transform="translate(352 158) scale(0.8)"/>
+          </g>
+          <g fill="var(--star-blue)" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round">
+            <use href="#star5" class="far" transform="translate(208 92) scale(1.0)"/>
+            <use href="#star5" transform="translate(522 148) scale(0.9)"/>
+            <use href="#star5" class="far" transform="translate(66 42) scale(0.8)"/>
+          </g>
+          <g fill="var(--star)">
+            <use href="#star4" class="far" transform="translate(166 56) scale(0.7)"/>
+            <use href="#star4" transform="translate(506 98) scale(0.6)"/>
+            <use href="#star4" class="far" transform="translate(30 140) scale(0.5)"/>
+          </g>
+          <g fill="var(--star-blue)">
+            <circle cx="292" cy="120" r="2.5" class="far"/>
+            <circle cx="104" cy="80" r="2" class="far"/>
+            <circle cx="446" cy="18" r="2.5"/>
+            <circle cx="42" cy="66" r="1.8" class="far"/>
+            <circle cx="376" cy="24" r="2"/>
+            <circle cx="238" cy="150" r="1.8" class="far"/>
           </g>
         </svg>
       </div>
@@ -731,6 +758,8 @@
           <h1 id="hero-title">연경쌤의 지구과학 실험실</h1>
           <p class="hero__desc">수업에서 보여 주기 어려웠던 장면을, 직접 만져 볼 수 있는 웹앱으로 만듭니다.</p>
         </div>
+        <!-- 지구 캐릭터 (아래 SVG 심볼 #earth-buddy) -->
+        <svg class="hero__buddy" aria-hidden="true"><use href="#earth-buddy"/></svg>
       </div>
     </section>
 
@@ -741,7 +770,7 @@
       <div class="container">
         <div class="section__head">
           <div>
-            <h2 class="section__title" id="tools-title">웹앱 모음</h2>
+            <h2 class="section__title" id="tools-title">웹앱 모음<svg class="title-star" viewBox="-10 -10 20 20" aria-hidden="true"><use href="#star4" fill="currentColor"/></svg></h2>
             <p class="section__sub">수업 목적과 과목에 맞는 도구를 찾아보세요.</p>
           </div>
           <p class="result-count" id="result-count" aria-live="polite"></p>
@@ -764,8 +793,8 @@
         </ul>
 
         <div class="empty" id="empty" hidden>
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8M8.5 11h5"/></svg>
-          <p><strong>검색 결과가 없습니다.</strong><br>다른 검색어를 입력하거나 필터를 바꿔 보세요.</p>
+          <svg aria-hidden="true"><use href="#earth-face"/></svg>
+          <p><strong>앗, 찾는 웹앱이 없어요.</strong><br>다른 검색어를 입력하거나 필터를 바꿔 보세요.</p>
           <button type="button" id="reset-btn">검색·필터 초기화</button>
         </div>
 
@@ -835,6 +864,45 @@
        APPS 배열의 icon 값에 "이름"을 적으면 됩니다.
        ======================================================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <!-- 별 -->
+    <defs>
+    <g id="star5"><polygon points="0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4"/></g>
+    <g id="star4"><path d="M0-10C1-4 4-1 10 0 4 1 1 4 0 10-1 4-4 1-10 0-4-1-1-4 0-10z"/></g>
+    </defs>
+    <!-- 지구 캐릭터 얼굴 (로고·빈 결과) -->
+    <symbol id="earth-face" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="34" fill="#7FB8E6" stroke="#2A2A2A" stroke-width="3.5"/>
+      <path d="M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM46 58c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14zM60 24c6-2 12 2 12 8s-6 6-10 4-4-8-2-12z" fill="#8FC98A" stroke="#2A2A2A" stroke-width="2.2" stroke-linejoin="round"/>
+      <circle cx="30" cy="42" r="3.2" fill="#2A2A2A"/>
+      <circle cx="50" cy="42" r="3.2" fill="#2A2A2A"/>
+      <ellipse cx="22" cy="49" rx="4.5" ry="2.6" fill="#F09A9A"/>
+      <ellipse cx="58" cy="49" rx="4.5" ry="2.6" fill="#F09A9A"/>
+      <path d="M34 48q6 7 12 0z" fill="#E2595E" stroke="#2A2A2A" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>
+    <!-- 지구 캐릭터 전신: 노트북을 보는 지구 (히어로) -->
+    <symbol id="earth-buddy" viewBox="0 0 200 200">
+      <ellipse cx="104" cy="186" rx="74" ry="7" fill="#DCE7F0"/>
+      <ellipse cx="130" cy="171" rx="17" ry="8" fill="#7FB8E6" stroke="#2A2A2A" stroke-width="3"/>
+      <circle cx="104" cy="92" r="70" fill="#7FB8E6" stroke="#2A2A2A" stroke-width="3.5"/>
+      <clipPath id="buddy-clip"><circle cx="104" cy="92" r="68"/></clipPath>
+      <g clip-path="url(#buddy-clip)" fill="#8FC98A" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round">
+        <path d="M44 66c4-16 20-28 36-24 10 3 14 12 8 20-4 6-12 6-16 12s-14 8-20 4-10-6-8-12z"/>
+        <path d="M122 32c14-8 34-4 46 8 8 8 6 22-4 28-8 4-16 0-24-4-8-2-16 0-20-8-4-10-4-18 2-24z"/>
+        <path d="M60 116c8-6 20-2 22 8 2 8-2 20-10 26-6 4-12-2-14-10-2-8-2-18 2-24z"/>
+        <path d="M132 112c10-4 20 2 20 12s-8 18-16 18c-8-2-12-10-10-18 1-5 3-9 6-12z"/>
+        <path d="M36 100c6 0 10 4 8 8s-8 4-10 0 0-8 2-8z"/>
+      </g>
+      <circle cx="84" cy="92" r="4.5" fill="#2A2A2A"/>
+      <circle cx="122" cy="92" r="4.5" fill="#2A2A2A"/>
+      <ellipse cx="70" cy="103" rx="8" ry="4.5" fill="#F09A9A"/>
+      <ellipse cx="136" cy="103" rx="8" ry="4.5" fill="#F09A9A"/>
+      <path d="M94 100q9 11 18 0z" fill="#E2595E" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round"/>
+      <rect x="18" y="124" width="66" height="46" rx="6" fill="#A8D3F0" stroke="#2A2A2A" stroke-width="3"/>
+      <path d="M56 137a9 9 0 1 0 8 15 7 7 0 1 1-8-15z" fill="#F2CF6B" stroke="#2A2A2A" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="12" y="169" width="80" height="9" rx="4" fill="#C9E2F4" stroke="#2A2A2A" stroke-width="3"/>
+      <path d="M100 146c-6 8-12 16-16 26" stroke="#2A2A2A" stroke-width="14" stroke-linecap="round"/>
+      <path d="M100 146c-6 8-12 16-16 26" stroke="#7FB8E6" stroke-width="8" stroke-linecap="round"/>
+    </symbol>
     <!-- 암모나이트 화석 -->
     <symbol id="icon-fossil" viewBox="0 0 48 48">
       <path d="M24 24a2 2 0 0 1 4 0a4 4 0 0 1-8 0a6 6 0 0 1 12 0a8 8 0 0 1-16 0a10 10 0 0 1 20 0a12 12 0 0 1-24 0a14 14 0 0 1 28 0"/>
