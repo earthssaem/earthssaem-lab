@@ -201,23 +201,23 @@
       inset: 0;
       pointer-events: none;
     }
-    /* 오른쪽 가장자리에 걸친 큰 하늘색 원 */
+    /* 오른쪽 위 가장자리에 걸친 하늘색 원 (이전의 약 68% 크기) */
     .hero__sky {
       position: absolute;
-      right: -150px; top: 50%;
-      width: 380px; height: 380px;
+      right: -95px; top: 44%;
+      width: 260px; height: 260px;
       transform: translateY(-50%);
       border-radius: 50%;
       background: var(--teal-soft);
       border: 2.5px solid var(--ink);
     }
+    /* 달과 별: 원 주변에만, 크기가 다른 별 4개 */
     .hero__stars {
       position: absolute;
       right: 0; top: 50%;
-      width: min(620px, 100%); height: 100%;
+      width: 320px; height: 175px;
       transform: translateY(-50%);
     }
-    .hero__stars .far { display: none; } /* 가운데 흩어진 별은 문장과 겹치지 않도록 숨김 */
     .hero__stars .moon { animation: moon-float 5s ease-in-out infinite; }
     @keyframes moon-float {
       0%, 100% { transform: translateY(0); }
@@ -243,13 +243,6 @@
       font-size: clamp(0.98rem, 1.4vw, 1.06rem);
       color: var(--navy-soft);
       max-width: 62em;
-    }
-    /* 보조 문구: 핵심 설명보다 작고 옅게 */
-    .hero__note {
-      margin-top: 0.25rem;
-      font-size: 0.84rem;
-      line-height: 1.5;
-      color: var(--muted);
     }
 
     /* ==========================================================
@@ -277,11 +270,6 @@
       letter-spacing: -0.015em;
       line-height: 1.3;
     }
-    .section__sub {
-      margin-top: 0.35rem;
-      color: var(--navy-soft);
-      font-size: 0.98rem;
-    }
 
     /* ==========================================================
        6. 도구 목록: 검색 + 필터
@@ -289,7 +277,7 @@
     #tools { scroll-margin-top: calc(var(--header-h) + 8px); }
 
     .toolbar {
-      margin-top: 1.25rem;
+      margin-top: 1.35rem; /* 제목과 검색창 사이 약 22px */
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -371,31 +359,20 @@
     .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange); color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type]:not([data-type="all"])::before { background: var(--ink); border-color: var(--ink); }
 
-    .section__title-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.4rem 0.75rem;
-    }
     .result-count {
       flex: none;
       margin: 0;
-      padding: 3px 11px;
-      border-radius: var(--radius-pill);
-      border: 2px solid var(--ink);
-      background: var(--surface);
-      font-size: 0.82rem;
-      line-height: 1.5;
+      font-size: 0.84rem;
       color: var(--muted);
       white-space: nowrap;
     }
-    .result-count strong { color: var(--navy); font-weight: 700; }
+    .result-count[hidden] { display: none; }
 
     /* ==========================================================
        7. 카드 그리드
        ========================================================== */
     .card-grid {
-      margin-top: 1.1rem;
+      margin-top: 1rem;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1rem;
@@ -639,14 +616,6 @@
       font-size: 0.86rem;
       color: var(--muted);
     }
-    .footer__meta a {
-      color: var(--navy-soft);
-      font-weight: 600;
-      text-decoration: underline;
-      text-decoration-thickness: 1.5px;
-      text-underline-offset: 3px;
-    }
-    .footer__meta a:hover { color: var(--teal-text); }
 
     /* ==========================================================
        10. 반응형 · 접근성 보정
@@ -660,13 +629,27 @@
       .site-nav { flex: none; }
       .site-nav ul { gap: 0; }
       .site-nav a { padding: 8px 7px; font-size: 0.86rem; }
-      .hero { padding: 2rem 0 1.85rem; }
-      .hero__sky { width: 210px; height: 210px; right: -110px; }
-      .hero__stars { width: 100%; }
-      .hero__inner { max-width: none; padding-right: 104px; }
+      .hero { padding: 1.6rem 0 1.5rem; }
+      /* 모바일: 하늘색 원은 숨기고 초승달과 별 2개만 제목 오른쪽 위에 작게 */
+      .hero__sky { display: none; }
+      .hero__stars {
+        top: 0; right: -10px;
+        transform: scale(0.62);
+        transform-origin: top right;
+      }
+      .hero__stars .m-hide { display: none; }
+      .hero__inner { max-width: none; }
+      .hero h1 { padding-right: 96px; }
+      .hero__desc { max-width: none; }
       .search { max-width: none; }
-      .filters { width: 100%; }
-      .filter-btn { flex: 1 1 auto; justify-content: center; padding: 0 0.75rem; }
+      .filters {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .filter-btn { width: 100%; height: 40px; justify-content: center; padding: 0 0.5rem; }
+      .result-count { width: 100%; }
     }
 
     @media (max-width: 420px) {
@@ -721,47 +704,32 @@
       <div class="hero__deco" aria-hidden="true">
         <!-- 배경 별 -->
         <div class="hero__sky"></div>
-        <svg class="hero__stars" viewBox="0 0 620 175" preserveAspectRatio="xMaxYMid meet">
+        <svg class="hero__stars" viewBox="0 0 320 175">
           <!-- 달 -->
-          <g transform="translate(496 90)">
+          <g transform="translate(262 66) scale(0.66)">
             <g class="moon">
-              <path d="M-4-40a40 40 0 1 0 34 62 30 30 0 1 1-34-62z" fill="var(--star)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M-4-40a40 40 0 1 0 34 62 30 30 0 1 1-34-62z" fill="var(--star)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
             </g>
           </g>
+          <!-- 별 4개 (크기 다르게) -->
           <g fill="var(--star)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
-            <use href="#star5" class="far" transform="translate(300 34) scale(1.6)"/>
-            <use href="#star5" class="far" transform="translate(150 118) scale(1.1)"/>
-            <use href="#star5" transform="translate(600 30) scale(1.3)"/>
-            <use href="#star5" transform="translate(420 150) scale(0.9)"/>
-            <use href="#star5" transform="translate(586 148) scale(1.0)"/>
+            <use href="#star5" transform="translate(206 36) scale(1.15)"/>
+            <use href="#star5" class="m-hide" transform="translate(178 118) scale(0.85)"/>
+            <use href="#star5" transform="translate(302 138) scale(1.0)"/>
           </g>
           <g fill="var(--surface)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
-            <use href="#star5" class="far" transform="translate(240 100) scale(1.0)"/>
-            <use href="#star5" transform="translate(430 40) scale(1.0)"/>
-            <use href="#star5" class="far" transform="translate(90 44) scale(0.8)"/>
+            <use href="#star5" class="m-hide" transform="translate(236 128) scale(0.75)"/>
           </g>
-          <g fill="var(--star)">
-            <use href="#star4" class="far" transform="translate(196 58) scale(0.7)"/>
-            <use href="#star4" transform="translate(560 100) scale(0.7)"/>
-            <use href="#star4" class="far" transform="translate(40 140) scale(0.5)"/>
-            <use href="#star4" transform="translate(370 120) scale(0.5)"/>
-          </g>
-          <g fill="var(--ink)" opacity="0.5">
-            <circle cx="330" cy="130" r="2.2" class="far"/>
-            <circle cx="120" cy="80" r="2" class="far"/>
-            <circle cx="470" cy="20" r="2.2"/>
-            <circle cx="60" cy="66" r="1.8" class="far"/>
-            <circle cx="390" cy="60" r="2"/>
-            <circle cx="540" cy="160" r="1.8"/>
-          </g>
+          <!-- 반짝이·점은 하나씩만 -->
+          <g fill="var(--star)"><use href="#star4" class="m-hide" transform="translate(160 66) scale(0.5)"/></g>
+          <circle cx="290" cy="22" r="2" fill="var(--ink)" opacity="0.5" class="m-hide"/>
         </svg>
       </div>
 
       <div class="container">
         <div class="hero__inner">
           <h1 id="hero-title">연경쌤의 <span class="hl">지구과학 실험실</span></h1>
-          <p class="hero__desc">지구과학 개념을 직접 탐구하고, 실제 데이터를 쉽게 분석하며, 배운 내용을 재미있게 복습할 수 있는 웹앱을 만듭니다.</p>
-          <p class="hero__note">생성형 AI와 함께 제작했습니다.</p>
+          <p class="hero__desc">시뮬레이션으로 지구과학 개념을 직접 탐구하고, 실제 데이터를 분석하며, 게임으로 배운 내용을 복습해 보세요.</p>
         </div>
       </div>
     </section>
@@ -771,16 +739,7 @@
          ====================================================== -->
     <section class="section tools" id="tools" aria-labelledby="tools-title">
       <div class="container">
-        <div class="section__head">
-          <div>
-            <div class="section__title-row">
-              <h2 class="section__title" id="tools-title">웹앱 모음<svg class="title-star" viewBox="-10 -10 20 20" aria-hidden="true"><use href="#star4" fill="currentColor"/></svg></h2>
-              <!-- 앱 개수는 JavaScript가 APPS 배열을 기준으로 자동 계산합니다 -->
-              <p class="result-count" id="result-count" aria-live="polite"></p>
-            </div>
-            <p class="section__sub">수업 목적과 과목에 맞는 도구를 찾아보세요.</p>
-          </div>
-        </div>
+        <h2 class="section__title" id="tools-title">웹앱 모음<svg class="title-star" viewBox="-10 -10 20 20" aria-hidden="true"><use href="#star4" fill="currentColor"/></svg></h2>
 
         <div class="toolbar">
           <div class="search">
@@ -792,6 +751,8 @@
           <div class="filters" role="group" aria-label="활용 유형 필터" id="filters">
             <!-- 필터 버튼은 JavaScript가 CATEGORIES를 기준으로 생성합니다 -->
           </div>
+          <!-- 검색어나 필터를 적용했을 때만 결과 수를 표시합니다 -->
+          <p class="result-count" id="result-count" aria-live="polite" hidden></p>
         </div>
 
         <ul class="card-grid" id="card-grid" aria-label="수업 도구 목록">
@@ -806,10 +767,7 @@
 
         <noscript>
           <div class="nojs-note">
-            <p>
-              JavaScript를 켜면 앱 목록이 표시됩니다.
-              문의: <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>
-            </p>
+            <p>JavaScript를 켜면 앱 목록이 표시됩니다.</p>
           </div>
         </noscript>
       </div>
@@ -832,7 +790,7 @@
   <footer class="site-footer">
     <div class="container">
       <p class="footer__brand">EARTHSSAEM LAB</p>
-      <p class="footer__meta">© <span id="year">2026</span> 제작: 김연경(<a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>)</p>
+      <p class="footer__meta">© <span id="year">2026</span> 제작: 김연경</p>
     </div>
   </footer>
 
@@ -1028,7 +986,7 @@
         icon: 'climate',
       },
       {
-        title: '화석 탐험대',
+        title: '지층 탐험대',
         type: 'game',
         description: '지질 공원을 탐사하며 지층과 화석 단서를 모으고 지질 시대의 흐름을 복습합니다.',
         subjects: ['통합과학', '지구과학'],
@@ -1162,16 +1120,10 @@
           if (visible) shown += 1;
         });
 
-        // 전체 상태: "전체 10개" / 필터·검색 적용: "3개 표시"
+        // 검색어나 필터를 적용했을 때만 "3개 결과"처럼 표시
         const isFiltered = activeType !== 'all' || q;
-        resultCount.innerHTML = '';
-        if (isFiltered) {
-          resultCount.appendChild(el('strong', { text: shown + '개' }));
-          resultCount.appendChild(document.createTextNode(' 표시'));
-        } else {
-          resultCount.appendChild(document.createTextNode('전체 '));
-          resultCount.appendChild(el('strong', { text: shown + '개' }));
-        }
+        resultCount.textContent = isFiltered ? shown + '개 결과' : '';
+        resultCount.hidden = !isFiltered;
 
         emptyEl.hidden = shown !== 0;
         grid.hidden = shown === 0;
