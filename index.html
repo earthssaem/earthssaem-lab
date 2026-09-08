@@ -171,7 +171,7 @@
     }
     /* 제목·설명을 가운데 정렬한 단일 열 (최대 720px) */
     .hero__inner {
-      max-width: 720px;
+      max-width: 960px; /* 설명 한 문장이 한 줄에 들어가는 폭 */
       margin-inline: auto;
       text-align: center;
     }
@@ -194,6 +194,8 @@
       color: var(--navy-soft);
       margin-inline: auto;
     }
+    /* 두 줄로 나뉠 때는 "게임으로" 앞에서만 끊기도록 덩어리 단위로 줄바꿈 */
+    .hero__desc .seg { display: inline-block; }
 
     /* ==========================================================
        5. 섹션 공통
@@ -660,7 +662,7 @@
       <div class="container">
         <div class="hero__inner">
           <h1 id="hero-title">연경쌤의 <span class="hl">지구과학 실험실</span></h1>
-          <p class="hero__desc">시뮬레이션으로 지구과학 개념을 직접 탐구하고, 실제 데이터를 분석하며, 게임으로 배운 내용을 복습해 보세요.</p>
+          <p class="hero__desc"><span class="seg">시뮬레이션으로 지구과학 개념을 직접 탐구하고, 실제 데이터를 분석하며,</span> <span class="seg">게임으로 배운 내용을 복습해 보세요.</span></p>
         </div>
       </div>
     </section>
