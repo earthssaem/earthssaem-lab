@@ -191,7 +191,7 @@
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 2.4rem 0 2.25rem;
+      padding: 1.75rem 0 1.5rem;
       border-bottom: 1px solid var(--line);
     }
     .hero .container { position: relative; }
@@ -217,6 +217,7 @@
       width: min(620px, 100%); height: 100%;
       transform: translateY(-50%);
     }
+    .hero__stars .far { display: none; } /* 가운데 흩어진 별은 문장과 겹치지 않도록 숨김 */
     .hero__stars .moon { animation: moon-float 5s ease-in-out infinite; }
     @keyframes moon-float {
       0%, 100% { transform: translateY(0); }
@@ -225,7 +226,7 @@
 
     .hero__inner {
       position: relative;
-      max-width: 760px;
+      max-width: calc(100% - 240px); /* 오른쪽 하늘색 원(보이는 폭 230px)과 겹치지 않게 */
     }
     .hero h1 {
       font-size: clamp(1.9rem, 3.8vw, 3rem);
@@ -238,16 +239,23 @@
       padding: 0 0.1em;
     }
     .hero__desc {
-      margin-top: 0.7rem;
+      margin-top: 0.55rem;
       font-size: clamp(0.98rem, 1.4vw, 1.06rem);
       color: var(--navy-soft);
-      max-width: 44em;
+      max-width: 62em;
+    }
+    /* 보조 문구: 핵심 설명보다 작고 옅게 */
+    .hero__note {
+      margin-top: 0.25rem;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: var(--muted);
     }
 
     /* ==========================================================
        5. 섹션 공통
        ========================================================== */
-    .section { padding: clamp(2.25rem, 4vw, 2.5rem) 0 clamp(3rem, 5vw, 4rem); }
+    .section { padding: clamp(2.25rem, 4vw, 2.5rem) 0 2rem; }
     .section__head {
       display: flex;
       flex-wrap: wrap;
@@ -596,50 +604,21 @@
     .nojs-note a { color: var(--teal-text); font-weight: 600; }
 
     /* ==========================================================
-       8. About
+       8. 수정 의견 안내
        ========================================================== */
-    #about { scroll-margin-top: calc(var(--header-h) + 8px); }
-    .about {
-      position: relative;
-      overflow: hidden;
-      background: var(--bg-soft);
-      border-top: 2px solid var(--ink);
-      border-bottom: 2px solid var(--ink);
+    .contact-note {
+      padding: 0 0 1.5rem;
+      font-size: 0.88rem;
+      color: var(--muted);
     }
-    .about {
-      padding: 3rem 0;
-    }
-    .about__deco {
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 44%;
-      pointer-events: none;
-    }
-    .about__deco svg { width: 100%; height: 100%; }
-    .about__inner {
-      position: relative;
-      max-width: 640px;
-    }
-    .about p {
-      margin-top: 0.8rem;
-      color: var(--navy-soft);
-      font-size: 1rem;
-    }
-    .about .section__title { color: var(--navy); }
-    /* 수정 의견 안내: 본문보다 작고 옅은 보조 문구 */
-    .about__contact {
-      margin-top: 1.1rem !important;
-      font-size: 0.86rem !important;
-      color: var(--muted) !important;
-    }
-    .about__contact a {
+    .contact-note a {
       color: var(--navy-soft);
       font-weight: 600;
       text-decoration: underline;
       text-decoration-thickness: 1.5px;
       text-underline-offset: 3px;
     }
-    .about__contact a:hover { color: var(--teal-text); }
+    .contact-note a:hover { color: var(--teal-text); }
 
     /* ==========================================================
        9. 푸터
@@ -684,9 +663,7 @@
       .hero { padding: 2rem 0 1.85rem; }
       .hero__sky { width: 210px; height: 210px; right: -110px; }
       .hero__stars { width: 100%; }
-      .hero__stars .far { display: none; }
-      .hero__inner { padding-right: 104px; }
-      .about__deco { width: 30%; opacity: 0.45; }
+      .hero__inner { max-width: none; padding-right: 104px; }
       .search { max-width: none; }
       .filters { width: 100%; }
       .filter-btn { flex: 1 1 auto; justify-content: center; padding: 0 0.75rem; }
@@ -728,7 +705,6 @@
       <nav class="site-nav" aria-label="주요 메뉴">
         <ul>
           <li><a href="#tools"><span class="nav-label-full">웹앱 모음</span><span class="nav-label-short" aria-hidden="true">웹앱</span></a></li>
-          <li><a href="#about">소개</a></li>
           <!-- 링크 추가 위치: 블로그 등 새 링크는 아래 형식으로 <li>를 추가하세요.
           <li><a href="https://blog.example.com" target="_blank" rel="noopener noreferrer">Blog</a></li>
           -->
@@ -784,7 +760,8 @@
       <div class="container">
         <div class="hero__inner">
           <h1 id="hero-title">연경쌤의 <span class="hl">지구과학 실험실</span></h1>
-          <p class="hero__desc">생성형 AI와 함께, 수업에서 보여 주기 어려웠던 장면을 직접 만져 볼 수 있는 웹앱으로 만듭니다.</p>
+          <p class="hero__desc">지구과학 개념을 직접 탐구하고, 실제 데이터를 쉽게 분석하며, 배운 내용을 재미있게 복습할 수 있는 웹앱을 만듭니다.</p>
+          <p class="hero__note">생성형 AI와 함께 제작했습니다.</p>
         </div>
       </div>
     </section>
@@ -839,45 +816,14 @@
     </section>
 
     <!-- ======================================================
-         About
+         수정 의견 안내 (웹앱 목록과 푸터 사이의 간결한 문구)
          ====================================================== -->
-    <section class="section about" id="about" aria-labelledby="about-title">
-      <div class="about__deco" aria-hidden="true">
-        <!-- 별 장식 -->
-        <svg viewBox="0 0 520 200" preserveAspectRatio="xMaxYMid meet">
-          <g fill="var(--star)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
-            <use href="#star5" transform="translate(330 46) scale(1.5)"/>
-            <use href="#star5" transform="translate(470 120) scale(1.2)"/>
-            <use href="#star5" transform="translate(410 168) scale(0.9)"/>
-          </g>
-          <g fill="var(--surface)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
-            <use href="#star5" transform="translate(250 130) scale(1.0)"/>
-            <use href="#star5" transform="translate(500 30) scale(0.9)"/>
-          </g>
-          <g fill="var(--star)">
-            <use href="#star4" transform="translate(390 100) scale(0.7)"/>
-            <use href="#star4" transform="translate(290 80) scale(0.5)"/>
-          </g>
-          <g fill="var(--ink)" opacity="0.45">
-            <circle cx="440" cy="60" r="2"/><circle cx="360" cy="150" r="2"/><circle cx="300" cy="30" r="1.8"/>
-          </g>
-        </svg>
-      </div>
-
-      <div class="container">
-        <div class="about__inner">
-          <h2 class="section__title" id="about-title">수업에서 시작된 작은 실험들</h2>
-          <p>
-            수업을 준비하다 생긴 질문과 아이디어를 작은 웹앱으로 만들었습니다.
-            실제 수업에서 사용해 보며 조금씩 다듬고 있습니다.
-          </p>
-          <p class="about__contact">
-            과학적 내용이나 기능에서 수정할 부분을 발견하셨다면 메일로 알려 주세요.
-            <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>
-          </p>
-        </div>
-      </div>
-    </section>
+    <div class="container contact-note">
+      <p>
+        내용이나 기능에서 수정이 필요한 부분을 발견하셨다면 메일로 알려 주세요.
+        <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>
+      </p>
+    </div>
   </main>
 
   <!-- ========================================================
