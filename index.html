@@ -50,6 +50,7 @@
       --star: #F2CF6B;          /* 별 노란색 */
       --star-blue: #A9CDE8;     /* 별 하늘색 */
       --ink: #2A2A2A;           /* 캐릭터 외곽선 */
+      --shadow-ink: #26344A;    /* 카드 그림자용 짙은 네이비 */
 
       --radius-lg: 24px;
       --radius-md: 14px;
@@ -362,14 +363,21 @@
     .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange); color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type]:not([data-type="all"])::before { background: var(--ink); border-color: var(--ink); }
 
+    .section__title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem 0.75rem;
+    }
     .result-count {
       flex: none;
-      margin: 0 0 0.3rem;
-      padding: 5px 12px;
+      margin: 0;
+      padding: 3px 11px;
       border-radius: var(--radius-pill);
       border: 2px solid var(--ink);
       background: var(--surface);
-      font-size: 0.86rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
       color: var(--muted);
       white-space: nowrap;
     }
@@ -406,7 +414,7 @@
       background: var(--surface);
       border: 2.5px solid var(--ink);
       border-radius: var(--radius-lg);
-      box-shadow: 4px 4px 0 var(--ink);
+      box-shadow: 3px 3px 0 var(--shadow-ink);
       transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
     }
     .card[hidden], .card-grid[hidden] { display: none; }
@@ -427,7 +435,7 @@
     .card:hover,
     .card:focus-within {
       transform: translate(-3px, -3px) rotate(-0.5deg);
-      box-shadow: 8px 8px 0 var(--accent);
+      box-shadow: 6px 6px 0 var(--accent);
     }
     /* 카드 전체 클릭: 제목 링크의 가상 요소를 카드 전체로 펼침 */
     .card__link::after {
@@ -618,8 +626,20 @@
       font-size: 1rem;
     }
     .about .section__title { color: var(--navy); }
-    .about a { color: var(--navy); font-weight: 700; text-decoration: none; border-bottom: 2.5px solid var(--teal); }
-    .about a:hover { background: var(--teal-soft); }
+    /* 수정 의견 안내: 본문보다 작고 옅은 보조 문구 */
+    .about__contact {
+      margin-top: 1.1rem !important;
+      font-size: 0.86rem !important;
+      color: var(--muted) !important;
+    }
+    .about__contact a {
+      color: var(--navy-soft);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+    }
+    .about__contact a:hover { color: var(--teal-text); }
 
     /* ==========================================================
        9. 푸터
@@ -632,31 +652,22 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem 2rem;
+      align-items: center;
+      gap: 0.5rem 2rem;
     }
     .footer__brand { font-weight: 800; letter-spacing: 0.08em; font-size: 0.9rem; }
-    .footer__desc { margin-top: 0.35rem; color: var(--navy-soft); font-size: 0.95rem; }
     .footer__meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.3rem;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--muted);
     }
     .footer__meta a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--navy);
+      color: var(--navy-soft);
       font-weight: 600;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
     }
-    .footer__meta a { border-bottom: 2px solid var(--teal); }
-    .footer__meta a:hover { background: var(--teal-soft); }
-    .footer__meta a svg { width: 18px; height: 18px; }
+    .footer__meta a:hover { color: var(--teal-text); }
 
     /* ==========================================================
        10. 반응형 · 접근성 보정
@@ -678,7 +689,6 @@
       .search { max-width: none; }
       .filters { width: 100%; }
       .filter-btn { flex: 1 1 auto; justify-content: center; padding: 0 0.75rem; }
-      .footer__meta { align-items: flex-start; }
     }
 
     @media (max-width: 420px) {
@@ -773,7 +783,7 @@
       <div class="container">
         <div class="hero__inner">
           <h1 id="hero-title">연경쌤의 <span class="hl">지구과학 실험실</span></h1>
-          <p class="hero__desc">수업에서 보여 주기 어려웠던 장면을, 직접 만져 볼 수 있는 웹앱으로 만듭니다.</p>
+          <p class="hero__desc">생성형 AI와 함께, 수업에서 보여 주기 어려웠던 장면을 직접 만져 볼 수 있는 웹앱으로 만듭니다.</p>
         </div>
       </div>
     </section>
@@ -785,10 +795,13 @@
       <div class="container">
         <div class="section__head">
           <div>
-            <h2 class="section__title" id="tools-title">웹앱 모음<svg class="title-star" viewBox="-10 -10 20 20" aria-hidden="true"><use href="#star4" fill="currentColor"/></svg></h2>
+            <div class="section__title-row">
+              <h2 class="section__title" id="tools-title">웹앱 모음<svg class="title-star" viewBox="-10 -10 20 20" aria-hidden="true"><use href="#star4" fill="currentColor"/></svg></h2>
+              <!-- 앱 개수는 JavaScript가 APPS 배열을 기준으로 자동 계산합니다 -->
+              <p class="result-count" id="result-count" aria-live="polite"></p>
+            </div>
             <p class="section__sub">수업 목적과 과목에 맞는 도구를 찾아보세요.</p>
           </div>
-          <p class="result-count" id="result-count" aria-live="polite"></p>
         </div>
 
         <div class="toolbar">
@@ -854,11 +867,11 @@
         <div class="about__inner">
           <h2 class="section__title" id="about-title">수업에서 시작된 작은 실험들</h2>
           <p>
-            수업을 준비하며 설명만으로 보여 주기 어려웠던 장면을 직접 조작할 수 있는 도구로 만들었습니다.
-            각 도구는 실제 수업에서 활용하며 계속 수정하고 개선하고 있습니다.
+            수업을 준비하다 생긴 질문과 아이디어를 작은 웹앱으로 만들었습니다.
+            실제 수업에서 사용해 보며 조금씩 다듬고 있습니다.
           </p>
-          <p>
-            수업에 활용하시거나 의견이 있으시면 메일로 연락 주세요.
+          <p class="about__contact">
+            과학적 내용이나 기능에서 수정할 부분을 발견하셨다면 메일로 알려 주세요.
             <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>
           </p>
         </div>
@@ -871,13 +884,8 @@
        ======================================================== -->
   <footer class="site-footer">
     <div class="container">
-      <div>
-        <p class="footer__brand">EARTHSSAEM LAB</p>
-        <p class="footer__desc">지구과학 수업을 위해 직접 만든 디지털 학습 도구</p>
-      </div>
-      <div class="footer__meta">
-        <p>© <span id="year">2026</span> 제작: 김연경(<a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>)</p>
-      </div>
+      <p class="footer__brand">EARTHSSAEM LAB</p>
+      <p class="footer__meta">© <span id="year">2026</span> 제작: 김연경(<a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>)</p>
     </div>
   </footer>
 
