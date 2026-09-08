@@ -931,7 +931,7 @@
          type        : 활용 유형 키 (CATEGORIES의 키 중 하나: concept / data / game)
          description : 한두 문장의 설명
          subjects    : 적용 과목 배열. { name: '과목명', year: '교육과정 연도' } 형식
-                       → 카드에는 "통합과학 · 2022"처럼 표시되고, 과목 드롭다운 항목도
+                       → 카드에는 "통합과학(2022)"처럼 표시되고, 과목 드롭다운 항목도
                          이 배열의 과목명에서 자동으로 만들어집니다.
          url         : 웹앱 주소 (새 탭에서 열림)
          icon        : 위 SVG 심볼 id에서 "icon-"을 뺀 이름
@@ -1155,7 +1155,7 @@
         const desc = el('p', { class: 'card__desc', text: app.description });
 
         const tags = el('ul', { class: 'card__tags', 'aria-label': '적용 과목' },
-          app.subjects.map((sub) => el('li', { text: sub.name + ' · ' + sub.year })));
+          app.subjects.map((sub) => el('li', { text: sub.name + '(' + sub.year + ')' })));
 
         const cta = el('span', { class: 'card__cta', 'aria-hidden': 'true' });
         cta.appendChild(document.createTextNode('웹앱 열기 '));
