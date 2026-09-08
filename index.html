@@ -3,67 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Earthssaem Lab | 지구과학 수업 도구</title>
-  <meta name="description" content="지구과학 개념 탐구, 실제 데이터 분석, 게임형 복습을 위한 수업용 웹앱 모음. 연경쌤이 직접 만들어 수업에서 활용하는 도구입니다.">
-  <meta name="theme-color" content="#FBFAF8">
-  <meta property="og:title" content="Earthssaem Lab | 지구과학 수업 도구">
-  <meta property="og:description" content="수업에 필요한 도구를 직접 만들어 활용합니다. 지구과학 수업용 웹앱 아카이브.">
+  <title>연경쌤의 지구과학 실험실 | Earthssaem Lab</title>
+  <meta name="description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
+  <meta name="theme-color" content="#F7F5F0">
+  <meta property="og:title" content="연경쌤의 지구과학 실험실 | Earthssaem Lab">
+  <meta property="og:description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
   <meta property="og:type" content="website">
-  <!-- 파비콘: 상단 로고와 같은 선으로 그린 지구 -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-17 -17 34 34' fill='none' stroke='%23161616' stroke-width='1.6'%3E%3Ccircle r='15'/%3E%3Cellipse rx='6.5' ry='15'/%3E%3Cpath d='M0-15v30M-15 0h30M-13.5-6.5h27M-13.5 6.5h27'/%3E%3C/svg%3E">
+  <!-- 파비콘: 히어로의 선으로 그린 지구를 축소한 것 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-17 -17 34 34' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='rotate(-14)'%3E%3Ccircle r='15' stroke='%231B2A41' stroke-width='1.8'/%3E%3Cg stroke='%230F8B8D' stroke-width='1.3'%3E%3Cellipse rx='6' ry='15'/%3E%3Cpath d='M0-15v30M-15 0h30M-13.5-6.5h27M-13.5 6.5h27'/%3E%3C/g%3E%3Cpath d='M-6-3c2-2 5-1 7 1s3 5 1 7-5 1-7-1-3-5-1-7z' fill='%231B2A41'/%3E%3C/g%3E%3C/svg%3E">
 
-  <!-- 유일한 외부 의존성: Pretendard (불러오지 못하면 시스템 글꼴로 대체) -->
+  <!-- 한글 글꼴: Pretendard (불러오지 못하면 아래 CSS의 시스템 폰트가 대신 적용됩니다) -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 
   <style>
     /* ==========================================================
-       1. 토큰 — 거의 흑백, 포인트 색은 하나
+       1. 디자인 토큰
        ========================================================== */
     :root {
-      --bg: #FBFAF8;
-      --bg-hover: #F2F0EB;
-      --ink: #161616;
-      --ink-2: #4A4A4A;
-      --ink-3: #8A8A8A;
-      --hair: #E2DFD9;
-      --accent: #0E6B6E;          /* 깊은 청록: 링크·호버·현재 위치에만 사용 */
+      --bg: #F7F5F0;            /* 밝은 아이보리 배경 */
+      --bg-soft: #EFEBE1;       /* 연한 베이지 구분 영역 */
+      --surface: #FFFFFF;
+      --line: #DED8CB;          /* 얇은 테두리 */
+      --line-strong: #C9C2B2;
+      --navy: #1B2A41;          /* 제목·본문 */
+      --navy-soft: #4A566A;     /* 보조 본문 */
+      --muted: #6E7787;
 
-      --header-h: 52px;
-      --subnav-h: 44px;
-      --container: 1180px;
-      --gutter: clamp(1rem, 3vw, 2.5rem);
+      --teal: #0F8B8D;          /* 개념 탐구 */
+      --teal-text: #0B6E70;
+      --teal-soft: #E1F2F1;
 
-      --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
-              system-ui, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
-      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino,
-               Georgia, "Times New Roman", "Noto Serif KR", serif;
+      --blue: #2F6FDB;          /* 데이터 분석 */
+      --blue-text: #2458B8;
+      --blue-soft: #E4ECFB;
+
+      --orange: #D9822B;        /* 게임·복습 */
+      --orange-text: #9E5410;
+      --orange-soft: #FBEBDC;
+
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 1px 2px rgba(27, 42, 65, 0.05), 0 4px 14px rgba(27, 42, 65, 0.05);
+      --shadow-md: 0 2px 4px rgba(27, 42, 65, 0.06), 0 12px 28px rgba(27, 42, 65, 0.10);
+
+      --header-h: 56px;
+      --container: 1240px;
+      --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+              system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
+              "Noto Sans KR", "Malgun Gothic", sans-serif;
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
     /* ==========================================================
-       2. 초기화
+       2. 기본 초기화
        ========================================================== */
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
       margin: 0;
-      font-family: var(--sans);
+      font-family: var(--font);
       font-size: 1rem;
-      line-height: 1.6;
-      color: var(--ink);
+      line-height: 1.65;
+      color: var(--navy);
       background: var(--bg);
       word-break: keep-all;
       overflow-wrap: anywhere;
-      -webkit-font-smoothing: antialiased;
     }
-    h1, h2, h3, p, ul, ol { margin: 0; }
-    ul, ol { padding: 0; list-style: none; }
+
+    h1, h2, h3, p, ul { margin: 0; }
+    ul { padding: 0; list-style: none; }
     a { color: inherit; }
-    svg { display: block; }
+    img, svg { display: block; max-width: 100%; }
+    button { font: inherit; color: inherit; }
 
     :focus-visible {
-      outline: 2px solid var(--accent);
+      outline: 3px solid var(--navy);
       outline-offset: 3px;
+      border-radius: 6px;
     }
 
     .visually-hidden {
@@ -76,22 +99,21 @@
 
     .skip-link {
       position: absolute;
-      top: -100px; left: 12px;
+      top: -100px; left: 16px;
       z-index: 100;
-      padding: 8px 14px;
-      background: var(--ink);
-      color: var(--bg);
+      padding: 10px 16px;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 10px;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-weight: 600;
     }
-    .skip-link:focus { top: 8px; }
+    .skip-link:focus { top: 12px; }
 
     .container {
-      width: min(var(--container), 100% - var(--gutter) * 2);
+      width: min(var(--container), 100% - 2.5rem);
       margin-inline: auto;
     }
-
-    .serif { font-family: var(--serif); }
 
     /* ==========================================================
        3. 헤더
@@ -99,10 +121,12 @@
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 50;
       height: var(--header-h);
-      background: var(--bg);
-      border-bottom: 1px solid var(--hair);
+      background: rgba(247, 245, 240, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
     }
     .site-header .container {
       height: 100%;
@@ -111,378 +135,706 @@
       justify-content: space-between;
       gap: 1rem;
     }
+
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.6rem;
       text-decoration: none;
-      font-weight: 700;
-      font-size: 0.86rem;
-      letter-spacing: 0.14em;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      font-size: 0.95rem;
+      color: var(--navy);
+      padding: 6px 4px;
       white-space: nowrap;
     }
-    .brand svg { width: 22px; height: 22px; }
+    .brand__logo { width: 30px; height: 30px; color: var(--navy); flex: none; }
+    .brand__logo .orbit { color: var(--teal); }
 
-    /* 상단 링크: 새 링크는 HTML의 <ul class="site-nav__list"> 안에 <li>를 추가하세요 */
-    .site-nav__list {
+    /* 상단 링크 영역: 새 링크는 <li>를 하나 더 추가하면 됩니다 (아래 HTML의 주석 참고) */
+    .site-nav ul {
       display: flex;
       align-items: center;
-      gap: 1.4rem;
+      gap: 0.25rem;
     }
-    .site-nav__list a {
+    .site-nav a {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      min-height: 44px;
+      gap: 0.4rem;
+      padding: 8px 12px;
+      border-radius: var(--radius-pill);
       text-decoration: none;
-      font-size: 0.9rem;
-      color: var(--ink-2);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--navy-soft);
       white-space: nowrap;
+      transition: color 0.2s var(--ease), background-color 0.2s var(--ease);
     }
-    .site-nav__list a:hover { color: var(--accent); }
-    .site-nav__list svg { width: 16px; height: 16px; }
+    .site-nav a:hover { color: var(--navy); background: var(--bg-soft); }
+    .site-nav a svg { width: 18px; height: 18px; }
+    .site-nav .nav-label-short { display: none; }
 
     /* ==========================================================
-       4. 상단 영역 — 가로 배치, 낮은 높이
+       4. 히어로
        ========================================================== */
     .hero {
       position: relative;
       overflow: hidden;
-      border-bottom: 1px solid var(--hair);
+      padding: 2.4rem 0 2.25rem;
+      border-bottom: 1px solid var(--line);
     }
-    .hero .container {
+    .hero__deco {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      color: var(--teal);
+    }
+    /* 선으로 그린 지구: 오른쪽 가장자리에서 1/3쯤 잘려 들어옴 */
+    .hero__deco .deco-globe {
+      position: absolute;
+      right: -100px;
+      top: 50%;
+      width: 300px; height: 300px;
+      max-width: none;
+      transform: translateY(-50%);
+      opacity: 0.42;
+    }
+    .hero__deco .deco-globe * { vector-effect: non-scaling-stroke; }
+
+    .hero__inner {
       position: relative;
-      min-height: 132px;
-      display: flex;
-      align-items: center;
-      padding-block: 1.5rem;
+      max-width: 760px;
     }
-    .hero__text { position: relative; z-index: 1; max-width: 62%; }
     .hero h1 {
-      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      font-size: clamp(1.9rem, 3.8vw, 3rem);
+      line-height: 1.25;
       font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.025em;
+      letter-spacing: -0.02em;
     }
-    .hero__lead {
-      margin-top: 0.55rem;
-      font-size: clamp(0.9rem, 1.2vw, 1rem);
-      color: var(--ink-2);
+    .hero__desc {
+      margin-top: 0.7rem;
+      font-size: clamp(0.98rem, 1.4vw, 1.06rem);
+      color: var(--navy-soft);
+      max-width: 44em;
     }
 
-    /* 선으로 그린 지구: 오른쪽 가장자리에서 반쯤 잘려 들어옴 */
-    .globe {
+    /* ==========================================================
+       5. 섹션 공통
+       ========================================================== */
+    .section { padding: clamp(2.25rem, 4vw, 2.5rem) 0 clamp(3rem, 5vw, 4rem); }
+    .section__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.5rem 1.5rem;
+    }
+    .section__head > div { max-width: 640px; }
+    .section__title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      line-height: 1.3;
+    }
+    .section__sub {
+      margin-top: 0.35rem;
+      color: var(--navy-soft);
+      font-size: 0.98rem;
+    }
+
+    /* ==========================================================
+       6. 도구 목록: 검색 + 필터
+       ========================================================== */
+    #tools { scroll-margin-top: calc(var(--header-h) + 8px); }
+
+    .toolbar {
+      margin-top: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1rem;
+    }
+    .search {
+      position: relative;
+      flex: 1 1 260px;
+      max-width: 420px;
+    }
+    .search svg {
       position: absolute;
-      right: calc(var(--gutter) * -1 - 190px);
-      top: 50%;
-      width: 420px; height: 420px;
+      left: 14px; top: 50%;
       transform: translateY(-50%);
-      color: var(--ink);
+      width: 18px; height: 18px;
+      color: var(--muted);
       pointer-events: none;
     }
-    .globe svg { width: 100%; height: 100%; }
-    .globe svg * { vector-effect: non-scaling-stroke; }
+    .search input {
+      width: 100%;
+      height: 46px;
+      padding: 0 14px 0 42px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      font: inherit;
+      font-size: 1rem;
+      color: var(--navy);
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .search input::placeholder { color: var(--muted); }
+    .search input:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(15, 139, 141, 0.18);
+    }
+    .search input::-webkit-search-cancel-button { cursor: pointer; }
 
-    /* ==========================================================
-       5. 묶음 앵커 메뉴 (검색·필터 대신 쓰는 탐색 수단)
-       ========================================================== */
-    .subnav {
-      position: sticky;
-      top: var(--header-h);
-      z-index: 30;
-      background: var(--bg);
-      border-bottom: 1px solid var(--hair);
-    }
-    .subnav__list {
+    .filters {
       display: flex;
-      gap: 0;
-      height: var(--subnav-h);
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
-    .subnav__list::-webkit-scrollbar { display: none; }
-    .subnav__list a {
-      position: relative;
+    .filter-btn {
+      height: 40px;
+      padding: 0 1rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      color: var(--navy-soft);
+      font-weight: 600;
+      font-size: 0.93rem;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      height: 100%;
-      padding: 0 1.1rem;
-      text-decoration: none;
-      font-size: 0.9rem;
-      color: var(--ink-2);
+      gap: 0.45rem;
+      transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .filter-btn::before {
+      content: "";
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--dot, var(--navy-soft));
+      opacity: 0.85;
+    }
+    .filter-btn[data-type="all"]::before { display: none; }
+    .filter-btn[data-type="concept"] { --dot: var(--teal); }
+    .filter-btn[data-type="data"]    { --dot: var(--blue); }
+    .filter-btn[data-type="game"]    { --dot: var(--orange); }
+    .filter-btn:hover { border-color: var(--navy-soft); color: var(--navy); }
+    .filter-btn[aria-pressed="true"] {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+    .filter-btn[aria-pressed="true"]::before { background: #fff; }
+    .filter-btn[aria-pressed="true"][data-type="concept"] { background: var(--teal-text); border-color: var(--teal-text); }
+    .filter-btn[aria-pressed="true"][data-type="data"]    { background: var(--blue-text); border-color: var(--blue-text); }
+    .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange-text); border-color: var(--orange-text); }
+
+    .result-count {
+      flex: none;
+      margin: 0 0 0.3rem;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      font-size: 0.86rem;
+      color: var(--muted);
       white-space: nowrap;
     }
-    .subnav__list li:first-child a { padding-left: 0; }
-    .subnav__list a .serif { font-size: 0.85rem; color: var(--ink-3); }
-    .subnav__list a::after {
-      content: "";
-      position: absolute;
-      left: 0; right: 0; bottom: -1px;
-      height: 2px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.2s ease;
-    }
-    .subnav__list li:first-child a::after { left: 0; }
-    .subnav__list a:hover { color: var(--accent); }
-    .subnav__list a[aria-current="true"] { color: var(--accent); }
-    .subnav__list a[aria-current="true"]::after { transform: scaleX(1); }
-    .subnav__list a[aria-current="true"] .serif { color: var(--accent); }
+    .result-count strong { color: var(--navy); font-weight: 700; }
 
     /* ==========================================================
-       6. 앱 목록 — 번호가 붙은 리스트
+       7. 카드 그리드
        ========================================================== */
-    #apps { scroll-margin-top: calc(var(--header-h) + var(--subnav-h)); }
-    .group { scroll-margin-top: calc(var(--header-h) + var(--subnav-h)); }
-    .group + .group { margin-top: 0.5rem; }
-
-    .group__head {
-      display: flex;
-      align-items: baseline;
-      gap: 0.9rem;
-      padding: 1.6rem 0 0.7rem;
-      border-bottom: 1px solid var(--ink);
-    }
-    .group__num {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      color: var(--ink-3);
-      font-variant-numeric: tabular-nums;
-    }
-    .group__title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-    .group__en {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--ink-3);
-    }
-    .group__count {
-      margin-left: auto;
-      font-family: var(--serif);
-      font-size: 0.9rem;
-      color: var(--ink-3);
-    }
-
-    .row {
+    .card-grid {
+      margin-top: 1.1rem;
       display: grid;
-      grid-template-columns: 3.2rem 2.4rem minmax(0, 1fr) minmax(9rem, 16rem) 5.5rem;
-      align-items: center;
-      gap: 0 1rem;
-      min-height: 80px;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--hair);
-      text-decoration: none;
-      color: inherit;
-      transition: background-color 0.15s ease;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
     }
-    .row:hover, .row:focus-visible {
-      background: var(--bg-hover);
-      box-shadow: 0 0 0 0.75rem var(--bg-hover); /* 호버 배경을 가터 안쪽까지 살짝 넓힘 */
-      clip-path: inset(0 -0.75rem);
+    @media (max-width: 1199px) {
+      .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
-    .row:focus-visible { outline-offset: -2px; }
+    @media (max-width: 799px) {
+      .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 599px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
 
-    .row__num {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      color: var(--ink-3);
-      font-variant-numeric: tabular-nums;
+    .card {
+      --accent: var(--teal);
+      --accent-text: var(--teal-text);
+      --accent-soft: var(--teal-soft);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding: 1.25rem 1.25rem 1.1rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);
     }
-    .row__icon {
-      width: 30px; height: 30px;
-      color: var(--ink);
+    .card[hidden], .card-grid[hidden] { display: none; }
+    /* 카드 상단의 유형 색 라인 */
+    .card { overflow: hidden; }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+    .card--concept { --accent: var(--teal);   --accent-text: var(--teal-text);   --accent-soft: var(--teal-soft); }
+    .card--data    { --accent: var(--blue);   --accent-text: var(--blue-text);   --accent-soft: var(--blue-soft); }
+    .card--game    { --accent: var(--orange); --accent-text: var(--orange-text); --accent-soft: var(--orange-soft); }
+
+    .card:hover,
+    .card:focus-within {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: var(--shadow-md);
+    }
+    /* 카드 전체 클릭: 제목 링크의 가상 요소를 카드 전체로 펼침 */
+    .card__link::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+    }
+    .card__link:focus-visible {
+      outline: none;
+    }
+    .card:has(.card__link:focus-visible) {
+      outline: 3px solid var(--accent-text);
+      outline-offset: 3px;
+    }
+    /* :has 미지원 브라우저 대비 */
+    .card__link:focus-visible::after {
+      outline: 3px solid var(--accent-text);
+      outline-offset: 3px;
+    }
+    .card:has(.card__link:focus-visible) .card__link:focus-visible::after { outline: none; }
+
+    .card__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+    .card__icon {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: var(--accent-soft);
+      color: var(--accent-text);
+      display: grid;
+      place-items: center;
+      flex: none;
+    }
+    .card__icon svg {
+      width: 34px; height: 34px;
       fill: none;
       stroke: currentColor;
-      stroke-width: 1.5;
+      stroke-width: 1.7;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .row__title {
-      display: block;
-      font-size: 1.05rem;
-      font-weight: 700;
-      line-height: 1.3;
-      letter-spacing: -0.01em;
-    }
-    .row__desc {
-      margin-top: 0.2rem;
-      font-size: 0.88rem;
-      line-height: 1.45;
-      color: var(--ink-2);
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .row__tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.15rem 0.7rem;
-      font-size: 0.82rem;
-      color: var(--ink-3);
-    }
-    .row__tags li + li::before {
-      content: "·";
-      margin-right: 0.7rem;
-    }
-    .row__open {
-      justify-self: end;
+    .card__type {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      font-size: 0.88rem;
+      gap: 0.4rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .card__type::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .card__title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+    .card__link {
+      text-decoration: none;
+      color: var(--navy);
+    }
+    .card__desc {
+      margin-top: 0.5rem;
+      color: var(--navy-soft);
+      font-size: 0.92rem;
+      line-height: 1.58;
+      flex: 1 1 auto;
+    }
+    .card__tags {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .card__tags li {
+      padding: 3px 9px;
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--navy-soft);
+      font-size: 0.78rem;
       font-weight: 600;
-      color: var(--ink-2);
-      white-space: nowrap;
     }
-    .row__open .arrow {
+    .card__cta {
+      margin-top: 0.9rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--line);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--accent-text);
+    }
+    .card__cta .arrow {
       display: inline-block;
-      transition: transform 0.18s ease;
+      transition: transform 0.22s var(--ease);
     }
-    .row:hover .row__open, .row:focus-visible .row__open { color: var(--accent); }
-    .row:hover .arrow, .row:focus-visible .arrow { transform: translateX(4px); }
+    .card:hover .card__cta .arrow,
+    .card:focus-within .card__cta .arrow { transform: translateX(4px); }
+
+    /* 등장 애니메이션 */
+    .card {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: card-in 0.5s var(--ease) forwards;
+      animation-delay: calc(var(--i, 0) * 60ms);
+    }
+    .card:hover, .card:focus-within { animation: none; opacity: 1; }
+    @keyframes card-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .empty {
+      margin-top: 1.5rem;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      color: var(--navy-soft);
+    }
+    .empty svg { width: 40px; height: 40px; margin: 0 auto 0.75rem; color: var(--muted); }
+    .empty strong { color: var(--navy); }
+    .empty button {
+      margin-top: 1rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .empty button:hover { border-color: var(--navy); }
 
     .nojs-note {
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--hair);
-      color: var(--ink-2);
-      font-size: 0.95rem;
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--navy-soft);
     }
-    .nojs-note a { color: var(--accent); }
+    .nojs-note a { color: var(--teal-text); font-weight: 600; }
 
     /* ==========================================================
-       7. 소개 · 푸터
+       8. About
        ========================================================== */
+    #about { scroll-margin-top: calc(var(--header-h) + 8px); }
     .about {
-      padding: 2rem 0 2.25rem;
-      display: grid;
-      grid-template-columns: 3.2rem minmax(0, 1fr);
-      gap: 0 1rem;
-      align-items: baseline;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-soft);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
-    .about__num {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      color: var(--ink-3);
+    .about {
+      padding: 3rem 0;
     }
-    .about h2 {
-      font-size: 1.05rem;
-      font-weight: 700;
+    .about__deco {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 48%;
+      pointer-events: none;
+      color: var(--navy);
+      opacity: 0.06;
+    }
+    .about__deco svg { width: 100%; height: 100%; }
+    .about__inner {
+      position: relative;
+      max-width: 640px;
     }
     .about p {
-      margin-top: 0.4rem;
-      max-width: 60ch;
-      font-size: 0.93rem;
-      color: var(--ink-2);
+      margin-top: 0.8rem;
+      color: var(--navy-soft);
+      font-size: 1rem;
     }
-    .about a { color: var(--accent); text-decoration: none; }
-    .about a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .about .section__title { color: var(--navy); }
+    .about a { color: var(--teal-text); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
 
+    /* ==========================================================
+       9. 푸터
+       ========================================================== */
     .site-footer {
-      border-top: 1px solid var(--hair);
-      padding: 1rem 0 1.25rem;
+      padding: 2rem 0;
     }
     .site-footer .container {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      gap: 0.4rem 1.25rem;
-      font-size: 0.82rem;
-      color: var(--ink-3);
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem 2rem;
     }
-    .site-footer .brand { font-size: 0.78rem; letter-spacing: 0.12em; color: var(--ink); }
-    .site-footer .brand svg { width: 16px; height: 16px; }
-    .site-footer a:not(.brand) { color: var(--ink-2); text-decoration: none; }
-    .site-footer a:not(.brand):hover { color: var(--accent); }
-    .site-footer .spacer { flex: 1; }
+    .footer__brand { font-weight: 800; letter-spacing: 0.08em; font-size: 0.9rem; }
+    .footer__desc { margin-top: 0.35rem; color: var(--navy-soft); font-size: 0.95rem; }
+    .footer__meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.3rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .footer__meta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--navy);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .footer__meta a:hover { border-bottom-color: var(--navy); }
+    .footer__meta a svg { width: 18px; height: 18px; }
 
     /* ==========================================================
-       8. 반응형
+       10. 반응형 · 접근성 보정
        ========================================================== */
-    @media (max-width: 1024px) {
-      /* 태블릿: 과목 태그를 설명 아래로 내리고 설명은 두 줄까지 */
-      .row {
-        grid-template-columns: 2.8rem 2.2rem minmax(0, 1fr) 4.5rem;
-        grid-template-rows: auto auto;
-        row-gap: 0.35rem;
-      }
-      .row__num, .row__icon, .row__open { grid-row: 1 / span 2; }
-      .row__main { grid-column: 3; grid-row: 1; }
-      .row__tags { grid-column: 3; grid-row: 2; }
-      .row__open { grid-column: 4; }
-      .row__desc { -webkit-line-clamp: 2; }
-      .globe { width: 360px; height: 360px; right: calc(var(--gutter) * -1 - 170px); }
+    @media (max-width: 640px) {
+      .container { width: min(var(--container), 100% - 2rem); }
+      .site-header .container { gap: 0.5rem; }
+      .site-header .container > * { min-width: 0; }
+      .brand { letter-spacing: 0.04em; font-size: 0.8rem; gap: 0.4rem; padding-inline: 0; }
+      .brand__logo { width: 26px; height: 26px; }
+      .site-nav { flex: none; }
+      .site-nav ul { gap: 0; }
+      .site-nav a { padding: 8px 7px; font-size: 0.86rem; }
+      .hero { padding: 2rem 0 1.85rem; }
+      .hero__deco .deco-globe { width: 180px; height: 180px; right: -60px; opacity: 0.35; }
+      .hero__inner { padding-right: 110px; }
+      .search { max-width: none; }
+      .filters { width: 100%; }
+      .filter-btn { flex: 1 1 auto; justify-content: center; padding: 0 0.75rem; }
+      .footer__meta { align-items: flex-start; }
     }
 
-    @media (max-width: 760px) {
-      .site-nav__list { gap: 1rem; }
-      .site-nav__list .nav-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-
-      .hero .container { min-height: 0; padding-block: 1.25rem; }
-      .hero__text { max-width: 70%; }
-      .globe { width: 230px; height: 230px; right: calc(var(--gutter) * -1 - 115px); }
-
-      .subnav__list a { padding: 0 0.9rem; font-size: 0.86rem; }
-
-      .group__head { flex-wrap: wrap; gap: 0.5rem 0.7rem; padding-top: 1.3rem; }
-      .group__title { font-size: 1.15rem; }
-
-      /* 각 줄을 세로 블록으로 재배치 */
-      .row {
-        grid-template-columns: 2.2rem minmax(0, 1fr) auto;
-        grid-template-rows: auto auto auto;
-        row-gap: 0.3rem;
-        column-gap: 0.75rem;
-        padding: 0.9rem 0 1rem;
-        min-height: 44px;
-        align-items: start;
-      }
-      .row__num { grid-column: 1; grid-row: 1; padding-top: 0.15rem; }
-      .row__icon { grid-column: 3; grid-row: 1; width: 26px; height: 26px; align-self: start; }
-      .row__main { grid-column: 2; grid-row: 1; }
-      .row__desc { display: block; -webkit-line-clamp: none; overflow: visible; }
-      .row__tags { grid-column: 2; grid-row: 2; }
-      .row__open { grid-column: 2; grid-row: 3; justify-self: start; min-height: 24px; margin-top: 0.15rem; }
-
-      .about { grid-template-columns: 2.2rem minmax(0, 1fr); column-gap: 0.75rem; }
-    }
-
-    @media (max-width: 400px) {
-      .brand { font-size: 0.78rem; letter-spacing: 0.1em; }
-      .hero__text { max-width: 74%; }
-      .globe { width: 190px; height: 190px; right: calc(var(--gutter) * -1 - 100px); }
+    @media (max-width: 420px) {
+      .site-nav .nav-label-full { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+      .site-nav .nav-label-short { display: inline; }
+      .brand { font-size: 0.76rem; letter-spacing: 0.03em; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: 0.01ms !important; }
-      .row:hover .arrow, .row:focus-visible .arrow { transform: none; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .card { opacity: 1; transform: none; animation: none; }
+      .card:hover, .card:focus-within { transform: none; }
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#apps">앱 목록으로 바로가기</a>
+  <a class="skip-link" href="#tools">도구 목록으로 바로가기</a>
 
   <!-- ========================================================
-       공용 SVG 심볼: 로고 마크(지구) + 앱 아이콘
+       헤더
+       ======================================================== -->
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="#top" aria-label="Earthssaem Lab 홈">
+        <svg class="brand__logo" viewBox="-17 -17 34 34" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="rotate(-14)">
+            <circle r="15" stroke-width="1.8"/>
+            <g class="orbit" stroke-width="1.3">
+              <ellipse rx="6" ry="15"/>
+              <path d="M0-15v30M-15 0h30M-13.5-6.5h27M-13.5 6.5h27"/>
+            </g>
+            <path d="M-6-3c2-2 5-1 7 1s3 5 1 7-5 1-7-1-3-5-1-7z" fill="currentColor" stroke="none"/>
+          </g>
+        </svg>
+        <span>EARTHSSAEM LAB</span>
+      </a>
+
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <ul>
+          <li><a href="#tools"><span class="nav-label-full">웹앱 모음</span><span class="nav-label-short" aria-hidden="true">웹앱</span></a></li>
+          <li><a href="#about">소개</a></li>
+          <!-- 링크 추가 위치: 블로그 등 새 링크는 아래 형식으로 <li>를 추가하세요.
+          <li><a href="https://blog.example.com" target="_blank" rel="noopener noreferrer">Blog</a></li>
+          -->
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ======================================================
+         히어로
+         ====================================================== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__deco" aria-hidden="true">
+        <!-- 선으로 그린 지구: 구 윤곽 + 경선·위선 + 단순화한 대륙 윤곽 -->
+        <svg class="deco-globe" viewBox="-110 -110 220 220" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <defs><clipPath id="globe-clip"><circle r="100"/></clipPath></defs>
+          <g transform="rotate(-14)">
+            <circle r="100"/>
+            <!-- 경선 -->
+            <path d="M0-100V100"/>
+            <ellipse rx="38" ry="100"/>
+            <ellipse rx="74" ry="100"/>
+            <!-- 위선 -->
+            <path d="M-100 0H100"/>
+            <path d="M-93.5-35H93.5M-93.5 35H93.5"/>
+            <path d="M-71.4-70H71.4M-71.4 70H71.4"/>
+            <!-- 대륙 윤곽 (단순화) -->
+            <g clip-path="url(#globe-clip)">
+              <path d="M-34-30c3-9 4-19 12-24s14-13 24-11 18 2 26-2 10-6 14-4l-4 10c-10 4-14 14-24 16-6 1-9 6-15 9s-11 0-16 4-9 8-17 2z"/>
+              <path d="M-30-14c8-8 22-6 34-7 10-1 18 4 26 3l16-5c3 8-2 16-8 22s-7 14-14 19-8 12-11 20-8 14-14 18-14 4-16-4c-1-8 2-16-4-22s-14-10-14-20c0-9 1-17 5-24z"/>
+              <path d="M40-30c8-4 18-4 26-2l6 14c-5 6-10 12-18 12-6-4-10-12-14-24z"/>
+              <path d="M50-62c12-6 26-8 40-4l30 6v40c-10-2-18 4-26 10-10 4-18 0-26-4s-16-6-20-14 0-24 2-34z"/>
+              <path d="M-108 8c8-6 20-4 28 2s10 16 6 26-6 20-10 28-8 12-14 12-6-16-8-26-4-22-2-42z"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <div class="container">
+        <div class="hero__inner">
+          <h1 id="hero-title">연경쌤의 지구과학 실험실</h1>
+          <p class="hero__desc">수업에서 보여 주기 어려웠던 장면을, 직접 만져 볼 수 있는 웹앱으로 만듭니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         도구 목록
+         ====================================================== -->
+    <section class="section tools" id="tools" aria-labelledby="tools-title">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <h2 class="section__title" id="tools-title">웹앱 모음</h2>
+            <p class="section__sub">수업 목적과 과목에 맞는 도구를 찾아보세요.</p>
+          </div>
+          <p class="result-count" id="result-count" aria-live="polite"></p>
+        </div>
+
+        <div class="toolbar">
+          <div class="search">
+            <label for="search-input" class="visually-hidden">도구 검색</label>
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+            <input type="search" id="search-input" placeholder="제목, 설명, 과목으로 검색" autocomplete="off" spellcheck="false">
+          </div>
+
+          <div class="filters" role="group" aria-label="활용 유형 필터" id="filters">
+            <!-- 필터 버튼은 JavaScript가 CATEGORIES를 기준으로 생성합니다 -->
+          </div>
+        </div>
+
+        <ul class="card-grid" id="card-grid" aria-label="수업 도구 목록">
+          <!-- 카드는 JavaScript가 APPS 배열을 기준으로 생성합니다 -->
+        </ul>
+
+        <div class="empty" id="empty" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8M8.5 11h5"/></svg>
+          <p><strong>검색 결과가 없습니다.</strong><br>다른 검색어를 입력하거나 필터를 바꿔 보세요.</p>
+          <button type="button" id="reset-btn">검색·필터 초기화</button>
+        </div>
+
+        <noscript>
+          <div class="nojs-note">
+            <p>
+              JavaScript를 켜면 앱 목록이 표시됩니다.
+              문의: <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>
+            </p>
+          </div>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         About
+         ====================================================== -->
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="about__deco" aria-hidden="true">
+        <!-- 등고선·지층선 그래픽 -->
+        <svg viewBox="0 0 700 420" preserveAspectRatio="xMaxYMid slice" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M60 340c80-60 140-20 220-70s120-110 220-120 200 40 200 40"/>
+          <path d="M90 372c80-60 150-40 230-90s110-120 210-130 170 30 170 30"/>
+          <path d="M20 300c90-70 160-10 250-60s130-130 240-140 190 60 190 60"/>
+          <path d="M140 400c70-50 150-60 230-110s110-100 200-110 130 50 130 50"/>
+          <path d="M-20 250c100-60 180 10 270-40s150-140 250-150 200 80 200 80"/>
+          <ellipse cx="470" cy="180" rx="120" ry="52" transform="rotate(-12 470 180)"/>
+          <ellipse cx="470" cy="180" rx="80" ry="32" transform="rotate(-12 470 180)"/>
+          <ellipse cx="470" cy="180" rx="40" ry="14" transform="rotate(-12 470 180)"/>
+        </svg>
+      </div>
+
+      <div class="container">
+        <div class="about__inner">
+          <h2 class="section__title" id="about-title">수업에서 시작된 작은 실험들</h2>
+          <p>
+            수업을 준비하며 설명만으로 보여 주기 어려웠던 장면을 직접 조작할 수 있는 도구로 만들었습니다.
+            각 도구는 실제 수업에서 활용하며 계속 수정하고 개선하고 있습니다.
+          </p>
+          <p>
+            수업에 활용하시거나 의견이 있으시면 메일로 연락 주세요.
+            <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================
+       푸터
+       ======================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div>
+        <p class="footer__brand">EARTHSSAEM LAB</p>
+        <p class="footer__desc">지구과학 수업을 위해 직접 만든 디지털 학습 도구</p>
+      </div>
+      <div class="footer__meta">
+        <p>© <span id="year">2026</span> 제작: 김연경(<a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a>)</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       카드 아이콘 (선형 SVG 심볼 모음)
+       새 아이콘을 추가하려면 <symbol id="icon-이름">을 하나 더 만들고,
+       APPS 배열의 icon 값에 "이름"을 적으면 됩니다.
        ======================================================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <!-- 로고 마크: 상단 지구 그래픽의 축소판 -->
-    <symbol id="mark-earth" viewBox="-17 -17 34 34">
-      <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle r="15"/>
-        <ellipse rx="6.5" ry="15"/>
-        <path d="M0-15v30M-15 0h30M-13.5-6.5h27M-13.5 6.5h27"/>
-        <path d="M-6-3c2-2 5-1 7 1s3 5 1 7-5 1-7-1-3-5-1-7z" fill="currentColor" stroke="none" opacity="0.9"/>
-      </g>
-    </symbol>
     <!-- 암모나이트 화석 -->
     <symbol id="icon-fossil" viewBox="0 0 48 48">
       <path d="M24 24a2 2 0 0 1 4 0a4 4 0 0 1-8 0a6 6 0 0 1 12 0a8 8 0 0 1-16 0a10 10 0 0 1 20 0a12 12 0 0 1-24 0a14 14 0 0 1 28 0"/>
@@ -567,148 +919,25 @@
     </symbol>
   </svg>
 
-  <!-- ========================================================
-       헤더
-       ======================================================== -->
-  <header class="site-header">
-    <div class="container">
-      <a class="brand" href="#top" aria-label="Earthssaem Lab 처음으로">
-        <svg aria-hidden="true"><use href="#mark-earth"/></svg>
-        <span>EARTHSSAEM LAB</span>
-      </a>
-      <nav class="site-nav" aria-label="사이트 메뉴">
-        <!-- 링크 추가 위치: 아래 형식으로 <li>를 하나 더 넣으면 됩니다.
-             <li><a href="https://blog.example.com" target="_blank" rel="noopener noreferrer">Blog</a></li> -->
-        <ul class="site-nav__list">
-          <li><a href="#about">소개</a></li>
-          <li>
-            <a href="https://github.com/earthssaem" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
-              <span class="nav-text">GitHub</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <main id="top">
-    <!-- ======================================================
-         상단 영역: 왼쪽 제목·한 줄 설명, 오른쪽 지구
-         ====================================================== -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container">
-        <div class="hero__text">
-          <h1 id="hero-title">연경쌤의 지구과학 수업 도구</h1>
-          <p class="hero__lead">수업에 필요한 도구를 직접 만들어 활용합니다.</p>
-        </div>
-
-        <!-- 선으로 그린 지구: 구 윤곽 + 경선·위선 + 단순화한 대륙 -->
-        <div class="globe" aria-hidden="true">
-          <svg viewBox="-110 -110 220 220" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-            <defs><clipPath id="globe-clip"><circle r="100"/></clipPath></defs>
-            <g transform="rotate(-14)">
-              <circle r="100" stroke-width="1.5"/>
-              <!-- 경선 -->
-              <path d="M0-100V100"/>
-              <ellipse rx="38" ry="100"/>
-              <ellipse rx="74" ry="100"/>
-              <!-- 위선 -->
-              <path d="M-100 0H100"/>
-              <path d="M-93.5-35H93.5M-93.5 35H93.5"/>
-              <path d="M-71.4-70H71.4M-71.4 70H71.4"/>
-              <!-- 대륙 윤곽 (단순화) -->
-              <g clip-path="url(#globe-clip)" stroke-width="1.25">
-                <!-- 유럽 -->
-                <path d="M-34-30c3-9 4-19 12-24s14-13 24-11 18 2 26-2 10-6 14-4l-4 10c-10 4-14 14-24 16-6 1-9 6-15 9s-11 0-16 4-9 8-17 2z"/>
-                <!-- 아프리카 -->
-                <path d="M-30-14c8-8 22-6 34-7 10-1 18 4 26 3l16-5c3 8-2 16-8 22s-7 14-14 19-8 12-11 20-8 14-14 18-14 4-16-4c-1-8 2-16-4-22s-14-10-14-20c0-9 1-17 5-24z"/>
-                <!-- 아라비아 -->
-                <path d="M40-30c8-4 18-4 26-2l6 14c-5 6-10 12-18 12-6-4-10-12-14-24z"/>
-                <!-- 아시아 (오른쪽 가장자리) -->
-                <path d="M50-62c12-6 26-8 40-4l30 6v40c-10-2-18 4-26 10-10 4-18 0-26-4s-16-6-20-14 0-24 2-34z"/>
-                <!-- 남아메리카 (왼쪽 가장자리) -->
-                <path d="M-108 8c8-6 20-4 28 2s10 16 6 26-6 20-10 28-8 12-14 12-6-16-8-26-4-22-2-42z"/>
-              </g>
-            </g>
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================================
-         묶음 앵커 메뉴 (JavaScript가 CATEGORIES 기준으로 생성)
-         ====================================================== -->
-    <nav class="subnav" aria-label="활용 유형별 이동">
-      <div class="container">
-        <ul class="subnav__list" id="subnav"></ul>
-      </div>
-    </nav>
-
-    <!-- ======================================================
-         앱 목록 (JavaScript가 APPS 배열 기준으로 생성)
-         ====================================================== -->
-    <section id="apps" aria-label="수업 도구 목록">
-      <div class="container" id="groups">
-        <noscript>
-          <p class="nojs-note">
-            앱 목록은 JavaScript가 켜져 있을 때 표시됩니다.
-            모든 도구는 <a href="https://github.com/earthssaem" target="_blank" rel="noopener noreferrer">GitHub(earthssaem)</a>에서도 확인할 수 있습니다.
-          </p>
-        </noscript>
-      </div>
-    </section>
-
-    <!-- ======================================================
-         소개
-         ====================================================== -->
-    <section class="container about" id="about" aria-labelledby="about-title">
-      <span class="about__num" aria-hidden="true">—</span>
-      <div>
-        <h2 id="about-title">수업에서 시작된 작은 도구들</h2>
-        <p>
-          수업을 준비하며 설명만으로 보여 주기 어려웠던 장면을 직접 조작할 수 있는 도구로 만들었습니다.
-          각 도구는 실제 수업에서 활용하며 계속 수정하고 개선하고 있습니다.
-          소스와 최신 소식은 <a href="https://github.com/earthssaem" target="_blank" rel="noopener noreferrer">github.com/earthssaem</a>에 있습니다.
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <!-- ========================================================
-       푸터: 한 줄
-       ======================================================== -->
-  <footer class="site-footer">
-    <div class="container">
-      <a class="brand" href="#top">
-        <svg aria-hidden="true"><use href="#mark-earth"/></svg>
-        <span>EARTHSSAEM LAB</span>
-      </a>
-      <span>연경쌤의 지구과학 수업 도구</span>
-      <span class="spacer"></span>
-      <a href="https://github.com/earthssaem" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <span>© <span id="year">2026</span></span>
-    </div>
-  </footer>
-
   <script>
     /* ============================================================
        ★ 앱 데이터 관리 위치 ★
        ------------------------------------------------------------
        새 웹앱을 추가하려면 아래 APPS 배열에 객체를 하나 더 넣기만 하면
-       해당 묶음에 줄이 자동으로 추가되고 번호도 다시 매겨집니다.
+       카드가 자동으로 만들어집니다. 각 필드의 뜻은 다음과 같습니다.
 
          title       : 웹앱 제목
          type        : 활용 유형 키 (CATEGORIES의 키 중 하나: concept / data / game)
-         description : 한 줄 설명
+         description : 한두 문장의 설명
          subjects    : 적용 과목 태그 배열
          url         : 웹앱 주소 (새 탭에서 열림)
          icon        : 위 SVG 심볼 id에서 "icon-"을 뺀 이름
 
-       유형을 새로 만들려면 CATEGORIES에 항목을 추가하면 됩니다.
-       (en: 묶음 제목 옆에 붙는 영문 라벨)
+       유형을 새로 만들고 싶다면 CATEGORIES에 항목을 추가하고,
+       CSS의 .card--유형키 색상 규칙을 함께 추가하세요.
        ============================================================ */
 
+    // 활용 유형 정의 (순서대로 필터 버튼이 만들어집니다)
     const CATEGORIES = {
       concept: { label: '개념 탐구' },
       data:    { label: '데이터 분석' },
@@ -801,20 +1030,24 @@
     ];
 
     /* ============================================================
-       아래는 렌더링·앵커 메뉴 로직입니다. 보통은 수정할 필요가 없습니다.
+       아래는 렌더링·검색·필터 로직입니다. 보통은 수정할 필요가 없습니다.
        ============================================================ */
     (function () {
       'use strict';
 
-      // 묶음 영문 라벨 (CATEGORIES에 en 필드가 없을 때의 기본값)
-      const EN_LABELS = { concept: 'Concept', data: 'Data', game: 'Game' };
-
-      const groupsEl = document.getElementById('groups');
-      const subnavEl = document.getElementById('subnav');
+      const grid = document.getElementById('card-grid');
+      const filtersEl = document.getElementById('filters');
+      const searchInput = document.getElementById('search-input');
+      const resultCount = document.getElementById('result-count');
+      const emptyEl = document.getElementById('empty');
+      const resetBtn = document.getElementById('reset-btn');
       const yearEl = document.getElementById('year');
 
-      const SVG_NS = 'http://www.w3.org/2000/svg';
-      const pad2 = (n) => String(n).padStart(2, '0');
+      let activeType = 'all';
+      let query = '';
+
+      // --- 유틸 -------------------------------------------------
+      const normalize = (s) => String(s || '').toLowerCase().replace(/\s+/g, '');
 
       function el(tag, attrs, children) {
         const node = document.createElement(tag);
@@ -829,130 +1062,133 @@
         return node;
       }
 
-      function iconSvg(id, className) {
-        const svg = document.createElementNS(SVG_NS, 'svg');
-        const use = document.createElementNS(SVG_NS, 'use');
+      function svgUse(id) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
         use.setAttribute('href', '#icon-' + id);
         use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-' + id);
         svg.setAttribute('aria-hidden', 'true');
-        svg.setAttribute('class', className);
         svg.appendChild(use);
         return svg;
       }
 
-      // --- 묶음별로 앱 정렬 (APPS 배열 순서 유지, 전체 통합 번호 부여) ---
-      const keys = Object.keys(CATEGORIES);
-      const byType = {};
-      keys.forEach((k) => { byType[k] = []; });
-      APPS.forEach((app) => {
-        if (!byType[app.type]) byType[app.type] = [];
-        byType[app.type].push(app);
-      });
-
-      let counter = 0;
-      const sections = [];
-
-      keys.forEach((key, gi) => {
-        const apps = byType[key];
-        if (!apps.length) return;
-        const cat = CATEGORIES[key];
-        const en = cat.en || EN_LABELS[key] || '';
-        const sectionId = 'group-' + key;
-
-        // 앵커 메뉴 항목
-        const link = el('a', { href: '#' + sectionId }, [
-          el('span', { class: 'serif', text: pad2(gi + 1), 'aria-hidden': 'true' }),
-          el('span', { text: cat.label }),
-        ]);
-        subnavEl.appendChild(el('li', null, [link]));
-
-        // 묶음 제목
-        const head = el('div', { class: 'group__head' }, [
-          el('span', { class: 'group__num', text: pad2(gi + 1), 'aria-hidden': 'true' }),
-          el('h2', { class: 'group__title', id: sectionId + '-title', text: cat.label }),
-          en ? el('span', { class: 'group__en', text: en, 'aria-hidden': 'true' }) : document.createTextNode(''),
-          el('span', { class: 'group__count', text: apps.length + '개' }),
-        ]);
-
-        // 앱 줄 목록
-        const list = el('ul');
-        apps.forEach((app) => {
-          counter += 1;
-          const row = el('a', {
-            class: 'row',
-            href: app.url,
-            target: '_blank',
-            rel: 'noopener noreferrer',
+      // --- 필터 버튼 생성 ----------------------------------------
+      const filterDefs = [{ key: 'all', label: '전체' }].concat(
+        Object.keys(CATEGORIES).map((key) => ({ key, label: CATEGORIES[key].label }))
+      );
+      filterDefs.forEach((f) => {
+        const btn = el('button', {
+          type: 'button',
+          class: 'filter-btn',
+          'data-type': f.key,
+          'aria-pressed': f.key === activeType ? 'true' : 'false',
+          text: f.label,
+        });
+        btn.addEventListener('click', () => {
+          activeType = f.key;
+          filtersEl.querySelectorAll('.filter-btn').forEach((b) => {
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
           });
-          row.appendChild(el('span', { class: 'row__num', text: pad2(counter), 'aria-hidden': 'true' }));
-          row.appendChild(iconSvg(app.icon, 'row__icon'));
-          row.appendChild(el('span', { class: 'row__main' }, [
-            el('span', { class: 'row__title', text: app.title }),
-            el('span', { class: 'row__desc', text: app.description }),
-          ]));
-          row.appendChild(el('ul', { class: 'row__tags', 'aria-label': '적용 과목' },
-            app.subjects.map((s) => el('li', { text: s }))));
-          row.appendChild(el('span', { class: 'row__open', 'aria-hidden': 'true' }, [
-            document.createTextNode('열기 '),
-            el('span', { class: 'arrow', text: '→' }),
-          ]));
-          row.appendChild(el('span', { class: 'visually-hidden', text: ' (새 탭에서 열림)' }));
-          list.appendChild(el('li', null, [row]));
+          applyFilters();
         });
-
-        const section = el('section', { class: 'group', id: sectionId, 'aria-labelledby': sectionId + '-title' }, [head, list]);
-        groupsEl.appendChild(section);
-        sections.push({ section, link });
+        filtersEl.appendChild(btn);
       });
 
-      // --- 스크롤 시 현재 묶음 표시 ---------------------------------
-      function setCurrent(target) {
-        sections.forEach(({ link }) => {
-          if (link === target) link.setAttribute('aria-current', 'true');
-          else link.removeAttribute('aria-current');
+      // --- 카드 생성 ---------------------------------------------
+      const cards = APPS.map((app, i) => {
+        const cat = CATEGORIES[app.type] || { label: app.type };
+        const li = el('li', { class: 'card card--' + app.type, style: '--i:' + i });
+        li.dataset.type = app.type;
+        li.dataset.search = normalize([app.title, app.description].concat(app.subjects).join(' '));
+
+        const article = el('article', { class: 'card__inner' });
+
+        const top = el('div', { class: 'card__top' }, [
+          el('div', { class: 'card__icon', 'aria-hidden': 'true' }, [svgUse(app.icon)]),
+          el('p', { class: 'card__type', text: cat.label }),
+        ]);
+
+        const link = el('a', {
+          class: 'card__link',
+          href: app.url,
+          target: '_blank',
+          rel: 'noopener noreferrer',
         });
-      }
-      let pinned = null; // 앵커 클릭으로 고정된 항목
-      function updateCurrent() {
-        if (pinned) { setCurrent(pinned); return; }
-        const threshold = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10)
-          + parseInt(getComputedStyle(document.documentElement).getPropertyValue('--subnav-h'), 10) + 8;
-        let current = null;
-        sections.forEach((s) => {
-          if (s.section.getBoundingClientRect().top <= threshold) current = s.link;
+        link.appendChild(document.createTextNode(app.title));
+        link.appendChild(el('span', { class: 'visually-hidden', text: ' (새 탭에서 열림)' }));
+        const title = el('h3', { class: 'card__title' }, [link]);
+
+        const desc = el('p', { class: 'card__desc', text: app.description });
+
+        const tags = el('ul', { class: 'card__tags', 'aria-label': '적용 과목' },
+          app.subjects.map((s) => el('li', { text: s })));
+
+        const cta = el('span', { class: 'card__cta', 'aria-hidden': 'true' });
+        cta.appendChild(document.createTextNode('웹앱 열기 '));
+        cta.appendChild(el('span', { class: 'arrow', text: '→' }));
+
+        [top, title, desc, tags, cta].forEach((n) => article.appendChild(n));
+        li.appendChild(article);
+        return li;
+      });
+      cards.forEach((c) => grid.appendChild(c));
+
+      // --- 검색 + 필터 적용 --------------------------------------
+      function applyFilters() {
+        const q = normalize(query);
+        let shown = 0;
+        cards.forEach((card) => {
+          const typeOk = activeType === 'all' || card.dataset.type === activeType;
+          const textOk = !q || card.dataset.search.indexOf(q) !== -1;
+          const visible = typeOk && textOk;
+          card.hidden = !visible;
+          if (visible) shown += 1;
         });
-        // 페이지 끝에 도달하면 마지막 묶음을 현재로 표시
-        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-          current = sections[sections.length - 1].link;
+
+        // 전체 상태: "전체 10개" / 필터·검색 적용: "3개 표시"
+        const isFiltered = activeType !== 'all' || q;
+        resultCount.innerHTML = '';
+        if (isFiltered) {
+          resultCount.appendChild(el('strong', { text: shown + '개' }));
+          resultCount.appendChild(document.createTextNode(' 표시'));
+        } else {
+          resultCount.appendChild(document.createTextNode('전체 '));
+          resultCount.appendChild(el('strong', { text: shown + '개' }));
         }
-        setCurrent(current || sections[0].link);
-      }
-      let ticking = false;
-      window.addEventListener('scroll', () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => { updateCurrent(); ticking = false; });
-      }, { passive: true });
-      window.addEventListener('resize', updateCurrent);
-      ['wheel', 'touchstart', 'keydown'].forEach((evt) => {
-        window.addEventListener(evt, () => { pinned = null; }, { passive: true });
-      });
-      updateCurrent();
 
-      // --- 앵커 이동: 헤더·메뉴 높이만큼 보정 ------------------------
+        emptyEl.hidden = shown !== 0;
+        grid.hidden = shown === 0;
+      }
+
+      searchInput.addEventListener('input', () => {
+        query = searchInput.value;
+        applyFilters();
+      });
+
+      resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        query = '';
+        activeType = 'all';
+        filtersEl.querySelectorAll('.filter-btn').forEach((b) => {
+          b.setAttribute('aria-pressed', b.dataset.type === 'all' ? 'true' : 'false');
+        });
+        applyFilters();
+        searchInput.focus();
+      });
+
+      applyFilters();
+
+      // --- 부드러운 스크롤 (헤더 높이 보정) --------------------------
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      document.addEventListener('click', (e) => {
-        const a = e.target.closest('a[href^="#"]');
-        if (!a) return;
-        const id = a.getAttribute('href').slice(1);
-        const target = id ? document.getElementById(id) : null;
-        if (!target) return;
-        e.preventDefault();
-        const hit = sections.find((s) => s.section === target);
-        pinned = hit ? hit.link : null;
-        if (hit) setCurrent(hit.link); else updateCurrent();
-        target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
-        if (history.pushState) history.pushState(null, '', '#' + id);
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href').slice(1);
+          const target = id ? document.getElementById(id) : null;
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+          if (history.pushState) history.pushState(null, '', '#' + id);
+        });
       });
 
       // --- 푸터 연도 ---------------------------------------------
