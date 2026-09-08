@@ -609,29 +609,32 @@
     .nojs-note a { color: var(--teal-text); font-weight: 600; }
 
     /* ==========================================================
-       8. 푸터 (왼쪽: 워드마크 / 오른쪽: 제작자 · 수정 제안 이메일)
+       8. 푸터 (한 줄 가운데 정렬: 제작 | 수정 제안)
        ========================================================== */
     .site-footer {
-      padding: 2rem 0;
+      padding: 1.5rem 0;
       border-top: 2px solid var(--ink);
     }
-    .site-footer .container {
+    .footer__meta {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      gap: 0.5rem 2rem;
-    }
-    .footer__brand { font-weight: 800; letter-spacing: 0.08em; font-size: 0.9rem; }
-    .footer__meta {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
       color: var(--muted);
-      text-align: right;
+      text-align: center;
     }
-    .footer__credit, .footer__contact { display: block; line-height: 1.6; }
+    /* 두 번째 항목의 왼쪽 선이 구분선 역할 (문자가 아니므로 스크린리더에 읽히지 않음) */
+    .footer__contact {
+      border-left: 1px solid var(--line);
+      padding-left: 1em;
+      margin-left: 1em;
+    }
+    .footer__label { color: var(--muted); opacity: 0.8; }
+    .footer__meta .value { color: var(--navy-soft); }
     .footer__meta a {
       color: var(--navy-soft);
-      font-weight: 600;
       text-decoration: underline;
       text-decoration-thickness: 1.5px;
       text-underline-offset: 3px;
@@ -673,7 +676,12 @@
       .subject-filter { width: 100%; }
       .subject-filter select { width: 100%; }
       .result-count { width: 100%; }
-      .footer__meta { text-align: left; }
+    }
+
+    @media (max-width: 600px) {
+      /* 푸터: 두 줄로 접고 구분선 숨김, 각 줄 가운데 정렬 */
+      .footer__credit, .footer__contact { flex-basis: 100%; }
+      .footer__contact { border-left: 0; padding-left: 0; margin-left: 0; }
     }
 
     @media (max-width: 420px) {
@@ -811,10 +819,9 @@
        ======================================================== -->
   <footer class="site-footer">
     <div class="container">
-      <p class="footer__brand">EARTHSSAEM LAB</p>
       <p class="footer__meta">
-        <span class="footer__credit">제작: 수도여고 교사 김연경</span>
-        <span class="footer__contact">수정 제안: <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a></span>
+        <span class="footer__credit"><span class="footer__label">제작:</span> <span class="value">수도여고 교사 김연경</span></span>
+        <span class="footer__contact"><span class="footer__label">수정 제안:</span> <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a></span>
       </p>
     </div>
   </footer>
