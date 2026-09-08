@@ -359,6 +359,34 @@
     .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange); color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type]:not([data-type="all"])::before { background: var(--ink); border-color: var(--ink); }
 
+    .subject-filter { position: relative; flex: none; }
+    .subject-filter select {
+      height: 40px;
+      padding: 0 2.3rem 0 1rem;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--ink);
+      background: var(--surface);
+      color: var(--navy);
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.93rem;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+    }
+    .subject-filter::after { /* 화살표 */
+      content: "";
+      position: absolute;
+      right: 14px; top: 50%;
+      width: 8px; height: 8px;
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      transform: translateY(-70%) rotate(45deg);
+      pointer-events: none;
+    }
+    .subject-filter select:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
+    .subject-filter select:focus-visible { outline: none; transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--teal); }
     .result-count {
       flex: none;
       margin: 0;
@@ -649,6 +677,8 @@
         gap: 8px;
       }
       .filter-btn { width: 100%; height: 40px; justify-content: center; padding: 0 0.5rem; }
+      .subject-filter { width: 100%; }
+      .subject-filter select { width: 100%; }
       .result-count { width: 100%; }
     }
 
@@ -745,11 +775,18 @@
           <div class="search">
             <label for="search-input" class="visually-hidden">도구 검색</label>
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
-            <input type="search" id="search-input" placeholder="제목, 설명, 과목으로 검색" autocomplete="off" spellcheck="false">
+            <input type="search" id="search-input" placeholder="제목, 설명, 과목, 연도로 검색" autocomplete="off" spellcheck="false">
           </div>
 
           <div class="filters" role="group" aria-label="활용 유형 필터" id="filters">
             <!-- 필터 버튼은 JavaScript가 CATEGORIES를 기준으로 생성합니다 -->
+          </div>
+          <!-- 과목 필터: 항목은 JavaScript가 APPS의 과목명을 기준으로 생성합니다 -->
+          <div class="subject-filter">
+            <label for="subject-select" class="visually-hidden">과목 선택</label>
+            <select id="subject-select">
+              <option value="all">전체 과목</option>
+            </select>
           </div>
           <!-- 검색어나 필터를 적용했을 때만 결과 수를 표시합니다 -->
           <p class="result-count" id="result-count" aria-live="polite" hidden></p>
@@ -904,7 +941,9 @@
          title       : 웹앱 제목
          type        : 활용 유형 키 (CATEGORIES의 키 중 하나: concept / data / game)
          description : 한두 문장의 설명
-         subjects    : 적용 과목 태그 배열
+         subjects    : 적용 과목 배열. { name: '과목명', year: '교육과정 연도' } 형식
+                       → 카드에는 "통합과학 · 2022"처럼 표시되고, 과목 드롭다운 항목도
+                         이 배열의 과목명에서 자동으로 만들어집니다.
          url         : 웹앱 주소 (새 탭에서 열림)
          icon        : 위 SVG 심볼 id에서 "icon-"을 뺀 이름
 
@@ -925,7 +964,10 @@
         title: '화석 탐구실',
         type: 'concept',
         description: '생물이 화석으로 보존되는 조건과 몰드·캐스트, 생흔화석의 형성 과정을 직접 탐구합니다.',
-        subjects: ['통합과학', '지구과학'],
+        subjects: [
+          { name: '통합과학', year: '2022' },
+          { name: '지구과학', year: '2022' },
+        ],
         url: 'https://fossil-lab.vercel.app/',
         icon: 'fossil',
       },
@@ -933,7 +975,10 @@
         title: '스트로마톨라이트 형성 과정',
         type: 'concept',
         description: '남세균 매트 위에 퇴적물이 쌓이고 다시 성장하는 과정이 반복되며 층이 형성되는 모습을 관찰합니다.',
-        subjects: ['통합과학', '지구과학'],
+        subjects: [
+          { name: '통합과학', year: '2022' },
+          { name: '지구과학', year: '2022' },
+        ],
         url: 'https://stromatolite.vercel.app/',
         icon: 'stromatolite',
       },
@@ -941,7 +986,10 @@
         title: '조석 현상 시뮬레이터',
         type: 'concept',
         description: '관측자의 위도와 달의 적위를 조절하며 지역에 따라 달라지는 조석 형태를 탐구합니다.',
-        subjects: ['지구과학Ⅱ', '지구시스템과학'],
+        subjects: [
+          { name: '지구과학Ⅱ', year: '2015' },
+          { name: '지구시스템과학', year: '2022' },
+        ],
         url: 'https://tide-sim.vercel.app/',
         icon: 'tide',
       },
@@ -949,7 +997,9 @@
         title: '일식·월식 시뮬레이터',
         type: 'concept',
         description: '태양·지구·달의 위치 관계와 그림자를 조작하며 일식과 월식이 일어나는 원리를 탐구합니다.',
-        subjects: ['통합과학', '지구과학'],
+        subjects: [
+          { name: '지구과학', year: '2022' },
+        ],
         url: 'https://eclipse-sim.vercel.app/',
         icon: 'eclipse',
       },
@@ -957,7 +1007,9 @@
         title: '천체의 위치와 좌표계',
         type: 'concept',
         description: '천구를 조작하며 지평 좌표계와 적도 좌표계에서 천체의 위치를 나타내는 방법을 탐구합니다.',
-        subjects: ['지구과학Ⅱ'],
+        subjects: [
+          { name: '지구과학Ⅱ', year: '2015' },
+        ],
         url: 'https://celestial-coordinates.vercel.app/',
         icon: 'celestial',
       },
@@ -965,7 +1017,9 @@
         title: '케플러 법칙',
         type: 'concept',
         description: '행성의 공전 운동을 관찰하며 케플러 제1·2·3법칙의 의미를 탐구합니다.',
-        subjects: ['지구과학Ⅱ'],
+        subjects: [
+          { name: '지구과학Ⅱ', year: '2015' },
+        ],
         url: 'https://kepler-laws.vercel.app/',
         icon: 'kepler',
       },
@@ -973,7 +1027,10 @@
         title: '조석 데이터 분석 도구',
         type: 'data',
         description: '실제 조위 관측 자료를 시각화하고 평상시와 특이 시기의 조위 변화를 비교·분석합니다.',
-        subjects: ['지구과학Ⅱ', '지구시스템과학'],
+        subjects: [
+          { name: '지구과학Ⅱ', year: '2015' },
+          { name: '지구시스템과학', year: '2022' },
+        ],
         url: 'https://earthssaem.github.io/lab/tide-data/',
         icon: 'tide-data',
       },
@@ -981,7 +1038,10 @@
         title: '기후변화 데이터 분석 도구',
         type: 'data',
         description: '실제 기온과 온실기체 관측 자료를 시각화하여 장기적인 변화 추세와 변동을 분석합니다.',
-        subjects: ['통합과학', '지구과학'],
+        subjects: [
+          { name: '통합과학', year: '2022' },
+          { name: '지구과학', year: '2022' },
+        ],
         url: 'https://earthssaem.github.io/lab/climate-data/',
         icon: 'climate',
       },
@@ -989,7 +1049,10 @@
         title: '지층 탐험대',
         type: 'game',
         description: '지질 공원을 탐사하며 지층과 화석 단서를 모으고 지질 시대의 흐름을 복습합니다.',
-        subjects: ['통합과학', '지구과학'],
+        subjects: [
+          { name: '통합과학', year: '2022' },
+          { name: '지구과학', year: '2022' },
+        ],
         url: 'https://fossil-explorer.vercel.app/',
         icon: 'fossil-explorer',
       },
@@ -997,7 +1060,9 @@
         title: '통합과학 방탈출',
         type: 'game',
         description: '빅뱅부터 판 구조론까지 여러 공간의 문제를 해결하며 통합과학 내용을 복습합니다.',
-        subjects: ['통합과학'],
+        subjects: [
+          { name: '통합과학', year: '2022' },
+        ],
         url: 'https://integratedscience1-escape.vercel.app/',
         icon: 'escape',
       },
@@ -1018,7 +1083,10 @@
       const resetBtn = document.getElementById('reset-btn');
       const yearEl = document.getElementById('year');
 
+      const subjectSelect = document.getElementById('subject-select');
+
       let activeType = 'all';
+      let activeSubject = 'all';
       let query = '';
 
       // --- 유틸 -------------------------------------------------
@@ -1074,7 +1142,9 @@
         const cat = CATEGORIES[app.type] || { label: app.type };
         const li = el('li', { class: 'card card--' + app.type, style: '--i:' + i });
         li.dataset.type = app.type;
-        li.dataset.search = normalize([app.title, app.description].concat(app.subjects).join(' '));
+        li.dataset.search = normalize([app.title, app.description]
+          .concat(app.subjects.map((sub) => sub.name + ' ' + sub.year)).join(' '));
+        li.dataset.subjects = app.subjects.map((sub) => sub.name).join('|');
 
         const article = el('article', { class: 'card__inner' });
 
@@ -1096,7 +1166,7 @@
         const desc = el('p', { class: 'card__desc', text: app.description });
 
         const tags = el('ul', { class: 'card__tags', 'aria-label': '적용 과목' },
-          app.subjects.map((s) => el('li', { text: s })));
+          app.subjects.map((sub) => el('li', { text: sub.name + ' · ' + sub.year })));
 
         const cta = el('span', { class: 'card__cta', 'aria-hidden': 'true' });
         cta.appendChild(document.createTextNode('웹앱 열기 '));
@@ -1108,20 +1178,34 @@
       });
       cards.forEach((c) => grid.appendChild(c));
 
+      // --- 과목 드롭다운 항목 생성 (APPS의 과목명, 처음 나온 순서) ----
+      const subjectNames = [];
+      APPS.forEach((app) => app.subjects.forEach((sub) => {
+        if (subjectNames.indexOf(sub.name) === -1) subjectNames.push(sub.name);
+      }));
+      subjectNames.forEach((name) => {
+        subjectSelect.appendChild(el('option', { value: name, text: name }));
+      });
+      subjectSelect.addEventListener('change', () => {
+        activeSubject = subjectSelect.value;
+        applyFilters();
+      });
+
       // --- 검색 + 필터 적용 --------------------------------------
       function applyFilters() {
         const q = normalize(query);
         let shown = 0;
         cards.forEach((card) => {
           const typeOk = activeType === 'all' || card.dataset.type === activeType;
+          const subjectOk = activeSubject === 'all' || card.dataset.subjects.split('|').indexOf(activeSubject) !== -1;
           const textOk = !q || card.dataset.search.indexOf(q) !== -1;
-          const visible = typeOk && textOk;
+          const visible = typeOk && subjectOk && textOk;
           card.hidden = !visible;
           if (visible) shown += 1;
         });
 
         // 검색어나 필터를 적용했을 때만 "3개 결과"처럼 표시
-        const isFiltered = activeType !== 'all' || q;
+        const isFiltered = activeType !== 'all' || activeSubject !== 'all' || q;
         resultCount.textContent = isFiltered ? shown + '개 결과' : '';
         resultCount.hidden = !isFiltered;
 
@@ -1138,6 +1222,8 @@
         searchInput.value = '';
         query = '';
         activeType = 'all';
+        activeSubject = 'all';
+        subjectSelect.value = 'all';
         filtersEl.querySelectorAll('.filter-btn').forEach((b) => {
           b.setAttribute('aria-pressed', b.dataset.type === 'all' ? 'true' : 'false');
         });
