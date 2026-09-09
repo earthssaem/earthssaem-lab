@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>연경쌤의 지구과학 실험실 | Earthssaem Lab</title>
-  <meta name="description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
+  <title>🌍 연경쌤의 지구과학 실험실 | Earthssaem Lab</title>
+  <meta name="description" content="지구과학 수업용 웹앱 모음">
   <meta name="theme-color" content="#F6FAFE">
-  <meta property="og:title" content="연경쌤의 지구과학 실험실 | Earthssaem Lab">
-  <meta property="og:description" content="연경쌤이 직접 만든 지구과학 수업용 웹앱 모음. 개념 탐구 시뮬레이션, 실제 데이터 분석 도구, 복습용 게임.">
+  <meta property="og:title" content="🌍 연경쌤의 지구과학 실험실">
+  <meta property="og:description" content="지구과학 수업용 웹앱 모음">
   <meta property="og:type" content="website">
   <!-- 파비콘: 굵은 외곽선의 만화풍 지구 (상단 로고와 동일) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='34' fill='%237FB8E6' stroke='%232A2A2A' stroke-width='4.5'/%3E%3Cpath d='M18 30c4-10 16-16 26-12 6 3 6 10 0 14-6 4-14 2-20 6-6 2-8-2-6-8zM44 56c6-4 14 0 14 8-2 6-8 8-14 6-4-4-4-10 0-14zM60 22c6-2 12 2 12 8s-6 6-10 4-4-8-2-12zM20 52c4-2 8 0 8 4s-4 5-7 3-3-5-1-7z' fill='%238FC98A' stroke='%232A2A2A' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -44,7 +44,7 @@
       --orange-text: #7D5A0B;
       --orange-soft: #FBF1CF;
 
-      --coral: #F2A9A3;         /* 제작 가이드 = 산호 */
+      --coral: #F2A9A3;         /* 제작 가이드 배너 = 산호 */
       --coral-text: #8A3B33;
       --coral-soft: #FBE4E1;
 
@@ -303,7 +303,6 @@
     .filter-btn[data-type="concept"] { --dot: var(--teal); }
     .filter-btn[data-type="data"]    { --dot: var(--blue); }
     .filter-btn[data-type="game"]    { --dot: var(--orange); }
-    .filter-btn[data-type="guide"]   { --dot: var(--coral); }
     .filter-btn:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"] {
       background: var(--ink);
@@ -314,7 +313,6 @@
     .filter-btn[aria-pressed="true"][data-type="concept"] { background: var(--teal);   color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type="data"]    { background: var(--blue);   color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange); color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
-    .filter-btn[aria-pressed="true"][data-type="guide"]   { background: var(--coral);  color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type]:not([data-type="all"])::before { background: var(--ink); border-color: var(--ink); }
 
     .subject-filter { position: relative; flex: none; }
@@ -404,7 +402,6 @@
     .card--concept { --accent: var(--teal);   --accent-text: var(--teal-text);   --accent-soft: var(--teal-soft); }
     .card--data    { --accent: var(--blue);   --accent-text: var(--blue-text);   --accent-soft: var(--blue-soft); }
     .card--game    { --accent: var(--orange); --accent-text: var(--orange-text); --accent-soft: var(--orange-soft); }
-    .card--guide   { --accent: var(--coral);  --accent-text: var(--coral-text);  --accent-soft: var(--coral-soft); }
 
     .card:hover,
     .card:focus-within {
@@ -615,6 +612,108 @@
     .footer__meta a:hover { color: var(--teal-text); }
 
     /* ==========================================================
+       9-1. 제작 가이드 배너 (교사용 자료, 카드 목록 아래)
+       ========================================================== */
+    .guide { padding-top: 0; }
+    .guide-banner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.35rem 1.6rem;
+      background: var(--coral-soft);
+      border: 2.5px solid var(--ink);
+      border-radius: var(--radius-lg);
+      box-shadow: 3px 3px 0 var(--shadow-ink);
+      transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
+    }
+    .guide-banner:hover,
+    .guide-banner:focus-within {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--coral);
+    }
+    .guide-banner__icon {
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      flex: none;
+      transition: transform 0.25s var(--ease);
+    }
+    .guide-banner:hover .guide-banner__icon,
+    .guide-banner:focus-within .guide-banner__icon { transform: rotate(-8deg) scale(1.06); }
+    .guide-banner__icon svg {
+      width: 34px; height: 34px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .guide-banner__text { flex: 1 1 auto; min-width: 0; }
+    .guide-banner__eyebrow {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--coral-text);
+      margin-bottom: 0.2rem;
+    }
+    .guide-banner__title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+      color: var(--navy);
+      word-break: keep-all;
+      text-wrap: balance;
+    }
+    .guide-banner__desc {
+      margin-top: 0.3rem;
+      font-size: 0.92rem;
+      line-height: 1.58;
+      color: var(--navy-soft);
+      word-break: keep-all;
+      text-wrap: pretty;
+    }
+    .guide-banner__cta {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      height: 44px;
+      padding: 0 1.15rem;
+      border-radius: var(--radius-pill);
+      background: var(--ink);
+      color: #fff;
+      border: 2px solid var(--ink);
+      font-weight: 800;
+      font-size: 0.93rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    /* 배너 전체 클릭: 링크의 가상 요소를 배너 전체로 펼침 */
+    .guide-banner__cta::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+    }
+    .guide-banner__cta:focus-visible { outline: none; }
+    .guide-banner:has(.guide-banner__cta:focus-visible) {
+      outline: 3px solid var(--coral-text);
+      outline-offset: 3px;
+    }
+    .guide-banner__cta .arrow {
+      display: inline-block;
+      transition: transform 0.22s var(--ease);
+    }
+    .guide-banner:hover .guide-banner__cta .arrow,
+    .guide-banner:focus-within .guide-banner__cta .arrow { transform: translateX(4px); }
+
+    /* ==========================================================
        10. 반응형 · 접근성 보정
        ========================================================== */
     @media (max-width: 640px) {
@@ -632,10 +731,11 @@
         gap: 8px;
       }
       .filter-btn { width: 100%; height: 40px; justify-content: center; padding: 0 0.5rem; }
-      .filter-btn[data-type="all"] { grid-column: 1 / -1; }
       .subject-filter { width: 100%; }
       .subject-filter select { width: 100%; }
       .result-count { width: 100%; }
+      .guide-banner { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.25rem; }
+      .guide-banner__cta { width: 100%; justify-content: center; }
     }
 
     @media (max-width: 600px) {
@@ -732,6 +832,27 @@
             <p>JavaScript를 켜면 앱 목록이 표시됩니다.</p>
           </div>
         </noscript>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         제작 가이드 배너 (교사용 자료)
+         ====================================================== -->
+    <section class="section guide" aria-labelledby="guide-title">
+      <div class="container">
+        <div class="guide-banner">
+          <div class="guide-banner__icon" aria-hidden="true">
+            <svg><use href="#icon-vibe"/></svg>
+          </div>
+          <div class="guide-banner__text">
+            <p class="guide-banner__eyebrow">선생님을 위한 자료</p>
+            <h2 class="guide-banner__title" id="guide-title">이 웹앱들은 어떻게 만들었을까?</h2>
+            <p class="guide-banner__desc">생성형 AI와 대화하며 지구과학 수업용 웹앱을 만드는 과정을 단계별로 안내합니다.</p>
+          </div>
+          <a class="guide-banner__cta" href="https://earthssaem-vibecoding-guide.vercel.app/" target="_blank" rel="noopener noreferrer">
+            제작 가이드 보기 <span class="arrow" aria-hidden="true">→</span><span class="visually-hidden"> (새 탭에서 열림)</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -849,7 +970,7 @@
       <circle cx="9" cy="33" r="4"/>
       <path d="M12 30l7-7M16 26l2 2M14 28l2 2"/>
     </symbol>
-    <!-- 말풍선 속 코드 괄호와 반짝임: AI와 대화하며 만드는 바이브코딩 -->
+    <!-- 말풍선 속 코드 괄호와 반짝임: 제작 가이드 배너용 -->
     <symbol id="icon-vibe" viewBox="0 0 48 48">
       <path d="M9 10h26a3 3 0 0 1 3 3v17a3 3 0 0 1-3 3H21l-8 7v-7H9a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z"/>
       <path d="M17 17l-5 4.5 5 4.5"/>
@@ -867,13 +988,12 @@
        카드가 자동으로 만들어집니다. 각 필드의 뜻은 다음과 같습니다.
 
          title       : 웹앱 제목
-         type        : 활용 유형 키 (CATEGORIES의 키 중 하나: concept / data / game / guide)
+         type        : 활용 유형 키 (CATEGORIES의 키 중 하나: concept / data / game)
          description : 한두 문장의 설명. " / "는 데스크톱 4열 카드에서의 줄바꿈 위치
                        (화면에는 표시되지 않으며, 태블릿·모바일에서는 자연스럽게 접힙니다)
          subjects    : 적용 과목 배열. { name: '과목명', year: '교육과정 연도' } 형식
                        → 카드에는 "통합과학(2022)"처럼 표시되고, 과목 드롭다운 항목도
                          이 배열의 과목명에서 자동으로 만들어집니다.
-         tag         : (선택) 과목이 없는 앱에 대신 표시할 태그 문구 (예: '교사용')
          url         : 웹앱 주소 (새 탭에서 열림)
          icon        : 위 SVG 심볼 id에서 "icon-"을 뺀 이름
 
@@ -886,7 +1006,6 @@
       concept: { label: '개념 탐구' },
       data:    { label: '데이터 분석' },
       game:    { label: '게임·복습' },
-      guide:   { label: '제작 가이드' },
     };
 
     // 등록된 웹앱 목록
@@ -997,15 +1116,6 @@
         url: 'https://integratedscience1-escape.vercel.app/',
         icon: 'escape',
       },
-      {
-        title: '바이브코딩 웹앱 제작 가이드',
-        type: 'guide',
-        description: '생성형 AI와 대화하며 / 지구과학 수업용 웹앱을 만드는 / 과정을 단계별로 안내합니다.',
-        subjects: [],
-        tag: '교사용',
-        url: 'https://earthssaem-vibecoding-guide.vercel.app/',
-        icon: 'vibe',
-      },
       // ▼ 새 앱은 여기에 추가하세요.
     ];
 
@@ -1082,7 +1192,7 @@
         const cat = CATEGORIES[app.type] || { label: app.type };
         const li = el('li', { class: 'card card--' + app.type, style: '--i:' + i });
         li.dataset.type = app.type;
-        li.dataset.search = normalize([app.title, app.description.replace(/ \/ /g, ' '), app.tag || '']
+        li.dataset.search = normalize([app.title, app.description.replace(/ \/ /g, ' ')]
           .concat(app.subjects.map((sub) => sub.name + ' ' + sub.year)).join(' '));
         li.dataset.subjects = app.subjects.map((sub) => sub.name).join('|');
 
@@ -1110,12 +1220,8 @@
           desc.appendChild(el('span', { class: 'card__line', text: seg }));
         });
 
-        // 과목이 없는 앱(교사용 자료 등)은 tag 문구를 대신 표시
-        const tagLabels = app.subjects.length
-          ? app.subjects.map((sub) => sub.name + '(' + sub.year + ')')
-          : (app.tag ? [app.tag] : []);
-        const tags = el('ul', { class: 'card__tags', 'aria-label': app.subjects.length ? '적용 과목' : '대상' },
-          tagLabels.map((label) => el('li', { text: label })));
+        const tags = el('ul', { class: 'card__tags', 'aria-label': '적용 과목' },
+          app.subjects.map((sub) => el('li', { text: sub.name + '(' + sub.year + ')' })));
 
         const cta = el('span', { class: 'card__cta', 'aria-hidden': 'true' });
         cta.appendChild(document.createTextNode('웹앱 열기 '));
