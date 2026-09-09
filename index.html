@@ -357,7 +357,7 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1rem;
     }
-    @media (max-width: 1199px) {
+    @media (max-width: 1279px) {
       .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     @media (max-width: 799px) {
@@ -383,6 +383,8 @@
       transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
     }
     .card[hidden], .card-grid[hidden] { display: none; }
+    /* 카드 내부를 세로 flex로: 설명이 남는 공간을 채우고 과목 태그·웹앱 열기는 아래에 정렬 */
+    .card__inner { display: flex; flex-direction: column; flex: 1 1 auto; }
     /* 카드 상단의 유형 색 라인 */
     .card { overflow: hidden; }
     .card::before {
@@ -470,6 +472,8 @@
       font-weight: 800;
       line-height: 1.35;
       letter-spacing: -0.01em;
+      word-break: keep-all;
+      text-wrap: balance;
     }
     .card__link {
       text-decoration: none;
@@ -480,10 +484,20 @@
       color: var(--navy-soft);
       font-size: 0.92rem;
       line-height: 1.58;
-      flex: 1 1 auto;
+      min-height: calc(1.58em * 3); /* 세 줄 기준 최소 높이: 두 줄짜리 설명도 아래 요소 위치가 같도록 */
+      flex: 0 0 auto; /* 남는 공간은 웹앱 열기 위 여백으로 보내 태그는 위, 웹앱 열기는 바닥에 정렬 */
+      word-break: keep-all;
+      text-wrap: pretty;
+    }
+    /* 데스크톱 4열(≥1280px, 카드 폭 298px)에서만 지정한 위치에서 줄바꿈 */
+    @media (min-width: 1280px) {
+      .card { padding-inline: 1.15rem; }
+      .card__desc { font-size: 0.88rem; letter-spacing: -0.01em; }
+      .card__desc .card__line { display: block; }
     }
     .card__tags {
       margin-top: 0.9rem;
+      margin-bottom: 0.9rem;
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
@@ -498,7 +512,7 @@
       font-weight: 600;
     }
     .card__cta {
-      margin-top: 0.9rem;
+      margin-top: auto;
       padding-top: 0.75rem;
       border-top: 2px dashed var(--line-strong);
       display: inline-flex;
@@ -780,12 +794,12 @@
       <path d="M24 24l9-11" stroke-dasharray="2 2"/>
     </symbol>
     <!-- 타원 궤도와 행성 -->
+    <!-- 타원 궤도(rx 17, ry 12): 초점 거리 √(17²−12²)≈12 → 태양은 중심(24)에서 오른쪽 12 지점(36)의 초점에 -->
     <symbol id="icon-kepler" viewBox="0 0 48 48">
-      <ellipse cx="24" cy="24" rx="19" ry="11"/>
-      <circle cx="36" cy="24" r="3.2" fill="currentColor" stroke="none"/>
-      <circle cx="9" cy="19" r="2.6"/>
-      <path d="M36 24L9 19M36 24l-16 9.5" stroke-dasharray="2 2"/>
-      <path d="M20 33.5A19 11 0 0 1 9 19" stroke-width="3" opacity="0.35"/>
+      <ellipse cx="24" cy="25" rx="17" ry="12"/>
+      <circle cx="36" cy="25" r="3" fill="currentColor" stroke="none"/>
+      <path d="M36 19.5v-2M36 32.5v-2M30.5 25h-2M41.5 25h2"/>
+      <circle cx="9.3" cy="31" r="2.2" fill="currentColor" stroke="none"/>
     </symbol>
     <!-- 파도와 꺾은선그래프 -->
     <symbol id="icon-tide-data" viewBox="0 0 48 48">
@@ -809,12 +823,12 @@
       <path d="M19 4h4v4"/>
     </symbol>
     <!-- 지질 망치와 지층 -->
+    <!-- 지층 노두(평행한 세 층) + 돋보기 -->
     <symbol id="icon-fossil-explorer" viewBox="0 0 48 48">
-      <path d="M4 36c5-3 9-3 14 0s9 3 14 0 9-3 12 0"/>
-      <path d="M4 43c5-3 9-3 14 0s9 3 14 0 9-3 12 0"/>
-      <path d="M9 30L24 15"/>
-      <path d="M22 9l6-4 12 8-6 6z"/>
-      <path d="M27 20l-3-5"/>
+      <path d="M5 13h24v27H5z"/>
+      <path d="M5 22.5L29 21M5 31.5L29 30"/>
+      <circle cx="35" cy="31" r="7"/>
+      <path d="M40 36l5 5"/>
     </symbol>
     <!-- 열린 문과 열쇠 -->
     <symbol id="icon-escape" viewBox="0 0 48 48">
@@ -835,7 +849,8 @@
 
          title       : 웹앱 제목
          type        : 활용 유형 키 (CATEGORIES의 키 중 하나: concept / data / game)
-         description : 한두 문장의 설명
+         description : 한두 문장의 설명. " / "는 데스크톱 4열 카드에서의 줄바꿈 위치
+                       (화면에는 표시되지 않으며, 태블릿·모바일에서는 자연스럽게 접힙니다)
          subjects    : 적용 과목 배열. { name: '과목명', year: '교육과정 연도' } 형식
                        → 카드에는 "통합과학(2022)"처럼 표시되고, 과목 드롭다운 항목도
                          이 배열의 과목명에서 자동으로 만들어집니다.
@@ -858,7 +873,7 @@
       {
         title: '화석 탐구실',
         type: 'concept',
-        description: '생물이 화석으로 보존되는 조건과 몰드·캐스트, 생흔화석의 형성 과정을 직접 탐구합니다.',
+        description: '생물이 화석으로 남는 조건과 / 몰드·캐스트, 생흔화석의 / 형성 과정을 탐구합니다.',
         subjects: [
           { name: '통합과학', year: '2022' },
           { name: '지구과학', year: '2022' },
@@ -867,9 +882,9 @@
         icon: 'fossil',
       },
       {
-        title: '스트로마톨라이트 형성 과정',
+        title: '스트로마톨라이트 형성',
         type: 'concept',
-        description: '남세균 매트 위에 퇴적물이 쌓이고 다시 성장하는 과정이 반복되며 층이 형성되는 모습을 관찰합니다.',
+        description: '남세균 매트에 퇴적물이 쌓이고 / 남세균이 다시 자라는 과정이 반복되어 / 층을 이루는 모습을 관찰합니다.',
         subjects: [
           { name: '통합과학', year: '2022' },
           { name: '지구과학', year: '2022' },
@@ -880,7 +895,7 @@
       {
         title: '조석 현상 시뮬레이터',
         type: 'concept',
-        description: '관측자의 위도와 달의 적위를 조절하며 지역에 따라 달라지는 조석 형태를 탐구합니다.',
+        description: '관측 지점의 위도와 달의 적위를 / 조절하며 달라지는 조석 형태를 / 탐구합니다.',
         subjects: [
           { name: '지구과학Ⅱ', year: '2015' },
           { name: '지구시스템과학', year: '2022' },
@@ -891,7 +906,7 @@
       {
         title: '일식·월식 시뮬레이터',
         type: 'concept',
-        description: '태양·지구·달의 위치 관계와 그림자를 조작하며 일식과 월식이 일어나는 원리를 탐구합니다.',
+        description: '태양·지구·달의 위치를 조절하고 / 그림자를 관찰하며 일식과 월식의 / 원리를 탐구합니다.',
         subjects: [
           { name: '지구과학', year: '2022' },
         ],
@@ -901,7 +916,7 @@
       {
         title: '천체의 위치와 좌표계',
         type: 'concept',
-        description: '천구를 조작하며 지평 좌표계와 적도 좌표계에서 천체의 위치를 나타내는 방법을 탐구합니다.',
+        description: '천구를 조작하며 지평 좌표계와 / 적도 좌표계로 천체의 위치를 / 나타내는 방법을 탐구합니다.',
         subjects: [
           { name: '지구과학Ⅱ', year: '2015' },
         ],
@@ -911,7 +926,7 @@
       {
         title: '케플러 법칙',
         type: 'concept',
-        description: '행성의 공전 운동을 관찰하며 케플러 제1·2·3법칙의 의미를 탐구합니다.',
+        description: '행성의 공전 운동을 관찰하며 / 케플러의 세 가지 법칙을 탐구합니다.',
         subjects: [
           { name: '지구과학Ⅱ', year: '2015' },
         ],
@@ -921,7 +936,7 @@
       {
         title: '조석 데이터 분석 도구',
         type: 'data',
-        description: '실제 조위 관측 자료를 시각화하고 평상시와 특이 시기의 조위 변화를 비교·분석합니다.',
+        description: '실제 조위 관측 자료를 시각화해 / 평상시와 태풍 시기의 조위 변화를 / 비교·분석합니다.',
         subjects: [
           { name: '지구과학Ⅱ', year: '2015' },
           { name: '지구시스템과학', year: '2022' },
@@ -932,7 +947,7 @@
       {
         title: '기후변화 데이터 분석 도구',
         type: 'data',
-        description: '실제 기온과 온실기체 관측 자료를 시각화하여 장기적인 변화 추세와 변동을 분석합니다.',
+        description: '실제 기온과 온실기체 농도 자료를 / 시각화해 장기적인 변화 추세와 / 변동을 분석합니다.',
         subjects: [
           { name: '통합과학', year: '2022' },
           { name: '지구과학', year: '2022' },
@@ -941,9 +956,9 @@
         icon: 'climate',
       },
       {
-        title: '지층 탐험대',
+        title: '지층 탐사대',
         type: 'game',
-        description: '지질 공원을 탐사하며 지층과 화석 단서를 모으고 지질 시대의 흐름을 복습합니다.',
+        description: '지질공원을 탐사하며 지층과 화석 / 단서를 모으고 지질 시대의 흐름을 / 복습합니다.',
         subjects: [
           { name: '통합과학', year: '2022' },
           { name: '지구과학', year: '2022' },
@@ -954,7 +969,7 @@
       {
         title: '통합과학 방탈출',
         type: 'game',
-        description: '빅뱅부터 판 구조론까지 여러 공간의 문제를 해결하며 통합과학 내용을 복습합니다.',
+        description: '빅뱅부터 판 구조론까지 여러 공간의 / 문제를 해결하며 통합과학 내용을 / 복습합니다.',
         subjects: [
           { name: '통합과학', year: '2022' },
         ],
@@ -1037,7 +1052,7 @@
         const cat = CATEGORIES[app.type] || { label: app.type };
         const li = el('li', { class: 'card card--' + app.type, style: '--i:' + i });
         li.dataset.type = app.type;
-        li.dataset.search = normalize([app.title, app.description]
+        li.dataset.search = normalize([app.title, app.description.replace(/ \/ /g, ' ')]
           .concat(app.subjects.map((sub) => sub.name + ' ' + sub.year)).join(' '));
         li.dataset.subjects = app.subjects.map((sub) => sub.name).join('|');
 
@@ -1058,7 +1073,12 @@
         link.appendChild(el('span', { class: 'visually-hidden', text: ' (새 탭에서 열림)' }));
         const title = el('h3', { class: 'card__title' }, [link]);
 
-        const desc = el('p', { class: 'card__desc', text: app.description });
+        // 설명: " / "로 나눈 조각을 span으로 감싸 데스크톱 4열에서만 줄바꿈 위치를 고정
+        const desc = el('p', { class: 'card__desc' });
+        app.description.split(' / ').forEach((seg, si) => {
+          if (si > 0) desc.appendChild(document.createTextNode(' '));
+          desc.appendChild(el('span', { class: 'card__line', text: seg }));
+        });
 
         const tags = el('ul', { class: 'card__tags', 'aria-label': '적용 과목' },
           app.subjects.map((sub) => el('li', { text: sub.name + '(' + sub.year + ')' })));
