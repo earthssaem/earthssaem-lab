@@ -794,12 +794,13 @@
       <path d="M24 24l9-11" stroke-dasharray="2 2"/>
     </symbol>
     <!-- 타원 궤도와 행성 -->
-    <!-- 타원 궤도(rx 17, ry 12): 초점 거리 √(17²−12²)≈12 → 태양은 중심(24)에서 오른쪽 12 지점(36)의 초점에 -->
+    <!-- 타원 궤도(rx 17, ry 11.5): 초점 거리 √(17²−11.5²)≈12.5 → 태양은 중심(24)에서 오른쪽 12.5 지점(36.5)의 초점에.
+         궤도 위 행성 하나, 궤도 꼭대기에 작은 방향 표시 -->
     <symbol id="icon-kepler" viewBox="0 0 48 48">
-      <ellipse cx="24" cy="25" rx="17" ry="12"/>
-      <circle cx="36" cy="25" r="3" fill="currentColor" stroke="none"/>
-      <path d="M36 19.5v-2M36 32.5v-2M30.5 25h-2M41.5 25h2"/>
-      <circle cx="9.3" cy="31" r="2.2" fill="currentColor" stroke="none"/>
+      <ellipse cx="24" cy="25" rx="17" ry="11.5"/>
+      <circle cx="36.5" cy="25" r="2.7" fill="currentColor" stroke="none"/>
+      <circle cx="9.3" cy="30.8" r="2.1" fill="currentColor" stroke="none"/>
+      <path d="M26.5 11.2l-2.6 2.3 2.6 2.3"/>
     </symbol>
     <!-- 파도와 꺾은선그래프 -->
     <symbol id="icon-tide-data" viewBox="0 0 48 48">
@@ -823,12 +824,12 @@
       <path d="M19 4h4v4"/>
     </symbol>
     <!-- 지질 망치와 지층 -->
-    <!-- 지층 노두(평행한 세 층) + 돋보기 -->
+    <!-- 루페(원형 확대경) + 지질 조사용 해머(한쪽은 평평, 한쪽은 뾰족한 픽), 대각선 교차 -->
     <symbol id="icon-fossil-explorer" viewBox="0 0 48 48">
-      <path d="M5 13h24v27H5z"/>
-      <path d="M5 22.5L29 21M5 31.5L29 30"/>
-      <circle cx="35" cy="31" r="7"/>
-      <path d="M40 36l5 5"/>
+      <circle cx="13" cy="15" r="6.3"/>
+      <path d="M17.5 19.5L26 28"/>
+      <path d="M9 41L25.5 24.5"/>
+      <path d="M24.8 13.8L31.2 20.2L36.5 30.5L26.2 25.2L19.8 18.8Z"/>
     </symbol>
     <!-- 열린 문과 열쇠 -->
     <symbol id="icon-escape" viewBox="0 0 48 48">
@@ -934,17 +935,6 @@
         icon: 'kepler',
       },
       {
-        title: '조석 데이터 분석 도구',
-        type: 'data',
-        description: '실제 조위 관측 자료를 시각화해 / 시간에 따른 해수면 높이 변화를 / 살펴봅니다.',
-        subjects: [
-          { name: '지구과학Ⅱ', year: '2015' },
-          { name: '지구시스템과학', year: '2022' },
-        ],
-        url: 'https://earthssaem.github.io/lab/tide-data/',
-        icon: 'tide-data',
-      },
-      {
         title: '기후변화 데이터 분석 도구',
         type: 'data',
         description: '실제 기온과 온실기체 농도 자료를 / 시각화해 장기적인 변화 추세와 / 변동을 분석합니다.',
@@ -954,6 +944,17 @@
         ],
         url: 'https://earthssaem.github.io/lab/climate-data/',
         icon: 'climate',
+      },
+      {
+        title: '조석 데이터 분석 도구',
+        type: 'data',
+        description: '실제 조위 관측 자료를 시각화해 / 시간에 따른 해수면 높이 변화를 / 살펴봅니다.',
+        subjects: [
+          { name: '지구과학Ⅱ', year: '2015' },
+          { name: '지구시스템과학', year: '2022' },
+        ],
+        url: 'https://earthssaem.github.io/lab/tide-data/',
+        icon: 'tide-data',
       },
       {
         title: '지층 탐사대',
