@@ -44,6 +44,10 @@
       --orange-text: #7D5A0B;
       --orange-soft: #FBF1CF;
 
+      --coral: #F2A9A3;         /* 제작 가이드 = 산호 */
+      --coral-text: #8A3B33;
+      --coral-soft: #FBE4E1;
+
       --sky: #7FB8E6;           /* 캐릭터 바다색 */
       --sky-soft: #A8D3F0;
       --leaf: #8FC98A;          /* 캐릭터 대륙색 */
@@ -299,6 +303,7 @@
     .filter-btn[data-type="concept"] { --dot: var(--teal); }
     .filter-btn[data-type="data"]    { --dot: var(--blue); }
     .filter-btn[data-type="game"]    { --dot: var(--orange); }
+    .filter-btn[data-type="guide"]   { --dot: var(--coral); }
     .filter-btn:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"] {
       background: var(--ink);
@@ -309,6 +314,7 @@
     .filter-btn[aria-pressed="true"][data-type="concept"] { background: var(--teal);   color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type="data"]    { background: var(--blue);   color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type="game"]    { background: var(--orange); color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
+    .filter-btn[aria-pressed="true"][data-type="guide"]   { background: var(--coral);  color: var(--navy); box-shadow: 3px 3px 0 var(--ink); }
     .filter-btn[aria-pressed="true"][data-type]:not([data-type="all"])::before { background: var(--ink); border-color: var(--ink); }
 
     .subject-filter { position: relative; flex: none; }
@@ -398,6 +404,7 @@
     .card--concept { --accent: var(--teal);   --accent-text: var(--teal-text);   --accent-soft: var(--teal-soft); }
     .card--data    { --accent: var(--blue);   --accent-text: var(--blue-text);   --accent-soft: var(--blue-soft); }
     .card--game    { --accent: var(--orange); --accent-text: var(--orange-text); --accent-soft: var(--orange-soft); }
+    .card--guide   { --accent: var(--coral);  --accent-text: var(--coral-text);  --accent-soft: var(--coral-soft); }
 
     .card:hover,
     .card:focus-within {
@@ -625,6 +632,7 @@
         gap: 8px;
       }
       .filter-btn { width: 100%; height: 40px; justify-content: center; padding: 0 0.5rem; }
+      .filter-btn[data-type="all"] { grid-column: 1 / -1; }
       .subject-filter { width: 100%; }
       .subject-filter select { width: 100%; }
       .result-count { width: 100%; }
@@ -841,6 +849,14 @@
       <circle cx="9" cy="33" r="4"/>
       <path d="M12 30l7-7M16 26l2 2M14 28l2 2"/>
     </symbol>
+    <!-- 말풍선 속 코드 괄호와 반짝임: AI와 대화하며 만드는 바이브코딩 -->
+    <symbol id="icon-vibe" viewBox="0 0 48 48">
+      <path d="M9 10h26a3 3 0 0 1 3 3v17a3 3 0 0 1-3 3H21l-8 7v-7H9a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z"/>
+      <path d="M17 17l-5 4.5 5 4.5"/>
+      <path d="M27 17l5 4.5-5 4.5"/>
+      <path d="M24 16l-4 11"/>
+      <path d="M42 3v8M38 7h8"/>
+    </symbol>
   </svg>
 
   <script>
@@ -851,12 +867,13 @@
        카드가 자동으로 만들어집니다. 각 필드의 뜻은 다음과 같습니다.
 
          title       : 웹앱 제목
-         type        : 활용 유형 키 (CATEGORIES의 키 중 하나: concept / data / game)
+         type        : 활용 유형 키 (CATEGORIES의 키 중 하나: concept / data / game / guide)
          description : 한두 문장의 설명. " / "는 데스크톱 4열 카드에서의 줄바꿈 위치
                        (화면에는 표시되지 않으며, 태블릿·모바일에서는 자연스럽게 접힙니다)
          subjects    : 적용 과목 배열. { name: '과목명', year: '교육과정 연도' } 형식
                        → 카드에는 "통합과학(2022)"처럼 표시되고, 과목 드롭다운 항목도
                          이 배열의 과목명에서 자동으로 만들어집니다.
+         tag         : (선택) 과목이 없는 앱에 대신 표시할 태그 문구 (예: '교사용')
          url         : 웹앱 주소 (새 탭에서 열림)
          icon        : 위 SVG 심볼 id에서 "icon-"을 뺀 이름
 
@@ -869,6 +886,7 @@
       concept: { label: '개념 탐구' },
       data:    { label: '데이터 분석' },
       game:    { label: '게임·복습' },
+      guide:   { label: '제작 가이드' },
     };
 
     // 등록된 웹앱 목록
@@ -979,6 +997,15 @@
         url: 'https://integratedscience1-escape.vercel.app/',
         icon: 'escape',
       },
+      {
+        title: '바이브코딩 웹앱 제작 가이드',
+        type: 'guide',
+        description: '생성형 AI와 대화하며 / 지구과학 수업용 웹앱을 만드는 / 과정을 단계별로 안내합니다.',
+        subjects: [],
+        tag: '교사용',
+        url: 'https://earthssaem-vibecoding-guide.vercel.app/',
+        icon: 'vibe',
+      },
       // ▼ 새 앱은 여기에 추가하세요.
     ];
 
@@ -1055,7 +1082,7 @@
         const cat = CATEGORIES[app.type] || { label: app.type };
         const li = el('li', { class: 'card card--' + app.type, style: '--i:' + i });
         li.dataset.type = app.type;
-        li.dataset.search = normalize([app.title, app.description.replace(/ \/ /g, ' ')]
+        li.dataset.search = normalize([app.title, app.description.replace(/ \/ /g, ' '), app.tag || '']
           .concat(app.subjects.map((sub) => sub.name + ' ' + sub.year)).join(' '));
         li.dataset.subjects = app.subjects.map((sub) => sub.name).join('|');
 
@@ -1083,8 +1110,12 @@
           desc.appendChild(el('span', { class: 'card__line', text: seg }));
         });
 
-        const tags = el('ul', { class: 'card__tags', 'aria-label': '적용 과목' },
-          app.subjects.map((sub) => el('li', { text: sub.name + '(' + sub.year + ')' })));
+        // 과목이 없는 앱(교사용 자료 등)은 tag 문구를 대신 표시
+        const tagLabels = app.subjects.length
+          ? app.subjects.map((sub) => sub.name + '(' + sub.year + ')')
+          : (app.tag ? [app.tag] : []);
+        const tags = el('ul', { class: 'card__tags', 'aria-label': app.subjects.length ? '적용 과목' : '대상' },
+          tagLabels.map((label) => el('li', { text: label })));
 
         const cta = el('span', { class: 'card__cta', 'aria-hidden': 'true' });
         cta.appendChild(document.createTextNode('웹앱 열기 '));
