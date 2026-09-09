@@ -198,7 +198,8 @@
       color: var(--navy-soft);
       margin-inline: auto;
     }
-    /* 두 줄로 나뉠 때는 "게임으로" 앞에서만 끊기도록 덩어리 단위로 줄바꿈 */
+    /* 덩어리 단위 줄바꿈: 한 줄 → 두 줄이면 "게임으로" 앞에서,
+       세 줄이면 "실제 데이터를" 앞에서도 끊기도록 inline-block을 겹쳐 둠 */
     .hero__desc .seg { display: inline-block; }
 
     /* ==========================================================
@@ -723,6 +724,8 @@
       .brand__logo { width: 26px; height: 26px; }
       .hero { padding: 1.25rem 0 1.15rem; }
       .hero__desc { max-width: none; }
+      /* 첫 덩어리("시뮬레이션으로 … 탐구하고,")가 360px 폭에서도 한 줄에 들어가도록 글자 크기 소폭 축소 */
+      .hero__desc { font-size: 0.92rem; }
       .search { max-width: none; }
       .filters {
         width: 100%;
@@ -784,7 +787,7 @@
       <div class="container">
         <div class="hero__inner">
           <h1 id="hero-title">연경쌤의 <span class="hl">지구과학 실험실</span></h1>
-          <p class="hero__desc"><span class="seg">시뮬레이션으로 지구과학 개념을 직접 탐구하고, 실제 데이터를 분석하며,</span> <span class="seg">게임으로 배운 내용을 복습해 보세요.</span></p>
+          <p class="hero__desc"><span class="seg"><span class="seg">시뮬레이션으로 지구과학 개념을 직접 탐구하고,</span> <span class="seg">실제 데이터를 분석하며,</span></span> <span class="seg">게임으로 배운 내용을 복습해 보세요.</span></p>
         </div>
       </div>
     </section>
