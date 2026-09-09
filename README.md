@@ -10,9 +10,12 @@
 ```js
 {
   title: '웹앱 제목',
-  type: 'concept',            // concept(개념 탐구) / data(데이터 분석) / game(게임·복습)
-  description: '한두 문장의 설명',
-  subjects: ['통합과학', '지구과학'],
+  type: 'concept',            // concept(개념 탐구) / data(데이터 분석) / game(게임·복습) / guide(제작 가이드)
+  description: '한두 문장의 설명', // " / "를 넣으면 데스크톱 4열 카드에서 그 위치에서 줄바꿈
+  subjects: [                 // 과목이 없는 앱은 [] 로 두고 tag: '교사용' 처럼 대신 표시할 문구를 적습니다
+    { name: '통합과학', year: '2022' },
+    { name: '지구과학', year: '2022' },
+  ],
   url: 'https://example.vercel.app/',
   icon: 'fossil',             // <symbol id="icon-fossil"> 의 "fossil" 부분
 },
