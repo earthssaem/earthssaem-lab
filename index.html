@@ -580,7 +580,7 @@
     .nojs-note a { color: var(--teal-text); font-weight: 600; }
 
     /* ==========================================================
-       8. 푸터 (한 줄 가운데 정렬: 제작 | 수정 제안)
+       8. 푸터 (한 줄 가운데 정렬: 제작 | 수정 제안 | 블로그)
        ========================================================== */
     .site-footer {
       padding: 1.5rem 0;
@@ -596,8 +596,8 @@
       color: var(--muted);
       text-align: center;
     }
-    /* 두 번째 항목의 왼쪽 선이 구분선 역할 (문자가 아니므로 스크린리더에 읽히지 않음) */
-    .footer__contact {
+    /* 두 번째·세 번째 항목의 왼쪽 선이 구분선 역할 (문자가 아니므로 스크린리더에 읽히지 않음) */
+    .footer__contact, .footer__blog {
       border-left: 1px solid var(--line);
       padding-left: 1em;
       margin-left: 1em;
@@ -742,9 +742,9 @@
     }
 
     @media (max-width: 600px) {
-      /* 푸터: 두 줄로 접고 구분선 숨김, 각 줄 가운데 정렬 */
-      .footer__credit, .footer__contact { flex-basis: 100%; }
-      .footer__contact { border-left: 0; padding-left: 0; margin-left: 0; }
+      /* 푸터: 세 줄로 접고 구분선 숨김, 각 줄 가운데 정렬 */
+      .footer__credit, .footer__contact, .footer__blog { flex-basis: 100%; }
+      .footer__contact, .footer__blog { border-left: 0; padding-left: 0; margin-left: 0; }
     }
 
     @media (max-width: 420px) {
@@ -869,6 +869,7 @@
       <p class="footer__meta">
         <span class="footer__credit"><span class="footer__label">© <span id="year">2026</span> 제작:</span> <span class="value">수도여자고등학교 교사 김연경</span></span>
         <span class="footer__contact"><span class="footer__label">수정 제안:</span> <a href="mailto:earthssaem@gmail.com">earthssaem@gmail.com</a></span>
+        <span class="footer__blog"><span class="footer__label">블로그:</span> <a href="https://blog.naver.com/earthssaem" target="_blank" rel="noopener noreferrer">blog.naver.com/earthssaem<span class="visually-hidden"> (새 탭에서 열림)</span></a></span>
       </p>
     </div>
   </footer>
