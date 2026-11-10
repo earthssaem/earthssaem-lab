@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/beta", "destination": "/index.html" },
+    { "source": "/beta/", "destination": "/index.html" }
+  ],
+  "headers": [
+    { "source": "/beta", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/beta/", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+  ]
+}
