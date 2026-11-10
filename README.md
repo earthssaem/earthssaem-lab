@@ -36,7 +36,7 @@
 ```
 
 - `https://earthssaem-lab.vercel.app/` : 베타 앱이 보이지 않습니다.
-- `https://earthssaem-lab.vercel.app/beta` : 베타 앱이 BETA 배지와 함께 맨 앞에 보이고, 정식 앱도 함께 보입니다.
+- `https://earthssaem-lab.vercel.app/beta` : 베타 앱이 보라색 카드와 BETA 배지로 맨 앞에 보이고(유형과 상관없이 같은 색), 정식 앱도 함께 보입니다.
 - `/beta` 주소는 허브 어디에도 링크하지 않으며, 검색엔진에 노출되지 않도록 `noindex`를 붙입니다(`vercel.json`).
 - 정식 공개할 때는 `beta: true` 줄만 지우면 됩니다.
 - 저장소가 공개되어 있으므로 주소를 아는 사람은 볼 수 있습니다. 비밀번호 같은 접근 제한은 없습니다.

@@ -48,6 +48,11 @@
       --coral-text: #8A3B33;
       --coral-soft: #FBE4E1;
 
+      --violet: #B79CF0;        /* 베타 카드 = 보라 (유형과 상관없이 같은 색) */
+      --violet-text: #5B3E99;
+      --violet-soft: #DCCBFA;
+      --violet-bg: #EFE6FF;
+
       --sky: #7FB8E6;           /* 캐릭터 바다색 */
       --sky-soft: #A8D3F0;
       --leaf: #8FC98A;          /* 캐릭터 대륙색 */
@@ -416,6 +421,14 @@
     .card--concept { --accent: var(--teal);   --accent-text: var(--teal-text);   --accent-soft: var(--teal-soft); }
     .card--data    { --accent: var(--blue);   --accent-text: var(--blue-text);   --accent-soft: var(--blue-soft); }
     .card--game    { --accent: var(--orange); --accent-text: var(--orange-text); --accent-soft: var(--orange-soft); }
+    /* 베타 카드(/beta 주소에서만 보임): 유형과 상관없이 모두 같은 보라색 */
+    .card--beta {
+      --accent: var(--violet); --accent-text: var(--violet-text); --accent-soft: var(--violet-soft);
+      background: var(--violet-bg);
+      box-shadow: 3px 3px 0 var(--violet-text);
+    }
+    .card--beta .card__tags li { background: var(--surface); border-color: var(--violet-soft); }
+    .card--beta .card__cta { border-top-color: var(--violet-soft); }
 
     .card:hover,
     .card:focus-within {
@@ -1093,7 +1106,7 @@
          url         : 웹앱 주소 (같은 탭에서 열림)
          icon        : 위 SVG 심볼 id에서 "icon-"을 뺀 이름
          beta        : (선택) true로 적으면 베타 웹앱이 됩니다.
-                       허브에는 보이지 않고 /beta 주소에서만 BETA 배지와 함께 맨 앞에 표시되며,
+                       허브에는 보이지 않고 /beta 주소에서만 보라색 카드·BETA 배지로 맨 앞에 표시되며,
                        정식 공개할 때는 이 줄만 지우면 됩니다.
 
        유형을 새로 만들고 싶다면 CATEGORIES에 항목을 추가하고,
@@ -1379,7 +1392,7 @@
       // --- 카드 생성 ---------------------------------------------
       const cards = visibleApps.map((app, i) => {
         const cat = CATEGORIES[app.type] || { label: app.type };
-        const li = el('li', { class: 'card card--' + app.type, style: '--i:' + i });
+        const li = el('li', { class: 'card card--' + app.type + (app.beta ? ' card--beta' : ''), style: '--i:' + i });
         li.dataset.type = app.type;
         li.dataset.search = normalize([app.title, app.description.replace(/ \/ /g, ' ')]
           .concat(app.subjects.map((sub) => sub.name + ' ' + sub.year))
