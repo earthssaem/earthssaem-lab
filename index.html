@@ -201,6 +201,19 @@
     /* 덩어리 단위 줄바꿈: 한 줄 → 두 줄이면 "게임으로" 앞에서,
        세 줄이면 "실제 데이터를" 앞에서도 끊기도록 inline-block을 겹쳐 둠 */
     .hero__desc .seg { display: inline-block; }
+    /* /beta 주소에서만 히어로 아래에 붙는 안내 문구 */
+    .beta-note {
+      display: inline-block;
+      margin-top: 0.8rem;
+      padding: 4px 14px;
+      border: 2px dashed var(--ink);
+      border-radius: var(--radius-md);
+      background: var(--coral-soft);
+      color: var(--coral-text);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .beta-note span { display: inline-block; } /* 좁은 화면에서는 · 단위로 줄바꿈 */
 
     /* ==========================================================
        5. 섹션 공통
@@ -471,6 +484,22 @@
       font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.02em;
+    }
+    /* 베타 카드(/beta 주소에서만 보임): 유형 배지 왼쪽의 BETA 배지 */
+    .card__labels {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .card__beta {
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      background: var(--ink);
+      border: 1.5px solid var(--ink);
+      color: var(--surface);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
     }
     .card__title {
       font-size: 1.2rem;
@@ -1029,6 +1058,9 @@
                          이 배열의 과목명에서 자동으로 만들어집니다.
          url         : 웹앱 주소 (같은 탭에서 열림)
          icon        : 위 SVG 심볼 id에서 "icon-"을 뺀 이름
+         beta        : (선택) true로 적으면 베타 웹앱이 됩니다.
+                       허브에는 보이지 않고 /beta 주소에서만 BETA 배지와 함께 맨 앞에 표시되며,
+                       정식 공개할 때는 이 줄만 지우면 됩니다.
 
        유형을 새로 만들고 싶다면 CATEGORIES에 항목을 추가하고,
        CSS의 .card--유형키 색상 규칙을 함께 추가하세요.
@@ -1221,6 +1253,27 @@
         return svg;
       }
 
+      // --- 베타 페이지(/beta) ------------------------------------
+      // 베타 앱(beta: true)은 /beta 주소에서만 맨 앞에 보이고, 허브에서는 빠집니다.
+      const IS_BETA_PAGE = /^\/beta\/?$/.test(location.pathname);
+      const betaApps = APPS.filter((app) => app.beta);
+      const publicApps = APPS.filter((app) => !app.beta);
+      const visibleApps = IS_BETA_PAGE ? betaApps.concat(publicApps) : publicApps;
+
+      if (IS_BETA_PAGE) {
+        document.title = '[베타] ' + document.title;
+        document.head.appendChild(el('meta', { name: 'robots', content: 'noindex, nofollow' }));
+        const noteParts = betaApps.length
+          ? ['베타 미리보기', '베타 웹앱 ' + betaApps.length + '개', '허브에는 보이지 않는 주소예요']
+          : ['베타 미리보기', '아직 등록된 베타 웹앱이 없어요'];
+        const note = el('p', { class: 'beta-note' });
+        noteParts.forEach((part, pi) => {
+          if (pi > 0) note.appendChild(document.createTextNode(' · '));
+          note.appendChild(el('span', { text: part }));
+        });
+        document.querySelector('.hero__inner').appendChild(note);
+      }
+
       // --- 필터 버튼 생성 ----------------------------------------
       const filterDefs = [{ key: 'all', label: '전체' }].concat(
         Object.keys(CATEGORIES).map((key) => ({ key, label: CATEGORIES[key].label }))
@@ -1244,19 +1297,23 @@
       });
 
       // --- 카드 생성 ---------------------------------------------
-      const cards = APPS.map((app, i) => {
+      const cards = visibleApps.map((app, i) => {
         const cat = CATEGORIES[app.type] || { label: app.type };
         const li = el('li', { class: 'card card--' + app.type, style: '--i:' + i });
         li.dataset.type = app.type;
         li.dataset.search = normalize([app.title, app.description.replace(/ \/ /g, ' ')]
-          .concat(app.subjects.map((sub) => sub.name + ' ' + sub.year)).join(' '));
+          .concat(app.subjects.map((sub) => sub.name + ' ' + sub.year))
+          .concat(app.beta ? ['베타 beta'] : []).join(' '));
         li.dataset.subjects = app.subjects.map((sub) => sub.name).join('|');
 
         const article = el('article', { class: 'card__inner' });
 
+        const typeLabel = el('p', { class: 'card__type', text: cat.label });
         const top = el('div', { class: 'card__top' }, [
           el('div', { class: 'card__icon', 'aria-hidden': 'true' }, [svgUse(app.icon)]),
-          el('p', { class: 'card__type', text: cat.label }),
+          app.beta
+            ? el('div', { class: 'card__labels' }, [el('span', { class: 'card__beta', text: 'BETA' }), typeLabel])
+            : typeLabel,
         ]);
 
         const link = el('a', {
@@ -1288,9 +1345,9 @@
       });
       cards.forEach((c) => grid.appendChild(c));
 
-      // --- 과목 드롭다운 항목 생성 (APPS의 과목명, 처음 나온 순서) ----
+      // --- 과목 드롭다운 항목 생성 (보이는 앱의 과목명, 처음 나온 순서) ----
       const subjectNames = [];
-      APPS.forEach((app) => app.subjects.forEach((sub) => {
+      visibleApps.forEach((app) => app.subjects.forEach((sub) => {
         if (subjectNames.indexOf(sub.name) === -1) subjectNames.push(sub.name);
       }));
       subjectNames.forEach((name) => {
