@@ -1027,7 +1027,7 @@
          subjects    : 적용 과목 배열. { name: '과목명', year: '교육과정 연도' } 형식
                        → 카드에는 "통합과학(2022)"처럼 표시되고, 과목 드롭다운 항목도
                          이 배열의 과목명에서 자동으로 만들어집니다.
-         url         : 웹앱 주소 (새 탭에서 열림)
+         url         : 웹앱 주소 (같은 탭에서 열림)
          icon        : 위 SVG 심볼 id에서 "icon-"을 뺀 이름
 
        유형을 새로 만들고 싶다면 CATEGORIES에 항목을 추가하고,
@@ -1262,11 +1262,10 @@
         const link = el('a', {
           class: 'card__link',
           href: app.url,
-          target: '_blank',
+          target: '_self',
           rel: 'noopener noreferrer',
         });
         link.appendChild(document.createTextNode(app.title));
-        link.appendChild(el('span', { class: 'visually-hidden', text: ' (새 탭에서 열림)' }));
         const title = el('h3', { class: 'card__title' }, [link]);
 
         // 설명: " / "로 나눈 조각을 span으로 감싸 데스크톱 4열에서만 줄바꿈 위치를 고정
